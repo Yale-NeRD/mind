@@ -99,30 +99,26 @@ memory servers:
 # list of storage servers
 storage servers:
 - s_server1:
-  control ip: 172.28.229.148
+  control ip: 172.29.249.44
   user: sslee
-  key: ~/.ssh/vmhost_acc
+  key: ~/.ssh/disagg_comp
   trace src:
-    - ma:
-        dir: /media/data_ssds/memcached_a/
-    - mc:
-        dir: /media/data_ssds/memcached_c/
-    - tf:
-        dir: /home/yanpeng/2020_11_25_tensorflow/
-    - gc:
-        dir: /home/yanpeng/2021_03_graphchi/
+    - ma: /media/data_ssds/memcached_a/
+    - mc: /media/data_ssds/memcached_c/
+    - tf: /home/yanpeng/2020_11_25_tensorflow/
+    - gc: /home/yanpeng/2021_03_graphchi/
   trace dst:
    - ma:
-       dir_1: /media/data_ssds/ma/
-       dir_2: /media/data_raid0/ma/
+        dir_1: /media/data_ssds/memcached_a_logs/
+        dir_2: /media/data_raid0/memcached_a_logs/
    - mc:
-       dir_1: /media/data_ssds/mc/
-       dir_2: /media/data_raid0/mc/
+        dir_1: /media/data_ssds/memcached_c_logs/
+        dir_2: /media/data_raid0/memcached_c_logs/
    - tf:
-       dir_1: /media/data_ssds/tf/
-       dir_2: /media/data_raid0/tf/
+        dir_1: /media/data_ssds/tensorflow_logs/
+        dir_2: /media/data_raid0/tensorflow_logs/
    - gc:
-       dir_1: /media/data_ssds/gc/
-       dir_2: /media/data_raid0/gc/
+        dir_1: /media/data_ssds/graphchi_logs/
+        dir_2: /media/data_raid0/graphchi_logs/
 
 

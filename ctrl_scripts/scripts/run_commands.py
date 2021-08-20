@@ -38,6 +38,12 @@ key_dir_2 = 'dir_2'
 dir_receipes = '/recipes'
 dir_bricks = '/bricks'
 
+app_name_map = {
+    'ma': 'memcached_a',
+    'mc': 'memcached_c',
+    'tf': 'tensorflow',
+    'gc': 'graphchi'
+}
 
 
 def build_ssh_base(server_ip, user, key):
@@ -134,7 +140,7 @@ def build_in_brick_command(server_ip, s_user, s_key, script_dir, commands):
 
 def build_vm_init_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir):
     return build_vm_brick_command(server_ip, s_user, s_key,
-                                  vm_ctrl_ip, v_user, v_key, 
+                                  vm_ctrl_ip, v_user, v_key,
                                   script_dir, "v_init_module.sh")
 
 
@@ -180,7 +186,7 @@ def build_vm_macro_bench_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v
     return build_vm_brick_command(server_ip, s_user, s_key,
                                   vm_ctrl_ip, v_user, v_key, script_dir,
                                   "v_04_run_macro_bench.sh "
-                                  + str(node_id) + " " + str(node_num) + " " 
+                                  + str(node_id) + " " + str(node_num) + " "
                                   + str(thread_num) + " " + trace + " " + str(step_num))
 
 
@@ -188,8 +194,8 @@ def build_switch_restart_command(switch_ip, s_user, s_key, script_dir):
     return build_in_brick_command(switch_ip, s_user, s_key, script_dir,
                                   "source ./h_switch_env.sh && ./h_switch_reset.sh")
 
-def build_host_load_trace_command(server_ip, s_user, s_key, script_dir, trace, src_dir, dst_dir_1, dst_dir_2, user, log_server, server_id, delete_cmd):
-    return build_in_brick_command(server_ip, s_user, s_key, script_dir, delete_cmd + " ./h_load_trace.sh " + trace + " " + src_dir + " " + dst_dir_1 + " " + dst_dir_2 + " " + user + " " + log_server + " " + server_id)
+def build_host_load_trace_command(server_ip, s_user, s_key, script_dir, trace, src_dir, dst_dir_1, dst_dir_2, user, log_server, server_id, delete_cmd, ssh_key):
+    return build_in_brick_command(server_ip, s_user, s_key, script_dir, delete_cmd + " ./h_load_trace.sh " + trace + " " + src_dir + " " + dst_dir_1 + " " + dst_dir_2 + " " + user + " " + log_server + " " + server_id + " " + ssh_key)
 
 
 def load_access_cfg(cfg, target):
@@ -260,7 +266,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                 if key_script in switch:
                     script_root = switch[key_script]
                 s_user_id, s_ssh_key = load_access_cfg(cfg, switch)
-                
+
                 # per server work
                 cmd = None
                 if job == "first_access":
@@ -299,7 +305,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                         cmd = build_server_custom_command(
                             server[key_ip], s_user_id, s_ssh_key,
                             "cd ~ && git clone " + job_args[key_repo_url] + " || ls")
-                
+
                 if cmd is not None:
                     print(cmd, flush=True)
                     tasks.append(loop.create_task(
@@ -372,16 +378,15 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     if (job_args is not None) and (key_trace in job_args):
                         script_root = cfg[key_default][key_script]
                         for storage_server in cfg[key_ss]:
-                            trace_dst = storage_server[key_trace_dst][job_args[key_trace]]
-                            trace_src = storage_server[key_trace_src][job_args[key_trace]]
-                            # dst_slices = len(trace_dst)
+                            trace_dst = storage_server[key_trace_dst][0][job_args[key_trace]]
+                            trace_src = storage_server[key_trace_src][0][job_args[key_trace]]
                             delete_cmd = ""
-                            for slice in trace_src:
-                                delete_cmd += "echo " + slice + " && sudo mkdir -p " + slice + " && sudo rm " + slice + "* && "
-                            cmd = build_host_load_trace_command(storage_server[key_ip], s_user_id, s_ssh_key,
-                                                                script_root, job_args[key_trace], trace_src,
+                            #for trace_slice in trace_dst:
+                            #    delete_cmd += "echo " + trace_dst[trace_slice] + " && sudo mkdir -p " + trace_dst[trace_slice] + " && sudo rm " + trace_dst[trace_slice] + "* && "
+                            cmd = build_host_load_trace_command(server[key_ip], s_user_id, s_ssh_key,
+                                                                script_root, app_name_map[job_args[key_trace]], trace_src,
                                                                 trace_dst[key_dir_1], trace_dst[key_dir_2], s_user_id,
-                                                                storage_server[key_ip], server[key_id], delete_cmd)
+                                                                storage_server[key_ip], str(server[key_id]), delete_cmd, storage_server[key_ssh_key])
 
                 if cmd is not None:
                     print(cmd, flush=True)
@@ -402,7 +407,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     if key_script in vm:
                         script_root = vm[key_script]
                     v_user_id, v_ssh_key = load_access_cfg(cfg, vm)
-                    
+
                     if job == "first_access":
                         cmd = build_first_access_vm_command(server[key_ip], s_user_id, s_ssh_key,
                                                             vm[key_ip], v_user_id, v_ssh_key)
@@ -431,7 +436,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                         if (job_args is not None) and (key_sr in job_args)\
                             and (key_rwr in job_args) and (key_node_num in job_args):
                             cmd = build_vm_sharing_ratio_command(server[key_ip], s_user_id, s_ssh_key,
-                                                                vm[key_ip], v_user_id, v_ssh_key, script_root, 
+                                                                vm[key_ip], v_user_id, v_ssh_key, script_root,
                                                                 vm[key_id], job_args[key_sr], job_args[key_rwr],
                                                                 job_args[key_node_num])
                     elif job == "latency_prepare":
@@ -442,7 +447,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                                                                vm[key_ip], v_user_id, v_ssh_key, script_root,
                                                                vm[key_id], job_args[key_state_from], job_args[key_state_to],
                                                                job_args[key_node_num])
-                            else:    
+                            else:
                                 cmd = build_vm_latency_prepare_command(server[key_ip], s_user_id, s_ssh_key,
                                                                     vm[key_ip], v_user_id, v_ssh_key, script_root,
                                                                     vm[key_id], job_args[key_state_from], job_args[key_state_to],
@@ -461,7 +466,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     elif job == "collect_from_vms":
                         if (job_args is not None) and (key_remote in job_args) and (key_local in job_args):
                             cmd = build_server_dir_download(server[key_ip], s_user_id, s_ssh_key,
-                                                             vm[key_ip], v_user_id, v_ssh_key, 
+                                                             vm[key_ip], v_user_id, v_ssh_key,
                                                              job_args[key_remote], job_args[key_local])
                     else:
                         break   # out of this for loop
@@ -475,13 +480,13 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                         async_delay += per_command_delay
         with open("run.log", "a+") as fp:
             if len(tasks) > 0:
-                wait_tasks = asyncio.wait(tasks) 
+                wait_tasks = asyncio.wait(tasks)
                 finished, _ = loop.run_until_complete(wait_tasks)
                 if verbose:
                     print_lines = []
                     for idx, task in enumerate(finished):
                         print_lines.append("\nNODE[{0}]:\n".format(idx))
-                        # res_str = 
+                        # res_str =
                         # print("NODE[]: ")
                         res_str = task.result().rstrip(' ').lstrip(' ')
                         # print("{0}".format(res_str))
@@ -525,7 +530,7 @@ if __name__ == "__main__":
     except yaml.YAMLError as err:
         print(err)
         exit(0)
-    
+
     print("== Cluster Configuration ==")
     print(mind_config, "\n")
 
