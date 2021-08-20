@@ -23,6 +23,11 @@ This directory contains script to send commands to the servers consising MIND cl
 
 ## Performance evaluation with memory traces
 ```
+python3 scripts/run_commands.py --profile 05_load_trace.yaml
+```
+- First run the script with the profile `05_load_trace.yaml` to load memory access traces from the storage server.
+
+```
 python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
 ```
 - (Fig. 6 and 8-right, default setup: Memcached with YCSB workloada)
