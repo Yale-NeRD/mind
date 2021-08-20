@@ -55,6 +55,9 @@ python3 scripts/run_commands.py --profile profiles/03_sharing_ratio.yaml
   - The name `res_2_sr050_rw050.log` presents it was from the 3rd blade (id=2), and sharing ratio was 50% and read ratio was 50%.
   - Inside the file, the last line shows 4KB IOPS. We used sum over 8 blades.
 
+## Test programs 
+- Test programs used by this script is located in [here](https://github.com/shsym/mind/tree/main/mind_linux/test_programs) with detailed information. 
+
 ## Details of experiment profile files
 Experiment profiles are located in `scripts/profiles` and each profile consists of task blocks. The main script `run_commands.py` loads and parses the given profile then runs corresponding tasks in order.
 - Example: sharing ratio experiment block in `03_sharing_ratio.yaml`
