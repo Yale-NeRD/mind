@@ -1,0 +1,4 @@
+#vscode workspace
+*.code-workspace
+.vscode
+*.log

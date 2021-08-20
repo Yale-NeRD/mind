@@ -1,0 +1,5 @@
+bin
+res/res*.txt
+trace/uniPage*
+trace/multiPage*
+logs_03a_sharing_ratio

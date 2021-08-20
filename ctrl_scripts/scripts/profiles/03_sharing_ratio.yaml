@@ -1,0 +1,57 @@
+# Profile for tasks/commands in order
+
+# = Prepare cluster =
+- name: start VMs
+  job: setup
+  per_command_delay: 0
+  post_delay: 60
+
+- name: update repo
+  job: update
+  per_command_delay: 1
+  post_delay: 60
+
+- name: restart and reset VMs
+  job: reset
+  per_command_delay: 0
+  post_delay: 60
+
+- name: initialize VMs
+  job: init
+  per_command_delay: 10
+  post_delay: 30
+
+# = Run test =
+- name: run sharing ratio
+  job: sharing_ratio
+  per_command_delay: 10
+  post_delay: 0
+  job_args:
+    sharing ratio: 50
+    rw ratio: 50
+    node num: 8
+
+# = File download part =
+- name: collect log data (vm to server)
+  job: collect_from_vms
+  per_command_delay: 1
+  post_delay: 0
+  job_args:
+    local dir: ~/Downloads/
+    target dir: Downloads/03a_sharing_ratio
+
+- name: collect log data (server to local)
+  job: collect_from_server
+  per_command_delay: 10
+  post_delay: 0
+  job_args:
+    local dir: ~/Downloads/
+    target dir: Downloads/03a_sharing_ratio
+
+# - name: switch side log
+#   job: switch_log
+#   per_command_delay: 10
+#   post_delay: 0
+#   job_args:
+#     local dir: ~/Downloads/
+#     target dir: /home/sslee/sde/bf-sde-9.2.0/pkgsrc/bf-drivers/bf_switchd/bfrt_examples/log/latest.log

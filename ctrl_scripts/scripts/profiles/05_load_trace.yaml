@@ -1,0 +1,44 @@
+# Profile for tasks/commands in order
+# - name: start VMs
+#   job: setup
+#   per_command_delay: 0
+#   post_delay: 60
+
+- name: update repo
+  job: update
+  per_command_delay: 1
+  post_delay: 60
+
+- name: (re)build kernel
+  job: update_kernel
+  per_command_delay: 0
+  post_delay: 60
+
+- name: restart and reset VMs
+  job: reset
+  per_command_delay: 0
+  post_delay: 60
+  # target_vms:
+  # - 0
+
+- name: load trace data (storage server to compute server)
+  job: load_trace
+  per_command_delay: 1
+  post_delay: 10
+  job_args:
+    trace: ma
+
+# Before run this, the ssh key should be copied first,
+# .ssh/config should have proper entry for tscript.github.com, e.g.:
+# Host tscript.github.com
+# HostName github.com
+# User git
+# IdentityFile ~/.ssh/id_script_deploy
+# IdentitiesOnly yes
+#
+# - name: clone this repo
+#   job: git_clone
+#   job_args:
+#     git url: git@tscript.github.com:shsym/mind_ae.git
+#   per_command_delay: 10
+#   post_delay: 0

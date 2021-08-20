@@ -1,0 +1,13 @@
+#**/traces/original/*
+#**/traces/remapped/*
+**/pinatrace.cpp.*
+**/pinatrace.o
+**/pinatrace.so
+**/malloctrace.o
+**/malloctrace.so
+**/test.sh
+**/test.c
+**/test
+**/addr_remap.txt
+**/addr_remapper
+*.log

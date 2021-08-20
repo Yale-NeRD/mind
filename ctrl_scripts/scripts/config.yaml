@@ -1,0 +1,128 @@
+# Configuration for access information
+# Default values: any omiited user id and ssh key will use those values
+
+# pull this repo as:
+# git clone git@tscript.github.com:shsym/mind_ae.git
+
+default:
+  script root: ~/mind_ae/ctrl_scripts/
+  user: sslee
+  key: ~/.ssh/vmhost_acc
+
+# id of switch must be -1
+switch:
+- switch1:
+  id: -1
+  control ip: 172.29.249.42
+  user: sslee
+  key: ~/.ssh/vmhost_acc
+
+# list of compute servers
+compute servers:
+- c_server1:
+  control ip: 172.28.229.148
+  user: sslee
+  key: ~/.ssh/vmhost_acc
+  vm list:
+    - vm1:
+      id: 0
+      control ip: 192.168.122.101
+      cluster ip: 10.10.10.201
+      vm name: Ubuntu-CN1
+      key: ~/.ssh/id_rsa_for_vm
+    - vm2:
+      id: 1
+      control ip: 192.168.122.102
+      cluster ip: 10.10.10.202
+      vm name: Ubuntu-CN2
+      key: ~/.ssh/id_rsa_for_vm
+- c_server2:
+  control ip: 172.28.229.149
+  vm list:
+    - vm1:
+      id: 2
+      control ip: 192.168.122.103
+      cluster ip: 10.10.10.203
+      vm name: Ubuntu-CN3
+      key: ~/.ssh/id_rsa_for_vm
+    - vm2:
+      id: 3
+      control ip: 192.168.122.104
+      cluster ip: 10.10.10.204
+      vm name: Ubuntu-CN4
+      key: ~/.ssh/id_rsa_for_vm
+- c_server3:
+  control ip: 172.28.229.151
+  vm list:
+    - vm1:
+      id: 4
+      control ip: 192.168.122.105
+      cluster ip: 10.10.10.205
+      vm name: Ubuntu-CN5
+      key: ~/.ssh/id_rsa_for_vm
+    - vm2:
+      id: 5
+      control ip: 192.168.122.106
+      cluster ip: 10.10.10.206
+      vm name: Ubuntu-CN6
+      key: ~/.ssh/id_rsa_for_vm
+- c_server4:
+  control ip: 172.28.229.153
+  vm list:
+    - vm1:
+      id: 6
+      control ip: 192.168.122.107
+      cluster ip: 10.10.10.207
+      vm name: Ubuntu-CN7
+      key: ~/.ssh/id_rsa_for_vm
+    - vm2:
+      id: 7
+      control ip: 192.168.122.108
+      cluster ip: 10.10.10.208
+      vm name: Ubuntu-CN8
+      key: ~/.ssh/id_rsa_for_vm
+
+# list of memory servers
+memory servers:
+  - m_server1:
+    control ip: 172.29.249.30
+    user: sslee
+    key: ~/.ssh/vmhost_acc
+    vm list:
+      - vm1:
+        id: 16
+        control ip: 192.168.122.102
+        cluster ip: 10.10.10.221
+        vm name: Ubuntu-MN
+        key: ~/.ssh/vmhost_acc
+
+# list of storage servers
+storage servers:
+- s_server1:
+  control ip: 172.28.229.148
+  user: sslee
+  key: ~/.ssh/vmhost_acc
+  trace src:
+    - ma:
+        dir: /media/data_ssds/memcached_a/
+    - mc:
+        dir: /media/data_ssds/memcached_c/
+    - tf:
+        dir: /home/yanpeng/2020_11_25_tensorflow/
+    - gc:
+        dir: /home/yanpeng/2021_03_graphchi/
+  trace dst:
+   - ma:
+       dir_1: /media/data_ssds/ma/
+       dir_2: /media/data_raid0/ma/
+   - mc:
+       dir_1: /media/data_ssds/mc/
+       dir_2: /media/data_raid0/mc/
+   - tf:
+       dir_1: /media/data_ssds/tf/
+       dir_2: /media/data_raid0/tf/
+   - gc:
+       dir_1: /media/data_ssds/gc/
+       dir_2: /media/data_raid0/gc/
+
+

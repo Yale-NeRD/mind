@@ -1,0 +1,4 @@
+bin
+res/res*.txt
+trace/uniPage*
+trace/multiPage*

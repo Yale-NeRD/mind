@@ -1,0 +1,59 @@
+# Profile for tasks/commands in order
+
+# - name: start VMs
+#   job: setup
+#   per_command_delay: 0
+#   post_delay: 60
+
+# - name: clone this repo
+#   job: git_clone
+#   job_args:
+#     git url: git@tscript.github.com:shsym/mind_ae.git
+#   per_command_delay: 10
+#   post_delay: 0
+
+- name: update repo
+  job: update
+  per_command_delay: 1
+  post_delay: 60
+
+- name: restart and reset VMs
+  job: reset
+  per_command_delay: 0
+  post_delay: 60
+
+- name: initialize VMs
+  job: init
+  per_command_delay: 10
+  post_delay: 30
+
+- name: run latency test
+  job: latency_prepare
+  per_command_delay: 5
+  post_delay: 0
+  job_args:
+    state from: shared
+    state to: modified
+    main vm: 0
+    node num: 8
+
+# = File download part =
+- name: collect log data (vm to server)
+  job: collect_from_vms
+  per_command_delay: 1
+  post_delay: 0
+  job_args:
+    local dir: ~/Downloads/
+    target dir: Downloads/03b_latency
+  target_vms:
+  - 0
+
+- name: collect log data (server to local)
+  job: collect_from_server
+  per_command_delay: 10
+  post_delay: 0
+  job_args:
+    local dir: ~/Downloads/
+    target dir: Downloads/03b_latency
+  target_vms:
+  - 0

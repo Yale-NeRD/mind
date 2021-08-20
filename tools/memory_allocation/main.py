@@ -7,6 +7,8 @@ from Allocators.OptimalLPMUtils import OptimalLPMUtils
 import argparse
 import os
 
+_green_str = '\033[92m'
+_end_color_str = '\033[0m'
 
 def print_load_balancing(algo, mn_num):
     size_list = SizeBalancingAllocator.get_size_list_from_alloc_list(algo.mapping, mn_num, algo.granularity)
@@ -21,7 +23,7 @@ def print_load_balancing(algo, mn_num):
         tot_size_sqr += entry * entry
 
     fairness = tot_size * tot_size / (mn_num * tot_size_sqr)
-    print("* Jain's fairness index: %.5lf" % fairness)
+    print(_green_str, "* [RESULT] Jain's fairness index: %.5lf" % fairness, _end_color_str)
     pass
 
 
@@ -36,9 +38,9 @@ def do_power_of_two_aggregation(algo, mn_num, verbose=False):     # prefix match
         print("  - Memory protection entries:", exact_protection_rules)
         # This is the value after optimization of merging exceptional tables and protection tables
         # => current implementation in the switch
-        print("  - [Result] MIND entries:", (mn_num + max(agg_addr_rules - mn_num, exact_protection_rules)))
+        print(_green_str, "  - [RESULT] MIND entries:", (mn_num + max(agg_addr_rules - mn_num, exact_protection_rules)), _end_color_str)
     else:
-        print("  - [Result] Address translation / protection entries: ", agg_addr_rules)
+        print(_green_str, "  - [RESULT] Address translation / protection entries: ", agg_addr_rules, _end_color_str)
     pass
 
 

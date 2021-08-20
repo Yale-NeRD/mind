@@ -1,0 +1,9 @@
+*
+!dyn_cache_block.cpp
+!main.cpp
+!simulator.cpp
+!simulator.hpp
+!Makefile
+!simulate.sh
+!*logs/
+!*.gitignore

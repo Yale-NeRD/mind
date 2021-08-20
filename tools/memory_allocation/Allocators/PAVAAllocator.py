@@ -1,6 +1,7 @@
 from Allocators.OptimalLPMUtils import OptimalLPMUtils
+import math
 
-_mind_alloc_limit = 1 * 1024 * 1024 * 1024
+_mind_alloc_limit = 8 * 1024 * 1024 * 1024
 
 
 class PAVAAllocator:
@@ -40,11 +41,13 @@ class PAVAAllocator:
 
             alloc_size_list = []
             if self.granularity > 0:
-                allocated = 0
-                while allocated < size:
-                    ssize = min(self.granularity, size - allocated)
-                    alloc_size_list.append(ssize)    # Allocate in granularity
-                    allocated += ssize
+                ssize = int(math.ceil(size / self.granularity) * self.granularity)
+                alloc_size_list.append(ssize)
+                # allocated = 0
+                # while allocated < size:    
+                #     ssize = min(self.granularity, size - allocated)
+                #     alloc_size_list.append(ssize)    # Allocate in granularity
+                #     allocated += ssize
             elif given_addr == 0 and power_of_two:
                 if size <= _mind_alloc_limit:
                     ssize = OptimalLPMUtils.last_power_of_two(size)
@@ -66,39 +69,51 @@ class PAVAAllocator:
             else:
                 alloc_size_list.append(size)
 
-            # print("** Allocation size: %d, mapping size: %d" % (len(alloc_size_list), len(self.mapping[pid])))
-            addr_in_granularity = 0
-            if self.granularity > 0 and given_addr > 0:
-                addr_in_granularity = given_addr - int(given_addr % self.granularity)
-                for map_rec in self.mapping[pid]:
-                    if map_rec['va']['start'] == addr_in_granularity:   # existing mapping
-                        if map_rec['flag'] == flag:
-                            return new_map
-                        else:
-                            addr_in_granularity += self.granularity
-
-            for sidx, ss in enumerate(alloc_size_list):
+            for _, ss in enumerate(alloc_size_list):
                 # Make sure that there is a mapping list
                 if (pid not in self.mapping.keys()) or (self.mapping[pid] is None):
                     self.mapping[pid] = list()
+
                 pa = self.pa_alloc.get_next_address(pid, ss, self.mapping)
                 if pa is not None:
-                    va = self.va_alloc.get_next_address(pid, ss, self.mapping, pa)
+                    if self.granularity > 0 and given_addr > 0:
+                        # find first avaiable after given_addr
+                        va = {}
+                        va['start'] = int(math.ceil(given_addr / self.granularity) * self.granularity)
+                        for map_rec in self.mapping[pid]:
+                            if (map_rec['va']['start'] < va['start'] + ss)\
+                                    and va['start'] < map_rec['va']['end']:   # overlapping mapping
+                                # check same size & same flag => same mapping
+                                if map_rec['flag'] == flag and ss == (map_rec['va']['end'] - map_rec['va']['start']):
+                                    va = None
+                                    break   # to go to next for loop of alloc_size_list
+                                else:
+                                    va['start'] = map_rec['va']['end']  # try next mapping
+                        if va is not None:
+                            va['end'] = va['start'] + ss    # not needed, actually
+                    else:
+                        va = self.va_alloc.get_next_address(pid, ss, self.mapping, pa)
+
                     if va is not None:
-                        if given_addr > 0:
+                        allocated = 0
+                        alloc_cnt = 0
+                        while allocated < ss:
+                            _va = {}
                             if self.granularity > 0:
-                                va['start'] = addr_in_granularity
-                                va['end'] = addr_in_granularity + ((sidx + 1) * self.granularity)
+                                _va['start'] = va['start'] + (alloc_cnt * self.granularity)
+                                _va['end'] = _va['start'] + self.granularity
+                                allocated += self.granularity
                             else:
-                                va['start'] = given_addr
-                                va['end'] = given_addr + ss
-                        new_map = {'va': va, 'pa': pa, 'flag': flag, 'given': given_addr}
-                        # print(new_map)
-                        self.mapping[pid].append(new_map)
+                                _va['start'] = va['start']
+                                _va['end'] = va['start'] + ss
+                                allocated += ss
+                            new_map = {'va': _va, 'pa': pa, 'flag': flag, 'given': given_addr}
+                            self.mapping[pid].append(new_map)
+                            alloc_cnt += 1
                         # sort mapping
                         self.mapping[pid] = sorted(self.mapping[pid], key=lambda entry: entry['va']['start'])
                     else:
-                        raise RuntimeError("Cannot allocate virtual address")
+                        pass    # skip overlapping VA regions
                 else:
                     raise RuntimeError("Cannot allocate physical address")
         return new_map
@@ -109,44 +124,3 @@ class PAVAAllocator:
             for map_rec in self.coarse_pgtable:
                 self.allocate(pid, map_rec['size'], map_rec['flag'], force_alloc=True)
             self.coarse_pgtable = []
-
-    def free(self, pid=0, start=0, end=0):
-        if (pid not in self.mapping.keys()) or (self.mapping[pid] is None):
-            return
-
-        for i in range(0, len(self.mapping[pid])):
-            if self.mapping[pid][i]['va']['start'] >= end:
-                pass
-
-            if self.mapping[pid][i]['va']['end'] <= start:
-                pass
-
-            # If it has a overlapped region
-            free_range = [max(self.mapping[pid][i]['va']['start'], start), min(self.mapping[pid][i]['va']['end'], end)]
-            remaining = []
-
-            # Remaining head
-            if free_range[0] > self.mapping[pid][i]['va']['start']:
-                va = {'start': self.mapping[pid][i]['va']['start'], 'end': free_range[0]}
-
-                pa = {'start': self.mapping[pid][i]['pa']['start'],
-                      'end': self.mapping[pid][i]['pa']['start'] + free_range[0] - self.mapping[pid][i]['va']['start'],
-                      'mn_id': self.mapping[pid][i]['pa']['mn_id']}
-
-                remaining.append({'pa': pa, 'va': va})
-
-            # Remaining tail
-            if free_range[1] < self.mapping[pid][i]['va']['end']:
-                va = {'start': free_range[1], 'end': self.mapping[pid][i]['va']['end']}
-
-                pa = {'start': self.mapping[pid][i]['pa']['end'] - (self.mapping[pid][i]['va']['end'] - free_range[1]),
-                      'end': self.mapping[pid][i]['pa']['end'],
-                      'mn_id': self.mapping[pid][i]['pa']['mn_id']}
-
-                remaining.append({'pa': pa, 'va': va})
-
-            if len(remaining) > 0:
-                self.mapping[pid] = self.mapping[pid][:i] + remaining + self.mapping[pid][i + 1:]
-            else:
-                self.mapping[pid] = self.mapping[pid][:i] + self.mapping[pid][i + 1:]
-
