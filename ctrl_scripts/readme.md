@@ -1,6 +1,6 @@
 # Script to run programs on *MIND* cluster
 This directory contains script to send commands to the servers consising MIND cluster.
-![cluster_setup](https://github.com/shsym/mind/blob/master/ctrl_scripts/exp_cluster.png?raw=true)
+![cluster_setup](https://raw.githubusercontent.com/shsym/mind/main/ctrl_scripts/exp_cluster.png)
 
 ## Dependencies
 - `python3`
