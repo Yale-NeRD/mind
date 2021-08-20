@@ -1,6 +1,6 @@
 # PSO/PSO+ estimator
 ## Overall estimation flow chart
-![cluster_setup](https://github.com/shsym/mind/blob/master/tools/pso_estimator/pso_ordering.png)
+![cluster_setup](https://github.com/shsym/mind/blob/main/tools/pso_estimator/pso_ordering.png?raw=true)
 
 ## Run
   - Use the following scripts in this directory for running PSO/PSO+ estimation: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, `run_mc.sh`
