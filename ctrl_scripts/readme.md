@@ -8,18 +8,19 @@ This directory contains script to send commands to the servers consising MIND cl
 - QEMU / virsh tools and kvm hypervisor
 
 ## Prerequisites / assumptions
-- Control server (i.e., the machine running this script) has ssh keys to access any compute/memory servers in *MIND* cluster
-- Each compute/memory server has (own) ssh key to access any of its VMs
-- User can run `sudo` wihtout password (can be set up by using `visudo`)
-  - For compute and memory servers, user can run `sudo virsh` without password
-  - For compute and memory blade VMs, user can run any command via `sudo` without password
-- All servers and VMs have this repository at `~/mind`
+- Control server (i.e., the machine running this script) has ssh keys to access any compute/memory servers in *MIND* cluster.
+  - In addition to compute and memory servers, we introduce storage servers to store and fetch memory access traces, if compuet servers do not have enough local storage (around 1TB per VM).
+- Each compute/memory server has (own) ssh key to access any of its VMs.
+- User can run `sudo` wihtout password (can be set up by using `visudo`).
+  - For compute and memory servers, user can run `sudo virsh` without password.
+  - For compute and memory blade VMs, user can run any command via `sudo` without password.
+- All servers and VMs have this repository at `~/mind`.
 
 ## Usage
-- Please update cluster configuration located at `scripts/config.yaml`
-  - Example setup is based on 4 compute server (2 compute blade VMs per server), 1 memory server (1 memory blade VM per server), and 1 programmable switch
+- Please update cluster configuration located at `scripts/config.yaml`.
+  - Example setup is based on 4 compute server (2 compute blade VMs per server), 1 memory server (1 memory blade VM per server), and 1 programmable switch.
 
-- Run the main script `run_commands.py` with the profile corresponding to the test
+- Run the main script `run_commands.py` with the profile corresponding to the test.
 
 ## Performance evaluation with memory traces
 ```
