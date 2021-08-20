@@ -1,7 +1,7 @@
 # please merge this file with Makefile.am provided by Intel under
 # '$SDE/pkgsrc/bf-drivers/bf_switchd/bfrt_examples'
 bin_PROGRAMS = tna_disagg_switch
-path_to_mind_linux = /home/sslee/Disaggregated_mem_vLinux_original
+path_to_mind_linux = /home/sslee/mind
 
 tna_disagg_switch_SOURCES = tna_disagg_switch.cpp\
                             tna_disagg_bfrt.cpp\
