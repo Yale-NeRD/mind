@@ -9,7 +9,7 @@ This directory contains script to send commands to the servers consising MIND cl
 
 ## Prerequisites / assumptions
 - Control server (i.e., the machine running this script) has ssh keys to access any compute/memory servers in *MIND* cluster.
-  - In addition to compute and memory servers, we introduce storage servers to store and fetch memory access traces, if compuet servers do not have enough local storage (around 1TB per VM).
+  - In addition to compute and memory servers, we introduce storage servers to store and fetch memory access traces, if compute servers do not have enough local storage (around 1TB per VM).
 - Each compute/memory server has (own) ssh key to access any of its VMs.
 - User can run `sudo` wihtout password (can be set up by using `visudo`).
   - For compute and memory servers, user can run `sudo virsh` without password.
