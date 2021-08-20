@@ -19,6 +19,7 @@ This directory contains script to send commands to the servers consising MIND cl
 ## Usage
 - Please update cluster configuration located at `scripts/config.yaml`.
   - Example setup is based on 4 compute server (2 compute blade VMs per server), 1 memory server (1 memory blade VM per server), and 1 programmable switch.
+  - If storage server is needed, location of memory traces can be also configured in this configuration file.
 
 - Run the main script `run_commands.py` with the profile corresponding to the test.
 
