@@ -2,10 +2,10 @@
 # Default values: any omiited user id and ssh key will use those values
 
 # pull this repo as:
-# git clone git@tscript.github.com:shsym/mind_ae.git
+# git clone git@tscript.github.com:shsym/mind.git
 
 default:
-  script root: ~/mind_ae/ctrl_scripts/
+  script root: ~/mind/ctrl_scripts/
   user: sslee
   key: ~/.ssh/vmhost_acc
 

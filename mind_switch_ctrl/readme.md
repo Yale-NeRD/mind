@@ -13,7 +13,7 @@ DIST_SUBDIRS = .
 
 - Merge `Makefile.am` in this directory with the example Makefile.am provided by SDE
 
-- In `Makefile.am`, update `path_to_mind_linux` as the path to *mind_linux* (not mind_ae)
+- In `Makefile.am`, update `path_to_mind_linux` as the path to *mind_linux* (not mind)
 
 - At `$SDE/pkgsrc/bf-drivers/bf_switchd/bfrt_examples`
   - In `tna_disagg_config.cpp`, update IP address, MAC address, and connected switch port number (*not front port number, but internal port number that can be checked in Intel's `bfshell` > `ucli` tool*)

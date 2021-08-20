@@ -1,6 +1,6 @@
 # Script to run programs on *MIND* cluster
 This directory contains script to send commands to the servers consising MIND cluster.
-![cluster_setup](https://github.com/shsym/mind_ae/blob/master/ctrl_scripts/exp_cluster.png?raw=true)
+![cluster_setup](https://github.com/shsym/mind/blob/master/ctrl_scripts/exp_cluster.png?raw=true)
 
 ## Dependencies
 - `python3`
@@ -13,7 +13,7 @@ This directory contains script to send commands to the servers consising MIND cl
 - User can run `sudo` wihtout password (can be set up by using `visudo`)
   - For compute and memory servers, user can run `sudo virsh` without password
   - For compute and memory blade VMs, user can run any command via `sudo` without password
-- All servers and VMs have this repository at `~/mind_ae`
+- All servers and VMs have this repository at `~/mind`
 
 ## Usage
 - Please update cluster configuration located at `scripts/config.yaml`

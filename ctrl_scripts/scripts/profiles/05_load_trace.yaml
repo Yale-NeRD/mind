@@ -39,6 +39,6 @@
 # - name: clone this repo
 #   job: git_clone
 #   job_args:
-#     git url: git@tscript.github.com:shsym/mind_ae.git
+#     git url: git@tscript.github.com:shsym/mind.git
 #   per_command_delay: 10
 #   post_delay: 0

@@ -4,7 +4,7 @@
 # initialization
 source ../bricks/h_set_env.sh
 c_id=$1
-MIND_DIR=~/mind_ae
+MIND_DIR=~/mind
 while [ $c_id -ge $1 -a $c_id -le $2 ]
 do
     echo "VM: ${c_id}"
