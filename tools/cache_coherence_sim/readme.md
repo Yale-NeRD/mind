@@ -36,6 +36,9 @@ This result is collected to examine to effectivity of MIND's bounded directory e
 
 - Entries in `progress.[#blades]n_[#threads per blade]t...log` contain Invalidation statistics (number of invalidations and invalidated pages) and number of read/write accesses.
 
+## Pre-computed logs
+- Please find our pre-computed output logs in [sub folder](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim/bounded_split_eval)
+
 ## Configure the simulator
 Besides the parameters passed to the simulator, Other reconfiguraions can also be done by editing `./simulator.hpp`.
 For example, you can undefine `DYNAMIC_RESIZE` to diable adaptive directory entry resizing, or reset `TIMEWINDOW_US` to change the time window size.
