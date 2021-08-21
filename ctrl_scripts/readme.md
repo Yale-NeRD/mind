@@ -36,7 +36,7 @@ python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
 ```
 - (Fig. 6 and 8-right, default setup: Memcached with YCSB workloada)
   - Please setup `04_macro_bench.yaml` for other workloads and configurations (tf: TensorFlow, gc: GraphChi, ma and mc: Memcached with YCSB workload A and C)
-- Result from compute blade VMs will be placed in `~/Downloads/04_macro_bench_[TRACE/APP]` (see `04_macro_bench.yaml` for details)
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Result from compute blade VMs will be placed in `~/Downloads/04_macro_bench_[TRACE/APP]` (see `04_macro_bench.yaml` for details)
   - Inside the files `progress.ma_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE].log`, `Time [1234566789]` shows the highest value among threads. We used the highest value among blades (e.g., the slowest thread among 80 threads).
 - Result from switch will be placed at `~/Download/latest.log`
   - Inside the log file, each line `23:07:02:512201, 7473, 1` represents `[TIMESTAMP], [#FREE DIRECTORY ENTRIES], [SPLIT/MERGE THRESHOLD]`
@@ -50,7 +50,7 @@ python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
 python3 scripts/run_commands.py --profile profiles/03b_latency.yaml
 ```
 - (Fig. 7-left, default setup: shared state to modified state, 8 compute blades)
-- Result will be placed in `~/Downloads/03b_latency`
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Result will be placed in `~/Downloads/03b_latency`
   - The name `shared_to_modified_total_8_blades.log` represent it was transition from Shared to Modified states for 8 blades (7 sharer to 1 writer).
   - Inside the file, `FH_fetch_remote_tot` shows network latency
   - Inside the file, `FH_ack_waiting_node` shows latency for waiting ACK/invalidation
@@ -60,7 +60,7 @@ python3 scripts/run_commands.py --profile profiles/03b_latency.yaml
 python3 scripts/run_commands.py --profile profiles/03_sharing_ratio.yaml
 ```
 - (Fig. 7-right, default setup: sharing ratio = 50%, read ratio = 50%)
-- Result will be placed in `~/Downloads/03a_sharing_ratio`
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Result will be placed in `~/Downloads/03a_sharing_ratio`
   - The name `res_2_sr050_rw050.log` presents it was from the 3rd blade (id=2), and sharing ratio was 50% and read ratio was 50%.
   - Inside the file, the last line shows 4KB IOPS. We used sum over 8 blades.
 
