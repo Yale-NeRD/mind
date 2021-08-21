@@ -1,9 +1,4 @@
 # Profile for tasks/commands in order
-- name: restart and reset VMs
-  job: shutdown   # this will only shutdown VMs
-  per_command_delay: 0
-  post_delay: 60
-
 # - name: start VMs
 #   job: setup
 #   per_command_delay: 0
@@ -19,26 +14,26 @@
 # IdentitiesOnly yes
 # ====================================================
 
-# - name: clone this repo
-#   job: git_clone
-#   job_args:
-#     git url: git@tscript.github.com:shsym/mind.git
-#   per_command_delay: 10
-#   post_delay: 0
+- name: clone this repo
+  job: git_clone
+  job_args:
+    git url: git@tscript.github.com:shsym/mind.git
+  per_command_delay: 10
+  post_delay: 0
 
-# - name: update repo
-#   job: update
-#   per_command_delay: 1
-#   post_delay: 60
+- name: update repo
+  job: update
+  per_command_delay: 1
+  post_delay: 60
 
-# - name: (re)build kernel
-#   job: update_kernel
-#   per_command_delay: 0
-#   post_delay: 60
+- name: (re)build kernel
+  job: update_kernel
+  per_command_delay: 0
+  post_delay: 60
 
-# - name: restart and reset VMs
-#   job: reset
-#   per_command_delay: 0
-#   post_delay: 60
-#   # target_vms:
-#   # - 0
+- name: restart and reset VMs
+  job: reset
+  per_command_delay: 0
+  post_delay: 60
+  # target_vms:
+  # - 0

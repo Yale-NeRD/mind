@@ -8,12 +8,14 @@ default:
   script root: ~/mind/ctrl_scripts/
   user: sslee
   key: ~/.ssh/vmhost_acc
+  cluster gw: 10.10.10.0
 
 # id of switch must be -1
 switch:
 - switch1:
   id: -1
   control ip: 172.29.249.42
+  cluster ip: 10.10.10.1
   user: sslee
   key: ~/.ssh/vmhost_acc
 
@@ -22,6 +24,8 @@ compute servers:
 - c_server1:
   id: 1   # server's id
   control ip: 172.28.229.148
+  cluster ip: 10.10.10.201
+  nic: ens8f0
   user: sslee
   key: ~/.ssh/vmhost_acc
   vm list:
@@ -40,6 +44,8 @@ compute servers:
 - c_server2:
   id: 2
   control ip: 172.28.229.149
+  cluster ip: 10.10.10.203
+  nic: ens8f0
   vm list:
     - vm1:
       id: 2
@@ -56,6 +62,8 @@ compute servers:
 - c_server3:
   id: 3
   control ip: 172.28.229.151
+  cluster ip: 10.10.10.205
+  nic: ens8f0
   vm list:
     - vm1:
       id: 4
@@ -72,6 +80,8 @@ compute servers:
 - c_server4:
   id: 4
   control ip: 172.28.229.153
+  cluster ip: 10.10.10.207
+  nic: ens8f0
   vm list:
     - vm1:
       id: 6
@@ -104,25 +114,27 @@ memory servers:
 storage servers:
 - s_server1:
   control ip: 172.29.249.44
+  cluster ip: 10.10.10.212
+  mac: 04:3f:72:a2:b4:3b
   user: sslee
   key: ~/.ssh/disagg_comp
   trace src:
-    - ma: /media/data_ssds/memcached_a/
-    - mc: /media/data_ssds/memcached_c/
-    - tf: /home/yanpeng/2020_11_25_tensorflow/
-    - gc: /home/yanpeng/2021_03_graphchi/
+    ma: /media/data_ssds/memcached_a/
+    mc: /media/data_ssds/memcached_c/
+    tf: /home/yanpeng/2020_11_25_tensorflow/
+    gc: /home/yanpeng/2021_03_graphchi/
   trace dst:
-   - ma:
-        dir_1: /media/data_ssds/memcached_a_logs/
-        dir_2: /media/data_raid0/memcached_a_logs/
-   - mc:
-        dir_1: /media/data_ssds/memcached_c_logs/
-        dir_2: /media/data_raid0/memcached_c_logs/
-   - tf:
-        dir_1: /media/data_ssds/tensorflow_logs/
-        dir_2: /media/data_raid0/tensorflow_logs/
-   - gc:
-        dir_1: /media/data_ssds/graphchi_logs/
-        dir_2: /media/data_raid0/graphchi_logs/
+    ma:
+      dir_1: /media/data_ssds/memcached_a_logs/
+      dir_2: /media/data_raid0/memcached_a_logs/
+    mc:
+      dir_1: /media/data_ssds/memcached_c_logs/
+      dir_2: /media/data_raid0/memcached_c_logs/
+    tf:
+      dir_1: /media/data_ssds/tensorflow_logs/
+      dir_2: /media/data_raid0/tensorflow_logs/
+    gc:
+      dir_1: /media/data_ssds/graphchi_logs/
+      dir_2: /media/data_raid0/graphchi_logs/
 
 

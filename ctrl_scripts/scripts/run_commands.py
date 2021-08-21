@@ -13,6 +13,10 @@ key_ss = 'storage servers'
 key_sw = 'switch'
 key_vm = 'vm list'
 key_ip = 'control ip'
+key_cluster_ip = 'cluster ip'
+key_cluster_gw = 'cluster gw'
+key_mac = 'mac'
+key_nic = 'nic'
 key_id = 'id'
 key_vm_name = 'vm name'
 key_script = 'script root'
@@ -389,8 +393,8 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     if (job_args is not None) and (key_trace in job_args):
                         script_root = cfg[key_default][key_script]
                         for storage_server in cfg[key_ss]:
-                            trace_dst = storage_server[key_trace_dst][0][job_args[key_trace]]
-                            trace_src = storage_server[key_trace_src][0][job_args[key_trace]]
+                            trace_dst = storage_server[key_trace_dst][job_args[key_trace]]
+                            trace_src = storage_server[key_trace_src][job_args[key_trace]]
                             delete_cmd = ""
                             #for trace_slice in trace_dst:
                             #    delete_cmd += "echo " + trace_dst[trace_slice] + " && sudo mkdir -p " + trace_dst[trace_slice] + " && sudo rm " + trace_dst[trace_slice] + "* && "
@@ -398,6 +402,17 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                                                                 script_root, app_name_map[job_args[key_trace]], trace_src,
                                                                 trace_dst[key_dir_1], trace_dst[key_dir_2], s_user_id,
                                                                 storage_server[key_ip], str(server[key_id]), delete_cmd, storage_server[key_ssh_key])
+                elif job == "set_nic":
+                    if (key_nic in server) and (key_cluster_ip in server)\
+                        and (key_cluster_gw in cfg[key_default]) and (key_cluster_ip in cfg[key_ss][0])\
+                        and (key_mac in cfg[key_ss][0]):
+                        # sudo ip route add 10.10.10.0/24 dev ens8f0
+                        cmd = "sudo ip addr add " + server[key_cluster_ip] + "/32 dev " + server[key_nic]
+                        cmd += " ; sudo ip link set dev " + server[key_nic] + " mtu 9000"
+                        cmd += " ; sudo ip link set dev " + server[key_nic] + " up"
+                        cmd += " ; sudo ip route add " + cfg[key_default][key_cluster_gw] + "/24 dev " + server[key_nic]
+                        cmd += " ; sudo arp -s -i " + server[key_nic] + " " + cfg[key_ss][0][key_cluster_ip] + " " + cfg[key_ss][0][key_mac]
+                        cmd = build_server_custom_command(server[key_ip], s_user_id, s_ssh_key, cmd)
 
                 if cmd is not None:
                     print(cmd, flush=True)

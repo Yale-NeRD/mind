@@ -1,15 +1,4 @@
 # Profile for tasks/commands in order
-# - name: start VMs
-#   job: setup
-#   per_command_delay: 0
-#   post_delay: 60
-
-- name: load trace data (storage server to compute server)
-  job: load_trace
-  per_command_delay: 1
-  post_delay: 10
-  job_args:
-    trace: ma
 
 # Before run this, the ssh key should be copied first,
 # .ssh/config should have proper entry for tscript.github.com, e.g.:
@@ -22,6 +11,33 @@
 # - name: clone this repo
 #   job: git_clone
 #   job_args:
-#     git url: git@tscript.github.com:shsym/mind_ae.git
+#     git url: https://github.com/shsym/mind.git
 #   per_command_delay: 10
 #   post_delay: 0
+
+- name: update repo
+  job: update
+  per_command_delay: 1
+  post_delay: 60
+
+# - name: shutdown VMs
+#   job: shutdown   # this will only shutdown VMs
+#   per_command_delay: 0
+#   post_delay: 60
+
+# - name: set servers' NIC
+#   job: set_nic   # this will only shutdown VMs
+#   per_command_delay: 0
+#   post_delay: 10
+
+- name: load trace data (storage server to compute server)
+  job: load_trace
+  per_command_delay: 1
+  post_delay: 10
+  job_args:
+    trace: ma
+
+# - name: start VMs
+#   job: setup
+#   per_command_delay: 0
+#   post_delay: 60
