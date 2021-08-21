@@ -20,6 +20,7 @@ switch:
 # list of compute servers
 compute servers:
 - c_server1:
+  id: 1   # server's id
   control ip: 172.28.229.148
   user: sslee
   key: ~/.ssh/vmhost_acc
@@ -37,6 +38,7 @@ compute servers:
       vm name: Ubuntu-CN2
       key: ~/.ssh/id_rsa_for_vm
 - c_server2:
+  id: 2
   control ip: 172.28.229.149
   vm list:
     - vm1:
@@ -52,6 +54,7 @@ compute servers:
       vm name: Ubuntu-CN4
       key: ~/.ssh/id_rsa_for_vm
 - c_server3:
+  id: 3
   control ip: 172.28.229.151
   vm list:
     - vm1:
@@ -67,6 +70,7 @@ compute servers:
       vm name: Ubuntu-CN6
       key: ~/.ssh/id_rsa_for_vm
 - c_server4:
+  id: 4
   control ip: 172.28.229.153
   vm list:
     - vm1:

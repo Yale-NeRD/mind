@@ -108,6 +108,11 @@ def build_vm_reboot_command(server_ip, user, key, vm_name):
     cmd = build_ssh_base(server_ip, user, key) + build_ssh_cmd(cmd)
     return cmd
 
+def build_vm_shutdown_command(server_ip, user, key, vm_name):
+    cmd = "sudo virsh shutdown " + vm_name
+    cmd = build_ssh_base(server_ip, user, key) + build_ssh_cmd(cmd)
+    return cmd
+
 
 def build_vm_reset_command(server_ip, user, key, vm_name):
     cmd = "sudo virsh reboot " + vm_name + " && "
@@ -194,8 +199,12 @@ def build_switch_restart_command(switch_ip, s_user, s_key, script_dir):
     return build_in_brick_command(switch_ip, s_user, s_key, script_dir,
                                   "source ./h_switch_env.sh && ./h_switch_reset.sh")
 
-def build_host_load_trace_command(server_ip, s_user, s_key, script_dir, trace, src_dir, dst_dir_1, dst_dir_2, user, log_server, server_id, delete_cmd, ssh_key):
-    return build_in_brick_command(server_ip, s_user, s_key, script_dir, delete_cmd + " ./h_load_trace.sh " + trace + " " + src_dir + " " + dst_dir_1 + " " + dst_dir_2 + " " + user + " " + log_server + " " + server_id + " " + ssh_key)
+
+def build_host_load_trace_command(server_ip, s_user, s_key, script_dir, trace, src_dir,
+                                  dst_dir_1, dst_dir_2, user, log_server, server_id, delete_cmd, ssh_key):
+    return build_in_brick_command(server_ip, s_user, s_key, script_dir, delete_cmd + " ./h_load_trace.sh " + trace
+                                  + " " + src_dir + " " + dst_dir_1 + " " + dst_dir_2 + " " 
+                                  + user + " " + log_server + " " + server_id + " " + ssh_key)
 
 
 def load_access_cfg(cfg, target):
@@ -338,6 +347,8 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                         cmd = build_vm_start_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
                     elif job == "reset":
                         cmd = build_vm_reboot_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
+                    elif job == "shutdown":
+                        cmd = build_vm_shutdown_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
                     elif job == "init":
                         cmd = build_vm_custom_command(server[key_ip], s_user_id, s_ssh_key,
                                                       vm[key_ip], v_user_id, v_ssh_key,
@@ -420,6 +431,8 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                         cmd = build_vm_start_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
                     elif job == "reset":
                         cmd = build_vm_reset_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
+                    elif job == "shutdown":
+                        cmd = build_vm_shutdown_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
                     elif job == "ls":
                         cmd = build_vm_custom_command(server[key_ip], s_user_id, s_ssh_key,
                                                       vm[key_ip], v_user_id, v_ssh_key, "ls")
