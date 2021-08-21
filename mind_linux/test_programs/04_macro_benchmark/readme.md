@@ -22,6 +22,6 @@
 - Id of the current blade, starting from 0 and must be less than `total_blade`
 
 ## Example
-`make run_tf_10t NUM_NODE=8 NODE_ID=1`
-- Run Tensorflow workload
-- Among total number of 8 compute blades, this blade is the 2nd one
+`make run_tf_10t NUM_NODE=8 NODE_ID=1` represents:
+- User tries to run Tensorflow workload
+- Among total number of 8 compute blades,the current blade is the 2nd one
