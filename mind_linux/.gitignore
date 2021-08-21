@@ -76,6 +76,7 @@ modules.builtin
 !.gitignore
 !.mailmap
 !.cocciconfig
+!.config	# for mind specific default config
 
 #
 # Generated include files
