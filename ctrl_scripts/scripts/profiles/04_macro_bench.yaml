@@ -30,10 +30,12 @@
     trace: ma
     node num: 8
     thread_num: 10
-    step_num: 1000
-  # target_vms:
-  # - 0
-  # - 1
+    step_num: 35000
+# step_num setup in the paper (depends on memory access pattern)
+# - Tensorflow or tf: 50000
+# - GraphChi or gc: 50000
+# - Memcached YCSB workloadA or ma: 35000
+# - Memcached YCSB workloadA or mc: 20000
 
 # = File download part =
 - name: collect log data (vm to server)

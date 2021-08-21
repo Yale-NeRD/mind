@@ -9,15 +9,15 @@
   per_command_delay: 1
   post_delay: 60
 
-# - name: (re)build kernel
-#   job: update_kernel
-#   per_command_delay: 0
-#   post_delay: 60
+- name: (re)build kernel
+  job: update_kernel
+  per_command_delay: 0
+  post_delay: 60
 
-# - name: restart and reset VMs
-#   job: reset
-#   per_command_delay: 0
-#   post_delay: 60
+- name: restart and reset VMs
+  job: reset
+  per_command_delay: 0
+  post_delay: 60
   # target_vms:
   # - 0
 
