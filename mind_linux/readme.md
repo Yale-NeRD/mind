@@ -20,3 +20,6 @@
       gcc --version
       g++ --version
       ```
+- To compile RoCE module:
+  - `cd roce_modules && make && sudo insmod roce4disagg.ko`
+  - Dependencies: we assumed that the kernel header files for ofed kernel in `/usr/src/ofa_kernel` (from the NIC driver, mlnx_ofed 5.0-1)
