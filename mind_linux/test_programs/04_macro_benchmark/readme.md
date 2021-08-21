@@ -24,4 +24,5 @@
 ## Example
 `make run_tf_10t NUM_NODE=8 NODE_ID=1` represents:
 - User tries to run Tensorflow workload
+- Each blade will run 10 threads (80 threads in total)
 - Among total number of 8 compute blades,the current blade is the 2nd one
