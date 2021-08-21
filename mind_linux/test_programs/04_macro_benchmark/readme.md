@@ -9,17 +9,17 @@
 - `make run_[application]ma_[thread_per_blade] NUM_NODE=[total_blade] NODE_ID=[current_node]`
 
 ## Parameters
-`@application`
+`application`
 - `TF`: TensorFlow, `GC`: GracphChi, `MA`: Memcached w/ YCSB workloada, `MC`: Memcached w/ YCSB workloadc
 
-`@thread_per_blade`
+`thread_per_blade`
 - Number of threads per blade, can be `1`, `2`, `4`, or `10`
 
-`@total_blade`
+`total_blade`
 - Total number of compute blades
 
-`@current_node`
-- ID of the current blade, starting from 0
+`current_node`
+- Id of the current blade, starting from 0 and must be less than `total_blade`
 
 ## Example
 `make run_tf_10t NUM_NODE=8 NODE_ID=1`
