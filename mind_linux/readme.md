@@ -3,7 +3,7 @@
 - Dependencies
   - `sudo apt-get install libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf`
     - Ref: https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel
-  - We tested building process on Ubuntu 18.04 (*4.15.0-153-generic*)
+  - We tested building process on Ubuntu 18.04 (*Linux 4.15.0*)
 - To compile the kernel, please use the script:
 `./build_kernel.sh`
   - Note | This script will compile and install the kernel, then reboot the machine.
