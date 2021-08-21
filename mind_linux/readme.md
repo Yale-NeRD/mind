@@ -3,12 +3,12 @@
 - Dependencies
   - `sudo apt-get install libncurses-dev gawk flex bison openssl libssl-dev dkms libelf-dev libudev-dev libpci-dev libiberty-dev autoconf`
     - Ref: https://wiki.ubuntu.com/Kernel/BuildYourOwnKernel
-  - We tested building process on Ubuntu 18.04
+  - We tested building process on Ubuntu 18.04 (*4.15.0-153-generic*)
 - To compile the kernel, please use the script:
 `./build_kernel.sh`
   - Note | This script will compile and install the kernel, then reboot the machine.
   - If you are using newer version of gcc (higher than gcc-7), you may experience some warnings/errors. Please try again with gcc-7.
-    - How to set up gcc-7 ([link](https://gist.githubusercontent.com/jlblancoc/99521194aba975286c80f93e47966dc5/raw/d8fcab3ba6b89b840dea10a523d69b0f3e64409c/Install_gcc7_ubuntu_16.04.md))
+    - How to install and set up symlink to gcc-7 ([link](https://gist.githubusercontent.com/jlblancoc/99521194aba975286c80f93e47966dc5/raw/d8fcab3ba6b89b840dea10a523d69b0f3e64409c/Install_gcc7_ubuntu_16.04.md))
     ```
     sudo apt-get install -y software-properties-common
     sudo add-apt-repository ppa:ubuntu-toolchain-r/test
