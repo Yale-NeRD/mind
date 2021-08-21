@@ -23,6 +23,8 @@ This directory contains script to send commands to the servers consising MIND cl
 
 - Run the main script `run_commands.py` with the profile corresponding to the test.
 
+- When each task of the profile is finished (see below for more details), output from servers/VMs will be updated at `scripts/run.log`
+
 ## Performance evaluation with memory traces
 ```
 python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
