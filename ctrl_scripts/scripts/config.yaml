@@ -108,14 +108,13 @@ compute servers:
 memory servers:
   - m_server1:
     control ip: 172.29.249.30
-    user: sslee
-    key: ~/.ssh/vmhost_acc
     vm list:
       - vm1:
         id: 16
         control ip: 192.168.122.102
         cluster ip: 10.10.10.221
         vm name: Ubuntu-MN
+        user: sslee
         key: ~/.ssh/vmhost_acc
 
 # list of storage servers
