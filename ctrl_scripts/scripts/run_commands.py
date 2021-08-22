@@ -243,37 +243,34 @@ async def terminate(sig, loop):
     results = await asyncio.gather(*tasks, return_exceptions=True)
     loop.stop()
 
+async def read_stream(stream):
+    while True:
+        line = await stream.readline()
+        if line:
+            line = str(line.rstrip(), 'utf8', 'ignore')
+            print(line)
+        else:
+            break
 
 async def run_command_sync_print(loop, cmd, collect_out=False, pre_delay=0):
     # wait if needed
     await asyncio.sleep(pre_delay)
     # run a command
     proc = await asyncio.create_subprocess_shell(cmd,
-        stdout=asyncio.subprocess.PIPE if collect_out else None,
-        stderr=asyncio.subprocess.PIPE, loop=loop)
-    # wait until the command is finished
-    await proc.wait()
-    # _ = await proc.stdout.read()
-    # _ = await proc.stderr.read()
-
-    # collect print outs
-    res = ""
+        stdin=asyncio.subprocess.DEVNULL,
+        stdout=asyncio.subprocess.DEVNULL,  # asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE, loop=loop, shell=True)
     if collect_out:
-        while True:
-            read_res = bytearray()
-            line = await proc.stdout.readline()
-            if not line:
-                break
-            read_res += line
-            res += read_res.decode().strip()
-            # if len(res) > 5 and res[-5:] == "x1b[K":    # end of terminal
-            #     res = res[:-6]
-            res += "\n"
-        if len(res) > 8:
-            res = res[:-8]
-    else:
-        res = ""
-    return res
+        print(bcolors.HEADER + "Sub-task started: " + cmd + bcolors.ENDC)
+    # wait until the command is finished
+    await asyncio.wait([
+            # read_stream(proc.stdout),
+            read_stream(proc.stderr)
+        ])
+    await proc.wait()
+
+    # return res
+    return ""
 
 
 async def wait_time(time):
@@ -529,38 +526,26 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                             run_command_sync_print(
                                 loop, cmd, (collect_std_out and verbose), async_delay)))
                         async_delay += per_command_delay
-        with open("run.log", "a+") as fp:
-            if len(tasks) > 0:
-                wait_tasks = asyncio.wait(tasks)
-                # termination signals
-                for signame in (signal.SIGINT, signal.SIGTERM):
-                    loop.add_signal_handler(signame,
-                                            functools.partial(asyncio.ensure_future,
-                                                              terminate(signame, loop)))
 
-                finished, _ = loop.run_until_complete(wait_tasks)
-                if verbose:
-                    print_lines = []
-                    for idx, task in enumerate(finished):
-                        print_lines.append("\nNODE[{0}]:\n".format(idx))
-                        # res_str =
-                        # print("NODE[]: ")
-                        res_str = task.result().rstrip(' ').lstrip(' ')
-                        # print("{0}".format(res_str))
-                        print_lines.append(res_str)
+        # run and print out result
+        if len(tasks) > 0:
+            wait_tasks = asyncio.wait(tasks)
+            # termination signals
+            for signame in (signal.SIGINT, signal.SIGTERM):
+                loop.add_signal_handler(signame,
+                                        functools.partial(asyncio.ensure_future,
+                                                            terminate(signame, loop)))
 
-                        fp.writelines(print_lines)
-                        # for line in print_lines:
-                        #     print(print_lines)
-            # post delay
-            fp.write(bcolors.OKBLUE + "\nWait for %d seconds" % post_delay + bcolors.ENDC)
-            fp.flush()
-            # print("Wait for %d seconds" % post_delay, flush=True)
+            finished, _ = loop.run_until_complete(wait_tasks)
+
+        # post delay
+        print(bcolors.OKBLUE + "Wait for %d seconds" % post_delay + bcolors.ENDC, flush=True)
         time.sleep(post_delay)
+
     except asyncio.futures.CancelledError:
         print(bcolors.WARNING + "This process has been cancelled!!! - terminate..." + bcolors.ENDC)
-    finally:
-        pass
+    # finally:
+    #     pass
     # loop.close()
 
 
