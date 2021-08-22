@@ -262,6 +262,7 @@ void do_cache_man(struct cache_t **caches, struct directory_t *dir, int num_node
     }
     printf("[Dyn Cache] Split entries: %u\n", split_cnt);
     printf("[Dyn Cache] Merged entries: %u\n", merge_cnt);
+    printf("[Dyn Cache] Cur/Tot: %lu/%lu\n", dir_cnt, dir->max_dir_entries);
     for (auto const& it : dir->entry_list)
     {
         if (it->event_cnt[ASYNC_INV_WB])

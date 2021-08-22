@@ -8,6 +8,7 @@
 # @8 interval of cache resizing in passes
 # @9 performance target coefficient (integer > 0)
 # @10 degree of split (1 for split 1 big block into 2 smaller blocks, 2 for 4, so on)
+# @11 maximum number of directory
 
 workload1="tensorflow"
 workload2="voltdb"
@@ -41,7 +42,7 @@ else
     echo "unexpected workload"
 fi
 
-ARG="$2 $3 $4 $5 $6 $7 $8 $9 $10"
+ARG="$2 $3 $4 $5 $6 $7 $8 $9 $10 $11"
 for i in $(seq 0 $(($3 - 1)))
 do
     ARG="$ARG $PRE$i$SUF"
