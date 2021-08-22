@@ -115,7 +115,7 @@ memory servers:
         cluster ip: 10.10.10.221
         vm name: Ubuntu-MN
         user: sslee
-        key: ~/.ssh/vmhost_acc
+        key: ~/.ssh/switch_acc
 
 # list of storage servers
 storage servers:
