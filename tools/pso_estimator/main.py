@@ -317,8 +317,9 @@ def parse_pso_file(filep, t_id, stat, remote_start_idx, remote_adjust, is_best_m
             benefit_cnt[min(latency_to_cdf_idx(calculate_benefit_from_rec(loc_stat, rec)), _num_cdf_bucket - 1)] += 1
 
     if t_id == 0:
-        print(loc_stat['thread_write'])
-        print(benefit_cnt)
+        # print(loc_stat['thread_write'])
+        # print(benefit_cnt)
+        pass
 
     if is_best_match:
         stat['remote_write_benefits'][t_id] = calculate_benefit_prob_best_match(loc_stat, benefit_cnt, remote_start_idx)
@@ -328,8 +329,8 @@ def parse_pso_file(filep, t_id, stat, remote_start_idx, remote_adjust, is_best_m
     stat['remote_write_benefits'][t_id] *= remote_adjust
     # we use pdf based calculation, so target_ratio is not needed
     # stat['remote_write_benefits'][t_id] = benefit_sum * stat['target_ratio'][t_id]
-    print("B[" + str(t_id) + "] .. done: %.3f" % stat['target_ratio'][t_id], ", ",
-          stat['remote_write_benefits'][t_id], " / ", stat['thread_rw'][t_id][3])
+    # print("B[" + str(t_id) + "] .. done: %.3f" % stat['target_ratio'][t_id], ", ",
+    #        stat['remote_write_benefits'][t_id], " / ", stat['thread_rw'][t_id][3])
 
 
 def load_pso_file(filename, stat, t_id, remote_start_idx, remote_adjust, is_best_match, is_ideal):
