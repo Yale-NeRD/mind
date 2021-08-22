@@ -134,16 +134,6 @@ def calculate_benefit_from_rec(loc_stat, rec):
     return benefit
 
 
-'''
-def calculate_benefit(stat, t_id):
-    for rec in stat['remote_write_list'][t_id]:
-        # print(rec)
-        stat['remote_write_benefits'][t_id] += calculate_benefit_from_rec(stat, rec)
-    stat['remote_write_benefits'][t_id] *= stat['target_ratio'][t_id]
-    print("B[" + str(t_id) + "] .. done: %.3f" % stat['target_ratio'][t_id], ", ", stat['remote_write_benefits'][t_id], flush=True)
-    pass
-'''
-
 
 def calculate_est_time(stat, t_id):
     rec = stat['thread_rw'][t_id]
@@ -157,21 +147,6 @@ def calculate_est_time(stat, t_id):
                                         #  * float(rec[3] / stat['rw_record'][t_id][3]))
     print("Est[" + str(t_id) + "] .. done")
     pass
-
-
-'''
-def calculate_est_time(stat, t_id, proc_ratio):
-    rec = stat['rw_record'][t_id]
-    est_time = (int(rec[0]) * stat['local_read_lat'] * stat['sim_ratio'][0])
-    est_time += (int(rec[1]) * stat['local_write_lat'] * stat['sim_ratio'][1])
-    est_time += (int(rec[2]) * stat['remote_read_lat'] * stat['sim_ratio'][2])
-    est_time += (int(rec[3]) * stat['remote_write_lat'] * stat['sim_ratio'][3])
-    est_time /= (1. - proc_ratio)
-    stat['est_time_sc'][t_id] = est_time
-    stat['est_time'][t_id] = est_time - (stat['remote_write_benefits'][t_id] * stat['sim_ratio'][3])
-    print("Est[" + str(t_id) + "] .. done", flush=True)
-    pass
-'''
 
 
 def parse_cdf_file(filep, tar_pass, stat, t_id):
@@ -203,111 +178,6 @@ def parse_cdf_file(filep, tar_pass, stat, t_id):
                         bkt_idx += 1
                 break
     filep.close()
-
-
-# Per thread calculation
-# def calculate_difference_cdf(unlimit_stat):
-#     unlimit_stat['cdf_diff'] = {}
-#     # unlimit_stat['cdf_diff']['read'] = [0 for _ in unlimit_stat['unlimit']['read']]
-#     # unlimit_stat['cdf_diff']['write'] = [0 for _ in unlimit_stat['unlimit']['write']]
-#     unlimit_stat['cdf_diff']['thread_read'] = [[0 for _ in t_rec] for t_rec in unlimit_stat['unlimit']['thread_read']]
-#     unlimit_stat['cdf_diff']['thread_write'] = [[0 for _ in t_rec] for t_rec in unlimit_stat['unlimit']['thread_write']]
-#
-#     for acc_type in ['read', 'write']:
-#         for idx, read_num in enumerate(unlimit_stat['unlimit']['thread_' + acc_type]): # over thread
-#             pdf_sum = {'unlimit': sum(read_num), 'limit': sum(unlimit_stat['limit']['thread_' + acc_type][idx])}
-#             cdf_list = {'unlimit': [float(rec / pdf_sum['unlimit']) for rec in read_num],
-#                         'limit': [float(rec / pdf_sum['limit']) for rec in unlimit_stat['limit']['thread_' + acc_type][idx]]}
-#             unlimit_pdf = deepcopy(cdf_list['unlimit'][:])
-#             # for jdx in range(1, len(read_num)):
-#             #     cdf_list['unlimit'][jdx] += cdf_list['unlimit'][jdx-1]
-#             # for jdx in range(1, len(unlimit_stat['limit']['thread_' + acc_type][idx])):
-#             #     cdf_list['limit'][jdx] += cdf_list['limit'][jdx-1]
-#             # now we have cdf
-#             cur_unlimit_idx = 0
-#             unlimit_stat['cdf_diff']['thread_' + acc_type][idx] = []
-#             for jdx in range(len(cdf_list['limit'])):
-#                 remain = cdf_list['limit'][jdx]
-#                 while remain > 0 and cur_unlimit_idx < len(unlimit_pdf):
-#                     if remain > unlimit_pdf[cur_unlimit_idx]:
-#                         unlimit_stat['cdf_diff']['thread_' + acc_type][idx].append(
-#                             [unlimit_pdf[cur_unlimit_idx], cur_unlimit_idx - jdx])
-#                         remain -= unlimit_pdf[cur_unlimit_idx]
-#                         unlimit_pdf[cur_unlimit_idx] = 0
-#                         cur_unlimit_idx += 1
-#                     else:
-#                         unlimit_pdf[cur_unlimit_idx] -= remain
-#                         unlimit_stat['cdf_diff']['thread_' + acc_type][idx].append(
-#                             [remain, cur_unlimit_idx - jdx])
-#                         remain = 0
-#                         break
-#
-#                 # dest_idx = len(cdf_list['limit']) - 1
-#                 # while dest_idx > 0:
-#                 #     if cdf_list['unlimit'][dest_idx] < cdf_list['limit'][jdx]:
-#                 #         break
-#                 #     else:
-#                 #         dest_idx -= 1
-#                 # unlimit_stat['cdf_diff']['thread_' + acc_type][idx][jdx] = dest_idx - jdx
-#             # if idx == 0:
-#             #     print(unlimit_stat['cdf_diff']['thread_' + acc_type][idx])
-#             #     print(cdf_list['unlimit'])
-#             #     print(cdf_list['limit'])
-#             # for jdx, rec in enumerate(read_num):   # over bucket
-#             #     unlimit_stat['cdf_diff']['thread_' + acc_type][idx][jdx]\
-#             #         = pdf_list['unlimit'][jdx] - pdf_list['limit'][jdx]
-#                     # = rec/float(max(1, unlimit_stat['limit']['thread_' + acc_type][idx][jdx]))
-#             print(idx, end=' ', flush=True)
-#         print('', flush=True)
-#
-#
-# def apply_unlimited_expectation(stat, unlimit_stat):
-#     new_cnt = {'read': [0 for _ in stat['read']], 'write': [0 for _ in stat['write']]}
-#     for acc_type in ['read', 'write']:
-#         for idx, read_num in enumerate(unlimit_stat['cdf_diff']['thread_' + acc_type]):  # over thread
-#             new_dist = [0 for _ in read_num]
-#             pdf_sum = sum(stat['thread_' + acc_type][idx])
-#             pdf_list = [float(rec / pdf_sum) for rec in stat['thread_' + acc_type][idx]]
-#             cur_diff_idx = 0
-#             for jdx, rec in enumerate(stat['thread_' + acc_type][idx]):   # over bucket
-#                 # hist[acc_type][jdx] += stat['thread_' + acc_type][idx][jdx] \
-#                 #                        * (unlimit_stat['cdf_diff']['thread_' + acc_type][idx][jdx] - 1.)
-#                 # stat['thread_' + acc_type][idx][jdx] *= unlimit_stat['cdf_diff']['thread_' + acc_type][idx][jdx]
-#                 # new_cnt[acc_type][jdx] += stat['thread_' + acc_type][idx][jdx]
-#                 #
-#                 #
-#                 # new_jdx = jdx + unlimit_stat['cdf_diff']['thread_' + acc_type][idx][jdx]
-#                 # new_dist[new_jdx] += stat['thread_' + acc_type][idx][jdx]
-#                 #
-#                 #
-#                 cur_prob = pdf_list[jdx]
-#                 remain = cur_prob
-#                 while remain > 0 and cur_diff_idx < len(read_num):
-#                     if remain > read_num[cur_diff_idx][0]:
-#                         new_dist[max(0, min(jdx + read_num[cur_diff_idx][1], len(new_dist) - 1))] += \
-#                             float(read_num[cur_diff_idx][0] / cur_prob) * stat['thread_' + acc_type][idx][jdx]
-#                         remain -= read_num[cur_diff_idx][0]
-#                         read_num[cur_diff_idx][0] = 0
-#                         cur_diff_idx += 1
-#                     else:
-#                         read_num[cur_diff_idx][0] -= remain
-#                         new_dist[max(0, min(jdx + read_num[cur_diff_idx][1], len(new_dist) - 1))] += \
-#                             float(remain / cur_prob) * stat['thread_' + acc_type][idx][jdx]
-#                         remain = 0
-#                         break
-#             stat['thread_' + acc_type][idx] = new_dist[:]
-#             print(idx, end=' ', flush=True)
-#         print('', flush=True)
-#     # recount sum
-#     for acc_type in ['read', 'write']:
-#         for idx, read_num in enumerate(unlimit_stat['unlimit']['thread_' + acc_type]):  # over thread
-#             for jdx, _ in enumerate(read_num):  # over bucket
-#                 new_cnt[acc_type][jdx] += stat['thread_' + acc_type][idx][jdx]
-#     stat['read'] = new_cnt['read']
-#     stat['write'] = new_cnt['write']
-#     # print(stat['read'])
-#     # print(stat['write'])
-#     # exit()
 
 
 def calculate_difference_cdf(unlimit_stat):
@@ -378,30 +248,13 @@ def apply_unlimited_expectation(stat, unlimit_stat):
     stat['write'] = new_cnt['write']
 
 
-# def print_cdf_from_stat(stat):
-#     hist = {'read': list(stat['read']), 'write': list(stat['write'])}
-#     for acc_type in ['read', 'write']:
-#         hist_sum = sum(hist[acc_type])
-#         for jdx, _ in enumerate(hist[acc_type]):  # over bucket
-#             hist[acc_type][jdx] /= float(hist_sum)
-#             if jdx >= 1:
-#                 hist[acc_type][jdx] += hist[acc_type][jdx - 1]
-#     for acc_type in ['read', 'write']:
-#         print('CDF ', acc_type, ': ', hist[acc_type])
-#         # print(unlimit_stat['cdf_diff']['thread_' + acc_type])
-
-
 def calculate_benefit_with_prob(stat, benefit_pdf, remote_start_idx, is_ideal=False):
     low_idx = int(math.floor(remote_start_idx))
     benefit_sum = sum(benefit_pdf)  # total number of benefit logs
     # stat['rw_record'][t_id][3]: number of total remote write
     for idx, val in enumerate(benefit_pdf):
         benefit_pdf[idx] = float(val / benefit_sum)  # as a pdf
-        # benefit_pdf[idx] = float(0) if idx < low_idx else float(val / benefit_sum)  # as a pdf
-    # stat['remote_write_total_local'] = sum(stat['thread_write'][low_idx:])
-    # read_pdf = [float(x / stat['thread_read_total_local']) for x in stat['thread_read_local']]
-    # write_pdf = [(float(0) if idx < low_idx else float(x / stat['remote_write_total_local']))
-    #              for idx, x in enumerate(stat['thread_write'])]
+
     benefit = 0
     for i, x in enumerate(stat['thread_write']):
         if i < low_idx:
@@ -579,20 +432,16 @@ if __name__ == '__main__':
     parser.add_argument('--ext', type=int, help='number of passes for extrapolation', default=int(50000))
     parser.add_argument('--bkt_size', type=int, help='size of bucket', default=int(512))
     parser.add_argument('--profile_overhead', type=float, help='profiling overhead in CDF', default=float(0.2)) # 0.96
-    parser.add_argument('--per_workload_proc_ratio', type=float, help='processing portion of the workload',
-                        default=float(0.))
-    # 58.6% for TF, 51.6% for grapchi, 80.2% memcached_a, 83.7% memcached_c IN excel
+    parser.add_argument('--proc_num', type=int, help='number of workers we will use in parallel', default=80)
     parser.add_argument('--local_th', type=float, help='maximum latency considered as local access', default=float(4))
     parser.add_argument('--remote_adjust', type=float,
                         help='adjust latency (profile to actual run, not only for remote)',
                         default=float(0.74))
     # Only one of the following two can be true
+    # DEFAULT: both of them are disabled
     parser.add_argument('--best_match', type=bool, help='use best match mode instead of pdf summation', default=False)
     parser.add_argument('--ideal', type=bool, help='performance when no remote write is visible', default=False)
-    # 0.235 for TF(10), 0.37 for TF(20), 0.47 for TF(40), 0.37 for TF(80),
-    # 0.195 for GC(10), 0.265 for GC(20), 0.59 for GC(40), 0.93 for GC(80),
-    # 1.47 for MA(10), 0.74 for MA(20), 0.7 for MA(40), 0.87 for MA(80),
-    # 0.59 for MC(10), 0.76 for MC(20), 1.22 for MC(40), 1.2 [was 0.97] for MC(80)
+
     # 4 us for all
     args = parser.parse_args()
     profile_overhead = args.profile_overhead
@@ -600,11 +449,9 @@ if __name__ == '__main__':
     print(args)
 
     # a2) init
-    proc_num = 80
+    proc_num = args.proc_num
     manager = Manager()
     stat = manager.dict()
-    # stat['read'] = manager.list([0 for _ in range(args.bkt_size)])
-    # stat['write'] = manager.list([0 for _ in range(args.bkt_size)])
     stat['remote_write_list'] = manager.dict()
 
     # b) files
@@ -634,7 +481,7 @@ if __name__ == '__main__':
             exit()
         # cdf files are already sorted
 
-    # b1)
+    # load cdf directly from MIND
     filelist = [args.dir + f for f in os.listdir(args.dir)]
     filelist.sort()
     rw_stat = dict()
@@ -650,7 +497,7 @@ if __name__ == '__main__':
         parse_cdf_file(fp, args.tar, rw_stat, idx)
         print("[%d]CDF file: " % idx, filename)
 
-    # limit versus unlimit
+    # load cdf and calculate difference: limit versus unlimit from simulator
     if args.unlimited_dir_sim:
         unlimit_stat = {'unlimit': {'filelist': [args.unlimit_cdf_dir + f for f in os.listdir(args.unlimit_cdf_dir)]},
                         'limit': {'filelist': [args.limit_cdf_dir + f for f in os.listdir(args.limit_cdf_dir)]}}
@@ -676,7 +523,7 @@ if __name__ == '__main__':
     stat['thread_read'] = manager.list([manager.list([x for x in th_rec]) for th_rec in rw_stat['thread_read']])
     stat['thread_write'] = manager.list([manager.list([x for x in th_rec]) for th_rec in rw_stat['thread_write']])
 
-    # b2)
+    # load rwcnt file
     filelist = [args.rw_dir + f for f in os.listdir(args.rw_dir)]
     filelist.sort()
     stat['rw_record'] = manager.list()
@@ -692,17 +539,14 @@ if __name__ == '__main__':
             pp.start()
         for pp in p:
             pp.join()
-    # single core version
-    # for idx, filename in enumerate(filelist):
-    #     parse_rw_file(filename, stat, idx, args.tar)
-    # c1)
+
+    # analyze loaded rwcnt
     update_sim_params(stat)
     stat['thread_rw'] = manager.list([manager.list() for _ in rw_stat['thread_read']])
     analysis_stat(stat, args.local_th, args.remote_adjust)
-    # c2)
     sim_versus_impl_analysis(stat)
 
-    # b3)
+    # load pso files
     filelist = [args.pso_dir + f for f in os.listdir(args.pso_dir)]
     filelist.sort()
     stat['remote_write_benefits'] = manager.list([0 for _ in range(num_thread)])
@@ -718,27 +562,8 @@ if __name__ == '__main__':
         for p in proc_list:
             if len(p) > idx:
                 p[idx].join()
-    # single core version
-    # for idx, filename in enumerate(filelist):
-    #     load_pso_file(filename, stat, idx)
-        # print(stat['remote_write_list'][idx])
 
-    # c) analysis
-    # print(stat['rw_record'])
-    # c3)
-    # proc_list = [[] for _ in range(proc_num)]
-    # stat['remote_write_benefits'] = [0 for _ in range(len(filelist))]
-    # for t_id in range(len(stat['remote_write_benefits'])):
-    #     p = Process(target=calculate_benefit, args=(stat, t_id))
-    #     proc_list[idx % proc_num].append(p)
-    # for p in proc_list:
-    #     for pp in p:
-    #         pp.start()
-    #     for pp in p:
-    #         pp.join()
-    # for t_id in range(len(stat['remote_write_benefits'])):
-    #     calculate_benefit(stat, t_id)
-    # c4)
+    # caculate estimated time
     proc_list = [[] for _ in range(proc_num)]
     stat['est_time'] = manager.list([0 for _ in range(num_thread)])
     stat['est_time_sc'] = manager.list([0 for _ in range(num_thread)])
@@ -750,9 +575,7 @@ if __name__ == '__main__':
             pp.start()
         for pp in p:
             pp.join()
-    # single core version
-    # for t_id in range(len(stat['est_time'])):
-    #     calculate_est_time(stat, t_id, args.per_workload_proc_ratio)
+
     # d) print result
     print_sim_versus_impl(stat)
     print_stat(stat, args.ext, float(args.ext / args.tar))
