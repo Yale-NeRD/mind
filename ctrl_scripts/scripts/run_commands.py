@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 import yaml
-import os
-import sys
+import os, signal, sys
 import asyncio
 import time
 import argparse
+import functools
 
 # global (constant) variables and names
 key_cs = 'compute servers'
@@ -48,6 +48,20 @@ app_name_map = {
     'tf': 'tensorflow',
     'gc': 'graphchi'
 }
+
+
+# color map from: https://stackoverflow.com/questions/287871/how-to-print-colored-text-to-the-terminal
+# orignal ref: https://svn.blender.org/svnroot/bf-blender/trunk/blender/build_files/scons/tools/bcolors.py
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 
 def build_ssh_base(server_ip, user, key):
@@ -219,6 +233,15 @@ def load_access_cfg(cfg, target):
     if key_ssh_key in target:
         _ssh_key = target[key_ssh_key]
     return _user_id, _ssh_key
+
+
+async def terminate(sig, loop):
+    print('Signal: {0}'.format(sig.name))
+    tasks = [task for task in asyncio.Task.all_tasks() if task is not
+             asyncio.tasks.Task.current_task()]
+    list(map(lambda task: task.cancel(), tasks))
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    loop.stop()
 
 
 async def run_command_sync_print(loop, cmd, collect_out=False, pre_delay=0):
@@ -509,6 +532,12 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
         with open("run.log", "a+") as fp:
             if len(tasks) > 0:
                 wait_tasks = asyncio.wait(tasks)
+                # termination signals
+                for signame in (signal.SIGINT, signal.SIGTERM):
+                    loop.add_signal_handler(signame,
+                                            functools.partial(asyncio.ensure_future,
+                                                              terminate(signame, loop)))
+
                 finished, _ = loop.run_until_complete(wait_tasks)
                 if verbose:
                     print_lines = []
@@ -524,10 +553,12 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                         # for line in print_lines:
                         #     print(print_lines)
             # post delay
-            fp.write("\nWait for %d seconds" % post_delay)
+            fp.write(bcolors.OKBLUE + "\nWait for %d seconds" % post_delay + bcolors.ENDC)
             fp.flush()
             # print("Wait for %d seconds" % post_delay, flush=True)
         time.sleep(post_delay)
+    except asyncio.futures.CancelledError:
+        print(bcolors.WARNING + "This process has been cancelled!!! - terminate..." + bcolors.ENDC)
     finally:
         pass
     # loop.close()
