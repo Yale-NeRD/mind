@@ -15,6 +15,8 @@ Therefore, we also included sample output files from the simulator, so that you 
 As the VM also contains *THIS* source code, you can pull the recent commit and build our own kernel on the VMs.
 
 ## Artifact evaulation instructions
+- *Update) When CloudLab experiment setup is ready (with a programmable switch), we will add CloudLab specific instructions and scripts.*
+
 ### How to build MIND
 - Please find the link to each system component below.
 1. [MIND kernel](https://github.com/shsym/mind/tree/master/mind_linux)
