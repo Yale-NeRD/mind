@@ -258,17 +258,19 @@ async def run_command_sync_print(loop, cmd, collect_out=False, pre_delay=0):
     # run a command
     proc = await asyncio.create_subprocess_shell(cmd,
         stdin=asyncio.subprocess.DEVNULL,
-        stdout=asyncio.subprocess.DEVNULL,  # asyncio.subprocess.PIPE,
+        stdout=asyncio.subprocess.PIPE,  # asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE, loop=loop, shell=True)
     if collect_out:
         print(bcolors.HEADER + "Sub-task started: " + cmd + bcolors.ENDC)
     # wait until the command is finished
     await asyncio.wait([
-            # read_stream(proc.stdout),
-            read_stream(proc.stderr)
+            read_stream(proc.stdout),
+            # read_stream(proc.stderr)
         ])
     await proc.wait()
 
+    if collect_out:
+        print(bcolors.HEADER + "Sub-task terminated: " + cmd + bcolors.ENDC)
     # return res
     return ""
 
