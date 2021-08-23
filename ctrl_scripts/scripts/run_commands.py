@@ -221,7 +221,7 @@ def build_switch_restart_command(switch_ip, s_user, s_key, script_dir):
 def build_host_load_trace_command(server_ip, s_user, s_key, script_dir, trace, src_dir,
                                   dst_dir_1, dst_dir_2, user, log_server, server_id, delete_cmd, ssh_key):
     return build_in_brick_command(server_ip, s_user, s_key, script_dir, delete_cmd + " ./h_load_trace.sh " + trace
-                                  + " " + src_dir + " " + dst_dir_1 + " " + dst_dir_2 + " " 
+                                  + " " + src_dir + " " + dst_dir_1 + " " + dst_dir_2 + " "
                                   + user + " " + log_server + " " + server_id + " " + ssh_key)
 
 
@@ -418,8 +418,10 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                             trace_dst = storage_server[key_trace_dst][job_args[key_trace]]
                             trace_src = storage_server[key_trace_src][job_args[key_trace]]
                             delete_cmd = ""
-                            #for trace_slice in trace_dst:
-                            #    delete_cmd += "echo " + trace_dst[trace_slice] + " && sudo mkdir -p " + trace_dst[trace_slice] + " && sudo rm " + trace_dst[trace_slice] + "* && "
+                            for app_names in app_name_map:
+                                delete_dst = storage_server[key_trace_dst][app_names]
+                                for trace_slice in delete_dst:
+                                    delete_cmd += "echo " + delete_dst[trace_slice] + " && sudo mkdir -p " + delete_dst[trace_slice] + " && sudo rm " + delete_dst[trace_slice] + "* && "
                             cmd = build_host_load_trace_command(server[key_ip], s_user_id, s_ssh_key,
                                                                 script_root, app_name_map[job_args[key_trace]], trace_src,
                                                                 trace_dst[key_dir_1], trace_dst[key_dir_2], s_user_id,
