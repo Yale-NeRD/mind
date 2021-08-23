@@ -37,6 +37,7 @@ key_state_to = 'state to'
 key_main_vm = 'main vm'
 key_trace_src = 'trace src'
 key_trace_dst = 'trace dst'
+key_owner = 'data_onwer'
 key_dir_1 = 'dir_1'
 key_dir_2 = 'dir_2'
 dir_receipes = '/recipes'
@@ -423,7 +424,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                             delete_cmd = ""
                             for app_names in app_name_map:
                                 delete_dst = storage_server[key_trace_dst][app_names]
-                                for trace_slice in delete_dst:
+                                for trace_slice in [key_dir_1, key_dir_2]:
                                     delete_cmd += "echo " + delete_dst[trace_slice] + " && sudo mkdir -p " + delete_dst[trace_slice]
                                     delete_cmd += " && sudo rm -r " + delete_dst[trace_slice]
                                     delete_cmd += " && sudo mkdir -p " + delete_dst[trace_slice] + " && "
@@ -431,6 +432,16 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                                                                 script_root, app_name_map[job_args[key_trace]], trace_src,
                                                                 trace_dst[key_dir_1], trace_dst[key_dir_2], s_user_id,
                                                                 storage_server[key_cluster_ip], str(server[key_id]), delete_cmd, storage_server[key_ssh_key])
+                elif job == "perm_trace":
+                    if (job_args is not None) and (key_trace in job_args) and (key_owner in server):
+                        script_root = cfg[key_default][key_script]
+                        for storage_server in cfg[key_ss]:
+                            trace_dst = storage_server[key_trace_dst][job_args[key_trace]]
+                            perm_cmd = "echo " + trace_dst[key_dir_1]
+                            perm_cmd += " && sudo ln -s " + trace_dst[key_dir_2] + "/* " + trace_dst[key_dir_1] + "."
+                            perm_cmd += " && sudo chown " + server[key_owner] + " -h " + trace_dst[key_dir_1] + "/* "
+                            perm_cmd += " && sudo chown " + server[key_owner] + " -h " + trace_dst[key_dir_2] + "/* "
+                            cmd = build_server_custom_command(server[key_ip], s_user_id, s_ssh_key, perm_cmd)
                 elif job == "set_nic":
                     if (key_nic in server) and (key_cluster_ip in server)\
                         and (key_cluster_gw in cfg[key_default]) and (key_cluster_ip in cfg[key_ss][0])\

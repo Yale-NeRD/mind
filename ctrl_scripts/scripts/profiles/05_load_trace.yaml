@@ -37,6 +37,13 @@
   job_args:
     trace: ma
 
+- name: check permission of the traces
+  job: perm_trace
+  per_command_delay: 1
+  post_delay: 10
+  job_args:
+    trace: ma   # this must be the same as the previous 'load_trace' job
+
 # - name: start VMs
 #   job: setup
 #   per_command_delay: 0
