@@ -243,12 +243,15 @@ async def terminate(sig, loop):
     results = await asyncio.gather(*tasks, return_exceptions=True)
     loop.stop()
 
-async def read_stream(stream):
+async def read_stream(stream, err_format=False):
     while True:
         line = await stream.readline()
         if line:
             line = str(line.rstrip(), 'utf8', 'ignore')
-            print(line)
+            if err_format:
+                print(bcolors.WARNING + line + bcolors.ENDC)
+            else:
+                print(line)
         else:
             break
 
@@ -265,7 +268,7 @@ async def run_command_sync_print(loop, cmd, collect_out=False, pre_delay=0):
     # wait until the command is finished
     await asyncio.wait([
             read_stream(proc.stdout),
-            # read_stream(proc.stderr)
+            read_stream(proc.stderr, err_format=True)
         ])
     await proc.wait()
 
@@ -421,11 +424,13 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                             for app_names in app_name_map:
                                 delete_dst = storage_server[key_trace_dst][app_names]
                                 for trace_slice in delete_dst:
-                                    delete_cmd += "echo " + delete_dst[trace_slice] + " && sudo mkdir -p " + delete_dst[trace_slice] + " && sudo rm " + delete_dst[trace_slice] + "* && "
+                                    delete_cmd += "echo " + delete_dst[trace_slice] + " && sudo mkdir -p " + delete_dst[trace_slice]
+                                    delete_cmd += " && sudo rm -r " + delete_dst[trace_slice]
+                                    delete_cmd += " && sudo mkdir -p " + delete_dst[trace_slice] + " && "
                             cmd = build_host_load_trace_command(server[key_ip], s_user_id, s_ssh_key,
                                                                 script_root, app_name_map[job_args[key_trace]], trace_src,
                                                                 trace_dst[key_dir_1], trace_dst[key_dir_2], s_user_id,
-                                                                storage_server[key_ip], str(server[key_id]), delete_cmd, storage_server[key_ssh_key])
+                                                                storage_server[key_cluster_ip], str(server[key_id]), delete_cmd, storage_server[key_ssh_key])
                 elif job == "set_nic":
                     if (key_nic in server) and (key_cluster_ip in server)\
                         and (key_cluster_gw in cfg[key_default]) and (key_cluster_ip in cfg[key_ss][0])\

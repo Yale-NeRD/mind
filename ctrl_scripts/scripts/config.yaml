@@ -143,5 +143,3 @@ storage servers:
     gc:
       dir_1: /media/data_ssds/graphchi_logs/
       dir_2: /media/data_raid0/graphchi_logs/
-
-

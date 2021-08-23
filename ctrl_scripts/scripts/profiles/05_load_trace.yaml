@@ -12,23 +12,23 @@
 #   job: git_clone
 #   job_args:
 #     git url: https://github.com/shsym/mind.git
-#   per_command_delay: 10
+#   per_command_delay: 1
 #   post_delay: 0
 
 - name: update repo
   job: update
   per_command_delay: 1
+  post_delay: 10
+
+- name: shutdown VMs
+  job: shutdown
+  per_command_delay: 0
   post_delay: 60
 
-# - name: shutdown VMs
-#   job: shutdown   # this will only shutdown VMs
-#   per_command_delay: 0
-#   post_delay: 60
-
-# - name: set servers' NIC
-#   job: set_nic   # this will only shutdown VMs
-#   per_command_delay: 0
-#   post_delay: 10
+- name: set servers' NIC
+  job: set_nic
+  per_command_delay: 0
+  post_delay: 10
 
 - name: load trace data (storage server to compute server)
   job: load_trace
