@@ -11,9 +11,11 @@ SERVER_KEY=$8
 
 PRE=""
 POST=""
-if [ ${LOG_SERVER} == "memcached_a" ]; then
+
+if [ ${APP_NAME} == "memcached_a" ]; then
   PRE="memcached_a_"
   POST="_0"
+  echo "Info: excetional naming for memcached_a"
 fi
 
 echo cd ${DST_DIR_1}/;
