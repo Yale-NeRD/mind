@@ -26,8 +26,8 @@ As the VM also contains *THIS* source code, you can pull the recent commit and b
     - [Data plane P4 program](https://github.com/shsym/mind/tree/main/mind_p4)
 
 ### How to run experiments
-We listed up the list of evaluations included in this repo and *a link to more specific instructions* as follows:
-
+We list up the evaluations included in this repo and *a link to more specific instructions* as follows.
+- We use this marker ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) to notify script for the evaluations
 1. [Performance with Tensorflow, GracphChi, and Memcached memory access traces](https://github.com/shsym/mind/tree/main/ctrl_scripts)
     - [Modified Intel PIN tool for collecting memory traces](https://github.com/shsym/mind/tree/main/tools/prepare_traces)
       - *You can skip this preparation step by directly using the memory traces provided via CloudLab or our cluster at Yale*
