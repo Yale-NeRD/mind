@@ -643,6 +643,7 @@ int main(int argc, char **argv)
 				args[i].all_done = true;
 				load_args[i].all_done = true;
 			}
+			asm volatile("mfence" : : : "memory");	// barrier
 			pthread_barrier_wait(&cont_barrier);
 			break;
 		}
