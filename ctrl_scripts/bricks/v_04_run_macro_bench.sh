@@ -27,5 +27,5 @@ sudo cp /tmp_test/progress.txt ${LOG_DIR}/progress.$4_$1_of_$2_$3t.log
 # sudo insmod pprint.ko
 # sleep 5
 # tail -n 100 /var/log/kern.log >> ${LOG_DIR}/kern.node_$4_$1_of_$2_$3t.log
-# sudo chown -R ${USER} ${LOG_DIR}
-# sudo chgrp -R ${USER} ${LOG_DIR}
+sudo chown -R ${USER} ${LOG_DIR}
+sudo chgrp -R ${USER} ${LOG_DIR}
