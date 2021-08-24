@@ -19,24 +19,24 @@ As the VM also contains *THIS* source code, you can pull the recent commit and b
 
 ### How to build MIND
 - Please find the link to each system component below.
-1. [MIND kernel](https://github.com/shsym/mind/tree/master/mind_linux)
+1. [MIND kernel](https://github.com/shsym/mind/tree/main/mind_linux)
 2. Switch program
-    - [Dependencies](https://github.com/shsym/mind/blob/master/mind_switch_ctrl/dependencies.md)
-    - [Control plane C/C++ program](https://github.com/shsym/mind/tree/master/mind_switch_ctrl)
-    - [Data plane P4 program](https://github.com/shsym/mind/tree/master/mind_p4)
+    - [Dependencies](https://github.com/shsym/mind/blob/main/mind_switch_ctrl/dependencies.md)
+    - [Control plane C/C++ program](https://github.com/shsym/mind/tree/main/mind_switch_ctrl)
+    - [Data plane P4 program](https://github.com/shsym/mind/tree/main/mind_p4)
 
 ### How to run experiments
 We listed up the list of evaluations included in this repo and *a link to more specific instructions* as follows:
 
-1. [Performance with Tensorflow, GracphChi, and Memcached memory access traces](https://github.com/shsym/mind/tree/master/ctrl_scripts)
-    - [Modified Intel PIN tool for collecting memory traces](https://github.com/shsym/mind/tree/master/tools/prepare_traces)
+1. [Performance with Tensorflow, GracphChi, and Memcached memory access traces](https://github.com/shsym/mind/tree/main/ctrl_scripts)
+    - [Modified Intel PIN tool for collecting memory traces](https://github.com/shsym/mind/tree/main/tools/prepare_traces)
       - *You can skip this preparation step by directly using the memory traces provided via CloudLab or our cluster at Yale*
     - In the compute blade, end-to-end running time will be presented (Fig. 6)
     - In the programmable switch, number of directory entries over time will be presented (Fig. 8, left)
-    - [PSO/PSO+ simulator](https://github.com/shsym/mind/tree/master/tools/pso_estimator) (part of Fig. 6)
-2. [Latency measurements for state transision cases (Fig. 7, left)](https://github.com/shsym/mind/tree/master/ctrl_scripts)
-3. [Benchmark with various sharing and read/write ratios (Fig. 7, right)](https://github.com/shsym/mind/tree/master/ctrl_scripts)
-4. [Memory allocation test with memory allocation traces (Fig. 8, center and right)](https://github.com/shsym/mind/tree/master/tools/memory_allocation)
-5. [Cache coherence protocol simulations (for the measurement under infeasible configurations in real switch / x86 architecture)](https://github.com/shsym/mind/tree/master/tools/cache_coherence_sim)
+    - [PSO/PSO+ simulator](https://github.com/shsym/mind/tree/main/tools/pso_estimator) (part of Fig. 6)
+2. [Latency measurements for state transision cases (Fig. 7, left)](https://github.com/shsym/mind/tree/main/ctrl_scripts)
+3. [Benchmark with various sharing and read/write ratios (Fig. 7, right)](https://github.com/shsym/mind/tree/main/ctrl_scripts)
+4. [Memory allocation test with memory allocation traces (Fig. 8, center and right)](https://github.com/shsym/mind/tree/main/tools/memory_allocation)
+5. [Cache coherence protocol simulations (for the measurement under infeasible configurations in real switch / x86 architecture)](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim)
     - Sensitivity analysis for bounded splitting algorithm (Fig. 9)
     - PSO and PSO+ simulation (Part of Fig. 7, right)
