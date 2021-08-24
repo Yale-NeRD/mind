@@ -19,7 +19,7 @@ simulates a cluster with `8` nodes that each has `10` cores (total `80`).
 - The following `10` indicates that the directory entry is resized every 10 timewindows with resizing enabled.
 - The last `300000` represents the maximum number of directory entries (Note that if the initial directory entry size is set to too small value, the initial number of directory entries can be larger than this value. The bounded splitting algorithm will merge directory entries to make the number of entries less than given maximum number of entries).
 
-We have the following example scripts: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, and `run_mc.sh`
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) We have the following example scripts: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, and `run_mc.sh`
 
 ## Understand the output
 After the simulator terminates, inside a directory `logs`, you should see directories named `pso`, `cdf`, `rwcnt` and log files named `stat.*` and `progress.*`, which are used for MIND's PSO simulation and sensitivity investigation of the bounded splitting algorithm.
