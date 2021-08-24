@@ -3,7 +3,7 @@ This directory contains script to send commands to the servers consising MIND cl
 ![cluster_setup](https://raw.githubusercontent.com/shsym/mind/main/ctrl_scripts/exp_cluster.png)
 
 ## Dependencies
-- `python3`
+- `python3` (tested with v3.6.9)
 - `yaml` and `argparse` package (```pip3 install argparse pyyaml```)
 - QEMU / virsh tools and kvm hypervisor
 
