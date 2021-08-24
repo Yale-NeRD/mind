@@ -4,7 +4,7 @@
 
 ## Run
   - Dependency: `pip3 install numpy argparse`
-  - Use the following scripts in this directory for running PSO/PSO+ estimation: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, `run_mc.sh`
+  - ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Use the following scripts in this directory for running PSO/PSO+ estimation: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, `run_mc.sh`
   - The script will print out Estimated time for PSO and SC
     - Time for SC is used for obtaining the input argument `--remote_adjust` (details in Usage section below)
       - *Script contains the values that we found from our experiments.*
