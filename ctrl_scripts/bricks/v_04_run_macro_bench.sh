@@ -4,7 +4,7 @@
 #$3: number of thread per blade
 #$4: trace type = [tf, gc, ma, mc]
 #$5: maximum step (workload specific)
-if [ $# -le 5 ]; then
+if [ $# -le 4 ]; then
     echo "Error: missing arguments: $@"
 fi
 

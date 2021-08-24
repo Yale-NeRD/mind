@@ -3,14 +3,15 @@
  * - Not complete, minimal useable functions (on-going work)
  */
 
-#include "config.h"
+// #include "config.h"
+
 #include "roce_disagg.h"
 #include "../../include/disagg/cnthread_disagg.h"
 
 #include <linux/mman.h>
 #include <asm/traps.h> // X86_PF_WRITE
 
-// #define TEST_ROLE_INDEX 1    // in config.mk
+#define TEST_ROLE_INDEX 1
 #define CHECK_REGISTER
 // #define TEST_FOR_NEW_DIR
 // #define TEST_BYPASS_CACHE_MATCH
