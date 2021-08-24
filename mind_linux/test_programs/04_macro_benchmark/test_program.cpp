@@ -90,8 +90,8 @@ int init(struct trace_t *trace)
 					char node_bits[256] = "";
 					for (int j = 0; j < MAX_NUM_NODES; ++j)
 						sprintf(node_bits, "%s[%u]", node_bits, meta_ptr->node_mask[j]);
-					printf("Waiting nodes [%03d]: %d [step:%lu -> %u] || [%s]\n",
-						   (i / 100) % 100, trace->num_nodes, step, meta_ptr->node_mask[trace->node_idx], node_bits);
+					printf("Waiting nodes [%03d]: %d [step:%lu -> %u]/[%u] || [%s]\n",
+						   (i / 100) % 100, trace->num_nodes, step, meta_ptr->node_mask[trace->node_idx], max_step, node_bits);
 				}
 				if (i % 200 == 0)
 				{
@@ -461,13 +461,6 @@ void do_log_helper(void *arg)
 		pthread_barrier_wait(&load_barrier);
 		do_log(arg);
 		pthread_barrier_wait(&run_barrier);
-		// sync on the end of the time window
-		if (trace->master_thread)
-		{
-			++step;
-			fprintf(stderr, "Prepare for next step [%lu]\n", step);
-			fini((metadata_t *)trace->meta_buf, num_nodes, node_id);
-		}
 		pthread_barrier_wait(&cont_barrier);
 	}
 }
@@ -616,7 +609,8 @@ int main(int argc, char **argv)
 	}
 
 	step = 0;
-	while (1) {
+	while (1)
+	{
 		ts_limit += TIMEWINDOW_US;
 		for (int i = 0; i < num_threads; ++i) {
 			load_args[i].ts_limit = ts_limit;
@@ -624,6 +618,11 @@ int main(int argc, char **argv)
 		pthread_barrier_wait(&update_barrier);
 		pthread_barrier_wait(&load_barrier);
 		pthread_barrier_wait(&run_barrier);
+
+		// sync on the end of the time window
+		++step;
+		fprintf(stderr, "Prepare for next step [%lu]\n", step);
+		fini((metadata_t *)meta_buf, num_nodes, node_id);
 
 		bool all_done = true;
 		for (int i = 0; i < num_threads; ++i)
@@ -643,7 +642,7 @@ int main(int argc, char **argv)
 				args[i].all_done = true;
 				load_args[i].all_done = true;
 			}
-			asm volatile("mfence" : : : "memory");	// barrier
+			asm volatile("mfence" : : : "memory");	// barrier - may be not needed..
 			pthread_barrier_wait(&cont_barrier);
 			break;
 		}
