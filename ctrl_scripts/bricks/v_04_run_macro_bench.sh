@@ -21,11 +21,11 @@ echo "Make cmd: ${make_cmd}"
 make $make_cmd NODE_ID=$1 NUM_NODE=$2 MAX_PASS=$5 > /dev/null 2>&1 &
 sleep 240
 sudo cp /tmp_test/progress.txt ${LOG_DIR}/progress.$4_$1_of_$2_$3t.log
-cd ${MIND_PATH}/mind_linux/util_modules
-make
-sudo rmmod pprint.ko
-sudo insmod pprint.ko
-sleep 5
-tail -n 100 /var/log/kern.log >> ${LOG_DIR}/kern.node_$4_$1_of_$2_$3t.log
-sudo chown -R ${USER} ${LOG_DIR}
-sudo chgrp -R ${USER} ${LOG_DIR}
+# cd ${MIND_PATH}/mind_linux/util_modules
+# make
+# sudo rmmod pprint.ko
+# sudo insmod pprint.ko
+# sleep 5
+# tail -n 100 /var/log/kern.log >> ${LOG_DIR}/kern.node_$4_$1_of_$2_$3t.log
+# sudo chown -R ${USER} ${LOG_DIR}
+# sudo chgrp -R ${USER} ${LOG_DIR}

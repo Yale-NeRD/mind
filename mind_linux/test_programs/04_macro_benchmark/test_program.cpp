@@ -499,7 +499,7 @@ int main(int argc, char **argv)
 	num_nodes = atoi(argv[arg_node_cnt]);
 	node_id = atoi(argv[arg_node_id]);
 	num_threads = atoi(argv[arg_num_threads]);
-	max_step = atoi(argv[arg_max_step]);
+	max_step = atoi(argv[arg_max_step]) + 1;
 	printf("Num Nodes: %d, Num Threads: %d\n", num_nodes, num_threads);
 	if (argc != arg_log1 + num_threads) {
 		fprintf(stderr, "thread number [%d] and log files provided not match [%d <-> %d]\n",
