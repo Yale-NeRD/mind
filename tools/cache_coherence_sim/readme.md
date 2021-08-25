@@ -1,6 +1,9 @@
 ## Introduction
 This repo contains a MIND simulator that runs on memory access traces prepared [here](https://github.com/shsym/mind_ae/tree/master/tools/prepare_traces)
 
+## Summary
+![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) We have the following example scripts: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, and `run_mc.sh`
+
 ## Get Started
 To run the simulator, you need to have the trace files ready first, which means they need to be stored
 under one directory altogether and named from 0 to (# cores -1), then please use:
@@ -18,8 +21,6 @@ simulates a cluster with `8` nodes that each has `10` cores (total `80`).
 - The maximum memory footprint size (highest address minus lowest address) of the trace is 4GB (`4294967296`), which is large enough for applications we studied.
 - The following `10` indicates that the directory entry is resized every 10 timewindows with resizing enabled.
 - The last `300000` represents the maximum number of directory entries (Note that if the initial directory entry size is set to too small value, the initial number of directory entries can be larger than this value. The bounded splitting algorithm will merge directory entries to make the number of entries less than given maximum number of entries).
-
-![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) We have the following example scripts: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, and `run_mc.sh`
 
 ## Understand the output
 After the simulator terminates, inside a directory `logs`, you should see directories named `pso`, `cdf`, `rwcnt` and log files named `stat.*` and `progress.*`, which are used for MIND's PSO simulation and sensitivity investigation of the bounded splitting algorithm.
