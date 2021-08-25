@@ -2,8 +2,8 @@
 
 ## Summary
 - Please first check NDA and HW requirements; if you plan to use CloudLab, you do not need to sign the NDA with Intel (but please agree with Mellanox's End-User Agreement.
-- We recommend using our VMs on CloudLab to minimize effort to create VMs. You can try rebuild kernel inside those VMs to verify completeness of the source code (we have script for [rebuild](https://github.com/shsym/mind/blob/main/ctrl_scripts/readme.md#re-build-mind-kernel)).
-- Please find the list of experiments and follow the detailed instructions on the linked pages.
+- We recommend using our VMs on CloudLab to minimize effort to create VMs. You can try rebuild kernel inside those VMs to verify completeness of the source code (we have a script for [rebuild](https://github.com/shsym/mind/blob/main/ctrl_scripts/readme.md#re-build-mind-kernel)).
+- Please find the [list of experiments](https://github.com/shsym/mind/tree/main/artifacts#how-to-run-experiments) and follow the detailed instructions on the linked pages.
 
 ### NDA Requirements
 - To compile and run the programmable switch side programs by your own, NDA with Intel is required.
