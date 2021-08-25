@@ -36,7 +36,7 @@ We prepared experiment profiles (.yaml format) so that you can easily change con
 - When each task of the profile is finished (see below for more details), output from servers/VMs will be updated at `scripts/run.log`
 
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces
-***We assume that you are in this directory on the experiment management server***
+***We assume that you are in this directory `mind/ctrl_scripts/` on the experiment management server***
 
 ```
 python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
