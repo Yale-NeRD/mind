@@ -17,7 +17,7 @@ We prepared experiment profiles (.yaml format) so that you can easily change con
 - QEMU / virsh tools and kvm hypervisor
 
 ## Prerequisites / assumptions
-*If you are using our VMs on CloudLab, you can simply skip this and the next section (jump to [here](https://github.com/shsym/mind/tree/main/ctrl_scripts#-performance-evaluation-with-memory-traces)), but please make sure that you have agree with [End-User agreement of Mellanox NIC driver](https://github.com/shsym/mind/tree/main/artifacts#nda-requirements).*
+*If you are using our VMs on CloudLab, you can simply skip both the current and the next sections (jump to [here](https://github.com/shsym/mind/tree/main/ctrl_scripts#-performance-evaluation-with-memory-traces)), but please make sure that you have agree with [End-User agreement of Mellanox NIC driver](https://github.com/shsym/mind/tree/main/artifacts#nda-requirements).*
 - Control server (i.e., the machine running this script) has ssh keys to access any compute/memory servers in *MIND* cluster.
   - In addition to compute and memory servers, we introduce storage servers to store and fetch memory access traces, if compute servers do not have enough local storage (around 1TB per VM).
 - Each compute/memory server has (own) ssh key to access any of its VMs.
