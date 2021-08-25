@@ -1,4 +1,10 @@
 # Artifact evaulation
+
+## Summary
+- Please first check NDA and HW requirements; if you plan to use CloudLab, you do not need to sign the NDA with Intel (but please agree with Mellanox's End-User Agreement.
+- We recommend using our VMs on CloudLab to minimize effort to create VMs. You can try rebuild kernel inside those VMs to verify completeness of the source code (we have script for [rebuild](https://github.com/shsym/mind/blob/main/ctrl_scripts/readme.md#re-build-mind-kernel)).
+- Please find the list of experiments and follow the detailed instructions on the linked pages.
+
 ### NDA Requirements
 - To compile and run the programmable switch side programs by your own, NDA with Intel is required.
 - To build *MIND*'s RoCE (RDMA over Converged Ethernet) module, you must agree with End-User Agreement for Mellanox OFED Software [(link to agreement and driver download)](https://www.mellanox.com/page/mlnx_ofed_eula?mtag=linux_sw_drivers&mrequest=downloads&mtype=ofed&mver=MLNX_OFED-5.0-1.0.0.0&mname=MLNX_OFED_LINUX-5.0-1.0.0.0-ubuntu18.04-x86_64.tgz)
