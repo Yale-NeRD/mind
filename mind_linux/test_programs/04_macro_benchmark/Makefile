@@ -1,8 +1,8 @@
 # Datasets
-PRE_TF := /test_program_log/tf/tensorflow_
-PRE_GC := /test_program_log/gc/graphchi_
+PRE_TF := /test_program_log/tf/
+PRE_GC := /test_program_log/gc/
 PRE_MA := /test_program_log/ma/memcached_a_
-PRE_MC := /test_program_log/mc/memcached_c_
+PRE_MC := /test_program_log/mc/
 # MAX_PASS_TF := 50000
 # MAX_PASS_GC := 50000
 # MAX_PASS_MA := 35000
@@ -63,6 +63,7 @@ clean:
 
 # tensorflow
 set_tf:
+	SUF :=
 	sudo mkdir -p /test_program_log
 	sudo mkdir -p /test_program_log/tf
 	sudo mount $(NFS_IP):/media/data_ssds/tensorflow_logs /test_program_log/tf
@@ -71,6 +72,7 @@ set_tf:
 	sudo mount $(NFS_IP):/media/data_raid0/tensorflow_logs /media/data_raid0/tensorflow_logs
 
 set_tf_debug:
+	SUF :=
 	sudo mkdir -p /test_program_log
 	sudo mkdir -p /test_program_log/tf
 	sudo mount $(NFS_IP):/home/yanpeng/2020_11_25_tensorflow/partitioned /test_program_log/tf
@@ -79,6 +81,7 @@ set_tf_debug:
 
 # graphchi
 set_gc:
+	SUF :=
 	sudo mkdir -p /test_program_log
 	sudo mkdir -p /test_program_log/gc
 	sudo mount $(NFS_IP):/media/data_ssds/graphchi_logs /test_program_log/gc
@@ -97,6 +100,7 @@ set_ma:
 
 # memcached_c
 set_mc:
+	SUF :=
 	sudo mkdir -p /test_program_log
 	sudo mkdir -p /test_program_log/mc
 	sudo mount $(NFS_IP):/media/data_ssds/memcached_c_logs /test_program_log/mc
