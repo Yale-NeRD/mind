@@ -241,7 +241,7 @@ async def terminate(sig, loop):
     tasks = [task for task in asyncio.Task.all_tasks() if task is not
              asyncio.tasks.Task.current_task()]
     list(map(lambda task: task.cancel(), tasks))
-    results = await asyncio.gather(*tasks, return_exceptions=True)
+    await asyncio.gather(*tasks, return_exceptions=True)
     loop.stop()
 
 async def read_stream(stream, err_format=False):
@@ -344,6 +344,10 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                         cmd = build_server_custom_command(
                             server[key_ip], s_user_id, s_ssh_key,
                             "cd ~ && git clone " + job_args[key_repo_url] + " || ls")
+                elif job == "update":
+                    cmd = build_server_custom_command(
+                        server[key_ip], s_user_id, s_ssh_key,
+                        "cd " + script_root + " && git pull")
 
                 if cmd is not None:
                     print(cmd, flush=True)
@@ -411,6 +415,10 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                         cmd = build_server_custom_command(
                             server[key_ip], s_user_id, s_ssh_key,
                             "cd ~ && git clone " + job_args[key_repo_url] + " || ls")
+                elif job == "update":
+                    cmd = build_server_custom_command(
+                        server[key_ip], s_user_id, s_ssh_key,
+                        "cd " + script_root + " && git pull")
                 elif job == "collect_from_server":
                     if (job_args is not None) and (key_remote in job_args) and (key_local in job_args):
                         cmd = build_file_from_server(server[key_ip], s_user_id, s_ssh_key,
