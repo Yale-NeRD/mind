@@ -3,14 +3,13 @@ This directory contains script to send commands to the servers consising MIND cl
 ![cluster_setup](https://raw.githubusercontent.com/shsym/mind/main/ctrl_scripts/exp_cluster.png)
 
 ## Summary
-- Dependencies
-- Prerequisites / assumptions
-- Usage
+This readme.md contains the following three benchmarks:
+
 - ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces
 - ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases
 - ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Benchmark with various sharing and read/write ratios
-- Test programs (source code)
-- Details of experiment profile files
+
+We prepared experiment profiles (.yaml format) so that you can easily change configuration of the evaluations. Please refer the details below.
 
 ## Dependencies
 - `python3` (tested with v3.6.9)
