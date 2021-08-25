@@ -5,9 +5,9 @@ This directory contains script to send commands to the servers consising MIND cl
 ## Summary
 This readme.md contains the following three benchmarks:
 
-- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces
-- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases
-- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Benchmark with various sharing and read/write ratios
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces (Fig. 6 and 8-left)
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases (Fig. 7-left)
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Benchmark with various sharing and read/write ratios (Fig. 7-right)
 
 We prepared experiment profiles (.yaml format) so that you can easily change configuration of the evaluations. Please refer the details below.
 
@@ -46,7 +46,7 @@ python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
 ```
 python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
 ```
-- (Fig. 6 and 8-right, default setup: Memcached with YCSB workloada)
+- (Fig. 6 and 8-left, default setup: Memcached with YCSB workloada)
   - Please setup `04_macro_bench.yaml` for other workloads and configurations (tf: TensorFlow, gc: GraphChi, ma and mc: Memcached with YCSB workload A and C)
 - Result from compute blade VMs will be placed in `~/Downloads/04_macro_bench_[TRACE/APP]` (see `04_macro_bench.yaml` for details)
   - Inside the files `progress.ma_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE].log`, `Time [1234566789]` shows the highest value among threads. We used the highest value among blades (e.g., the slowest thread among 80 threads).
