@@ -4,6 +4,10 @@
 - Please first check NDA and HW requirements; if you plan to use CloudLab, you do not need to sign the NDA with Intel (but please agree with Mellanox's End-User Agreement as described below).
 - We recommend using our VMs on CloudLab to minimize effort to create VMs and manually build kernel on them. You can try rebuild kernel inside those VMs to verify completeness of the source code (we have a script for [rebuild](https://github.com/shsym/mind/blob/main/ctrl_scripts/readme.md#re-build-mind-kernel)).
 - Please find the [list of experiments](https://github.com/shsym/mind/tree/main/artifacts#how-to-run-experiments) and follow the detailed instructions on the linked pages.
+- Since some of then experiments use the memory access traces (over 6 TB), it would take more than a week to reproduce all data points for MIND and the compared systems (FastSwap and GAM). To mitigate this overhead:
+  - For the performance evaluation with memory traces, which is the main results in the paper (Fig. 6), the memory trace replayer exposes an input parameter to limit the length of the experiment. For example, by using 1/10 of the traces, the experiments would be done within 15 hours (roughly).
+  - For the cache coherence protocol emulation, we prepared pre-computed output results.
+  - For PSO/PSO+ estimation, the pre-computed output from the cache coherence protocol and other pre-computed input data can be used to feed the estimator.
 ---
 
 ### NDA Requirements
@@ -14,12 +18,6 @@
 - To run simulations, one may need up to 120 threads running in parallel.
 - Default cluster environment consists of 8 compute blade VMs, 1 memory blade VM, and 1 programmable switch. We used 100 Gbps link for all connections between VM and the switch; VMs are distributed over 4 compute servers and 1 memory server.
 - We enabled IO-MMU and used PCIe passthrough to attach NIC to VMs.
-
-### Notes
-- Since we used very huge memory traces (around 8 TB), simulator will take a few days to create a data point / log.
-Therefore, we also included sample output files from the simulator, so that you can quickly run analyzer scripts with the sample files to see the results.
-- To mitigate dependency and configuration complexicy (NIC drivers, IO-MMU anc VM setup), we are preparing VMs on CloudLab which can run *MIND*'s kernel.
-As the VM also contains *THIS* source code, you can pull the recent commit and build our own kernel on the VMs.
 
 ## Artifact evaulation instructions
 - *Update) When CloudLab experiment setup is ready (with a programmable switch), we will add CloudLab specific instructions and scripts.*
@@ -44,6 +42,6 @@ We list up the evaluations included in this repo and *a link to more specific in
 2. [Latency measurements for state transision cases (Fig. 7, left)](https://github.com/shsym/mind/tree/main/ctrl_scripts)
 3. [Benchmark with various sharing and read/write ratios (Fig. 7, right)](https://github.com/shsym/mind/tree/main/ctrl_scripts)
 4. [Memory allocation test with memory allocation traces (Fig. 8, center and right)](https://github.com/shsym/mind/tree/main/tools/memory_allocation)
-5. [Cache coherence protocol simulations (for the measurement under infeasible configurations in real switch / x86 architecture)](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim)
+5. [Cache coherence protocol emulations (for the measurement under infeasible configurations in real switch / x86 architecture)](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim)
     - Sensitivity analysis for bounded splitting algorithm (Fig. 9)
     - PSO and PSO+ simulation (Part of Fig. 7, right)
