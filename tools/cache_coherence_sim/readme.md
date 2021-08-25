@@ -3,7 +3,7 @@ This repo contains a MIND simulator that runs on memory access traces prepared [
 
 ## Summary
 - ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) We have the following example scripts: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, and `run_mc.sh`
-- Since it may take too much time to run simulation (up to 2 days per application, espeically for memcached w/ YCSB workloadA), please also find our pre-computed output logs in [sub folder](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim/bounded_split_eval)
+- Since it may take too much time to run simulation (up to 2 days per application, espeically for memcached w/ YCSB workloadA), please also find our pre-computed output logs in [here](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim/bounded_split_eval)
   - Please refer the last line of the log. Each column means the cumulative number of false invalidations, falsely written backed pages, and directory entries at the end the current resizing epoch, respectively (the `stat.[#blades]n_[#threads per blade]t...log` file below).
 
 ## Get Started
