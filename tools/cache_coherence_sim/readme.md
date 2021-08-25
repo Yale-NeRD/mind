@@ -1,14 +1,21 @@
-## Introduction
-This repo contains a MIND simulator that runs on memory access traces prepared [here](https://github.com/shsym/mind_ae/tree/master/tools/prepare_traces)
+# Cache coherence emulator with software-based cache coherence protocol implementation
+- This tool is mainly designed for evaluating and comparing various (extreme) design space which cannot be fitted in on-chip memory of programmable switch ASIC.
+- We renamed it as an emulator (instead of simulator) because we emulate the in-network cache coherence by launching many number of workers sharing a similar native code for our macro benchmark program. 
 
 ## Summary
 - ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) We have the following example scripts: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, and `run_mc.sh`
+  - In the paper, we adjusted three parameters:
+    - Initial directory entry size (16 KB to 2 MB) — Fig. 9 left and right
+    - Epoch size (1 to 100; set to a very large number such as 1000000 to disable bounded splitting algorithm) — Fig. 9 right
+    - Maximum number of directory entries (30000 for TSO/PSO and 300000 for PSO+) — a part of Fig. 6
+  - The evaluation results were measured in a machine having enough core count (96 cores / 192 threads).
 - Since it may take too much time to run simulation (up to 2 days per application, espeically for memcached w/ YCSB workloadA), please also find our pre-computed output logs in [here](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim/bounded_split_eval)
   - Please refer the last line of the log. Each column means:
     - The cumulative number of false invalidations,
     - Falsely written backed pages,
     - Directory entries at the end the current resizing epoch, respectively.
     - Please refer our description for `stat.[#blades]n_[#threads per blade]t...log` file below.
+
 
 ## Get Started
 To run the simulator, you need to have the trace files ready first, which means they need to be stored
@@ -25,7 +32,7 @@ simulates a cluster with `8` nodes that each has `10` cores (total `80`).
 - The initial directory entry size is 1MB (`1048576`).
 - The local cache size for each node is 512MB (`536870912`)
 - The maximum memory footprint size (highest address minus lowest address) of the trace is 4GB (`4294967296`), which is large enough for applications we studied.
-- The following `10` indicates that the directory entry is resized every 10 timewindows with resizing enabled.
+- The following `10` indicates epoch size—the directory entry is resized every 10 timewindows with resizing enabled.
 - The last `300000` represents the maximum number of directory entries (Note that if the initial directory entry size is set to too small value, the initial number of directory entries can be larger than this value. The bounded splitting algorithm will merge directory entries to make the number of entries less than given maximum number of entries).
 
 ## Understand the output
