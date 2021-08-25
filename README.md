@@ -2,7 +2,7 @@
 In this research project, we leverage programmable network switches to enable an efficient shared memory abstraction for disaggregated data centers by placing memory management logic in the network fabric.
 
 ## Artifact Evaluation
-### [→ Please find our instructions here](https://github.com/shsym/mind/tree/master/artifacts)
+### [→ Please find our instructions here](https://github.com/shsym/mind/tree/main/artifacts)
 
 ## Dependency & Requirements
 - System architecture: x86-64bit
