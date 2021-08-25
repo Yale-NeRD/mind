@@ -18,7 +18,7 @@
       [running time without profiling] - [running time without memory accesses] = [estimated SC time]
       ```
       - The first two values are measured on MIND (i.e., the benchmark for Fig. 6)
-        - `[running time without memory accesses]` can be measured by simply comment out memory access in [this file](https://github.com/shsym/mind/blob/main/mind_linux/test_programs/04_macro_benchmark/test_program.cpp)
+        - `[running time without memory accesses]` can be measured by simply comment out memory access in [this file](https://github.com/shsym/mind/blob/main/mind_linux/test_programs/04_macro_benchmark/test_program.cpp) ([READ](https://github.com/shsym/mind/blob/60372b492baab7fc11b2578c866d7e28de583a2a/mind_linux/test_programs/04_macro_benchmark/test_program.cpp#L283)/[WRITE](https://github.com/shsym/mind/blob/60372b492baab7fc11b2578c866d7e28de583a2a/mind_linux/test_programs/04_macro_benchmark/test_program.cpp#L295))
 
 - PSO
 ```
