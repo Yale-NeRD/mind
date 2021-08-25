@@ -1,5 +1,5 @@
 # Memory allocation simulation tool
-- To test and compare *MIND*'s and traditional memory allocation, we designed this tool which simulates of memory allcation and calculates page table aggregation based on prefix-match
+- To test and compare *MIND*'s and traditional memory allocation. schemes, we designed this tool which simulates of memory allcation and calculates page table aggregation based on prefix-match
 
 ## Usage
 For the memory allocation results of TensorFlow, Graphchi, and Memcached A/C traces (10 to 80 threads), please run:
