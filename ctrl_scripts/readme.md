@@ -50,10 +50,11 @@ python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
 python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
 ```
 - (Fig. 6 and 8-left, default setup: Memcached with YCSB workloada)
-  - Please setup `04_macro_bench.yaml` for other workloads and configurations (tf: TensorFlow, gc: GraphChi, ma and mc: Memcached with YCSB workload A and C)
-- Result from compute blade VMs will be placed in `~/Downloads/04_macro_bench_[TRACE/APP]` (see `04_macro_bench.yaml` for details)
-  - Inside the files `progress.ma_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE].log`, `Time [1234566789]` shows the highest value among threads. We used the highest value among blades (e.g., the slowest thread among 80 threads).
+  - Please setup `04_macro_bench.yaml` to have the same application you loaded: [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L30), [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L47), and [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L55)
+- Result from compute blade VMs will be placed in `~/Downloads/04_macro_bench_[APP]` (see `04_macro_bench.yaml` for details)
+  - Inside the files `progress.[APP]_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE].log`, `Time [1234566789]` shows the highest value among threads. We used the highest value among blades (e.g., the slowest thread among 80 threads).
 - Result from switch will be placed at `~/Download/latest.log`
+  - A new result will override any previous result having the same filename.
   - Inside the log file, each line `23:07:02:512201, 7473, 1` represents `[TIMESTAMP], [#FREE DIRECTORY ENTRIES], [SPLIT/MERGE THRESHOLD]`
 
 ### Comparison with other systems
