@@ -13,12 +13,13 @@
 - The script will print out Estimated time for PSO and SC
   - Time for SC is used for obtaining the input argument `--remote_adjust` (details in the next section)
     - *Script contains the values that we found from our experiments.*
-    - Someone try to find a value of `--remote_adjust` where
+    - If you want to try to find a value of `--remote_adjust`, we need fo first calculate `estimated SC time`:
       ```
-      [running time without profiling] - [running time without memory accesses] = [estimated SC time]
+      [estimated SC time] = [running time without profiling] - [running time without memory accesses]
       ```
       - The first two values are measured on MIND (i.e., the benchmark for Fig. 6)
         - `[running time without memory accesses]` can be measured by simply comment out memory access in [this file](https://github.com/shsym/mind/blob/main/mind_linux/test_programs/04_macro_benchmark/test_program.cpp) ([READ](https://github.com/shsym/mind/blob/60372b492baab7fc11b2578c866d7e28de583a2a/mind_linux/test_programs/04_macro_benchmark/test_program.cpp#L283)/[WRITE](https://github.com/shsym/mind/blob/60372b492baab7fc11b2578c866d7e28de583a2a/mind_linux/test_programs/04_macro_benchmark/test_program.cpp#L295))
+      - Then you can adjust `--remote_adjust` so that the time for SC equals to the value of `estimated SC time`
 
 - PSO
 ```
