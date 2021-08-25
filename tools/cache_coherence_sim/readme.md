@@ -2,7 +2,9 @@
 This repo contains a MIND simulator that runs on memory access traces prepared [here](https://github.com/shsym/mind_ae/tree/master/tools/prepare_traces)
 
 ## Summary
-![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) We have the following example scripts: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, and `run_mc.sh`
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) We have the following example scripts: `run_tf.sh`, `run_gc.sh`, `run_ma.sh`, and `run_mc.sh`
+- Since it may take too much time to run simulation (up to 2 days with 120 threads per application, espeically for memcached w/ YCSB workloadA), please also find our pre-computed output logs in [sub folder](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim/bounded_split_eval)
+  - Please refer the last line of the log. Each column means the cumulative number of false invalidations, falsely written backed pages, and directory entries at the end the current resizing epoch, respectively (the `stat.[#blades]n_[#threads per blade]t...log` file below).
 
 ## Get Started
 To run the simulator, you need to have the trace files ready first, which means they need to be stored
@@ -31,14 +33,10 @@ The content of an entry starts with the address of the cache line, then followed
 
 - `rwcnt` stores number of reads and writes ([local read], [local write], [remote read], [remote writes] per line). Logs in this directory will be used for PSO simulation.
 
-- Entries in `stat.[#blades]n_[#threads per blade]t...log` are generated at each time the resizing happens. The entries contain 3 numbers each, 
-indicating the cumulative number of false invalidations, falsely written backed pages and directory entries at the end the current resizing epoch.
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Entries in `stat.[#blades]n_[#threads per blade]t...log` are generated at each time the resizing happens. The entries contain 3 numbers each, indicating the cumulative number of false invalidations, falsely written backed pages, and directory entries at the end the current resizing epoch.
 This result is collected to examine to effectivity of MIND's bounded directory entry splitting algorithm.
 
 - Entries in `progress.[#blades]n_[#threads per blade]t...log` contain Invalidation statistics (number of invalidations and invalidated pages) and number of read/write accesses.
-
-## Pre-computed logs
-- Please find our pre-computed output logs in [sub folder](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim/bounded_split_eval)
 
 ## Configure the simulator
 Besides the parameters passed to the simulator, Other reconfiguraions can also be done by editing `./simulator.hpp`.
