@@ -43,6 +43,8 @@ We prepared experiment profiles (.yaml format) so that you can easily change con
 python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
 ```
 - First, run the script with the profile `05_load_trace.yaml` to load memory access traces from the storage server.
+  - You can choose up which application traces to load in the profile—please modify both lines: [here](https://github.com/shsym/mind/blob/5da9130db51f4da10fd4b84d64ae1f01dc008fb9/ctrl_scripts/scripts/profiles/05_load_trace.yaml#L38) and [here](https://github.com/shsym/mind/blob/5da9130db51f4da10fd4b84d64ae1f01dc008fb9/ctrl_scripts/scripts/profiles/05_load_trace.yaml#L45)
+    - tf: TensorFlow, gc: GraphChi, ma: Memcached w/ YCSB workloadA, mc: Memcached w/ YCSB workloadC
 
 ```
 python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
