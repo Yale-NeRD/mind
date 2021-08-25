@@ -2,6 +2,16 @@
 This directory contains script to send commands to the servers consising MIND cluster.
 ![cluster_setup](https://raw.githubusercontent.com/shsym/mind/main/ctrl_scripts/exp_cluster.png)
 
+## Summary
+- Dependencies
+- Prerequisites / assumptions
+- Usage
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases
+- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Benchmark with various sharing and read/write ratios
+- Test programs (source code)
+- Details of experiment profile files
+
 ## Dependencies
 - `python3` (tested with v3.6.9)
 - `yaml` and `argparse` package (```pip3 install argparse pyyaml```)
@@ -64,7 +74,7 @@ python3 scripts/run_commands.py --profile profiles/03_sharing_ratio.yaml
   - The name `res_2_sr050_rw050.log` presents it was from the 3rd blade (id=2), and sharing ratio was 50% and read ratio was 50%.
   - Inside the file, the last line shows 4KB IOPS. We used sum over 8 blades.
 
-## Test programs 
+## Test programs (source code)
 - Test programs used by this script is located in [here](https://github.com/shsym/mind/tree/main/mind_linux/test_programs) with detailed information. 
 
 ## Details of experiment profile files
