@@ -35,13 +35,9 @@ We prepared experiment profiles (.yaml format) so that you can easily change con
 
 - When each task of the profile is finished (see below for more details), output from servers/VMs will be updated at `scripts/run.log`
 
-## (Re-)Build MIND kernel
-```
-python3 scripts/run_commands.py --profile profiles/01_restart_vms.yaml
-```
-- This profile will clone this repo (which will print warnings because our VMs already have the repo), build kernel, and restart VMs.
-
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces
+***We assume that you are in this directory on the experiment management server***
+
 ```
 python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
 ```
@@ -79,6 +75,12 @@ python3 scripts/run_commands.py --profile profiles/03_sharing_ratio.yaml
 - Result will be placed in `~/Downloads/03a_sharing_ratio`
   - The name `res_2_sr050_rw050.log` presents it was from the 3rd blade (id=2), and sharing ratio was 50% and read ratio was 50%.
   - Inside the file, the last line shows 4KB IOPS. We used sum over 8 blades.
+
+## (Re-)Build MIND kernel
+```
+python3 scripts/run_commands.py --profile profiles/01_restart_vms.yaml
+```
+- This profile will clone this repo (which will print warnings because our VMs already have the repo), build kernel, and restart VMs.
 
 ## Test programs (source code)
 - Test programs used by this script is located in [here](https://github.com/shsym/mind/tree/main/mind_linux/test_programs) with detailed information. 
