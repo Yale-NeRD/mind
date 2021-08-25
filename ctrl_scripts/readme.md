@@ -34,6 +34,12 @@ We prepared experiment profiles (.yaml format) so that you can easily change con
 
 - When each task of the profile is finished (see below for more details), output from servers/VMs will be updated at `scripts/run.log`
 
+## (Re-)Build MIND kernel
+```
+python3 scripts/run_commands.py --profile profiles/01_restart_vms.yaml
+```
+- This profile will clone this repo (which will print warnings because our VMs already have the repo), build kernel, and restart VMs.
+
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces
 ```
 python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
