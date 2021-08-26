@@ -5,7 +5,8 @@
 - We recommend using our VMs on CloudLab to minimize effort to create VMs and manually build kernel on them. You can try rebuild kernel inside those VMs to verify completeness of the source code (we have a script for [rebuild](https://github.com/shsym/mind/blob/main/ctrl_scripts/readme.md#re-build-mind-kernel)).
 - Please find the [list of experiments](https://github.com/shsym/mind/tree/main/artifacts#how-to-run-experiments) and follow the detailed instructions on the linked pages.
 - Since some of then experiments use the memory access traces (over 6 TB), it would take more than a week to reproduce all data points for MIND and the compared systems (FastSwap and GAM). To mitigate this overhead:
-  - For the performance evaluation with memory traces, which is the main results in the paper (Fig. 6), the memory trace replayer exposes an input parameter to limit the length of the experiment. For example, by using 1/10 of the traces, the experiments would be done within 15 hours (roughly).
+  - For the performance evaluation with memory traces, which is the main results in the paper (Fig. 6), the memory trace replayer exposes an input parameter to limit the length of the experiment. For example, by using 1/10 of the traces, the experiments for 4 applications and 3 systems would be done within 15 hours (roughly).
+    - Even though the results from shorter memory traces would be the exactly same as the values in the paper, we believe overall performance trend would be consistent (since we reported normalized values in the paper).
   - For the cache coherence protocol emulation, we prepared pre-computed output results.
   - For PSO/PSO+ estimation, the pre-computed output from the cache coherence protocol and other pre-computed input data can be used to feed the estimator.
 ---
