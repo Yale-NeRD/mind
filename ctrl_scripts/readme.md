@@ -24,7 +24,7 @@ We prepared experiment profiles (.yaml format) so that you can easily change con
 - User can run `sudo` wihtout password (can be set up by using `visudo`).
   - For compute and memory servers, user can run `sudo virsh` without password.
   - For compute and memory blade VMs, user can run any command via `sudo` without password.
-- All servers and VMs have this repository at `~/mind`.
+- All servers and VMs have this repository at `~/mind` (please clone this repository).
 
 ## Usage / cluster setup
 - Please update cluster configuration located at `scripts/config.yaml`.
