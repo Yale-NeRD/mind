@@ -78,7 +78,7 @@ python3 scripts/run_commands.py --profile profiles/03_sharing_ratio.yaml
 - (Fig. 7-right, default setup: sharing ratio = 50%, read ratio = 50%)
 - Result will be placed in `~/Downloads/03a_sharing_ratio`
   - The name `res_2_sr050_rw050.log` presents it was from the 3rd blade (id=2), and sharing ratio was 50% and read ratio was 50%.
-  - Inside the file, the last line shows 4KB IOPS. We used sum over 8 blades.
+  - Inside the file, the last line shows 4KB IOPS. We used the sum over 8 blades.
 
 ## (Re-)Build MIND kernel
 ```
