@@ -32,4 +32,7 @@
   - Configure driver by `./configure --prefix=$SDE_INSTALL --enable-grpc --enable-thrift --host=x86_64-linux-gnu`
   - Run `make` and `make install`
 
-- To launch the compile program, use `./launch_disagg_switch.sh`
+- To launch the compile program
+  - First load Intel's `bf_kpkt` driver
+  - Enable the corresponding network interface
+  - Use to run the binary `./launch_disagg_switch.sh`
