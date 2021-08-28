@@ -36,7 +36,7 @@
   - Change [this line](https://github.com/shsym/mind/blob/4d623a558e379495ca3b636db4b7176728d5d5e6/mind_switch_ctrl/tna_disagg_switch.cpp#L115) to run `bfshell` (set to absolute path of `$SDE_INSTALL/bin/bfshell`) with the created script
 
 - To launch the compile program
-  - Make sure that P4 program is compiled and installed
+  - Make sure that [MIND P4 program](https://github.com/shsym/mind/tree/main/mind_p4) is compiled and installed
   - First load Intel's `bf_kpkt` driver
   - Enable the corresponding network interface
   - Use to run the binary `./launch_disagg_switch.sh`
