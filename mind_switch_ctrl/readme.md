@@ -32,7 +32,11 @@
   - Configure driver by `./configure --prefix=$SDE_INSTALL --enable-grpc --enable-thrift --host=x86_64-linux-gnu`
   - Run `make` and `make install`
 
+- Based on your cluster setup, please create `bfshell` script for enabling ports
+  - Change [this line](https://github.com/shsym/mind/blob/4d623a558e379495ca3b636db4b7176728d5d5e6/mind_switch_ctrl/tna_disagg_switch.cpp#L115) to run `bfshell` (set to absolute path of `$SDE_INSTALL/bin/bfshell`) with the created script
+
 - To launch the compile program
+  - Make sure that P4 program is compiled and installed
   - First load Intel's `bf_kpkt` driver
   - Enable the corresponding network interface
   - Use to run the binary `./launch_disagg_switch.sh`
