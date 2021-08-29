@@ -43,7 +43,7 @@ We prepared experiment profiles (.yaml format) so that you can easily change con
 python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
 ```
 - First, run the script with the profile `05_load_trace.yaml` to load memory access traces from the storage server.
-  - You can choose up which application traces to load in the profile—please modify both lines: [here](https://github.com/shsym/mind/blob/5da9130db51f4da10fd4b84d64ae1f01dc008fb9/ctrl_scripts/scripts/profiles/05_load_trace.yaml#L38) and [here](https://github.com/shsym/mind/blob/5da9130db51f4da10fd4b84d64ae1f01dc008fb9/ctrl_scripts/scripts/profiles/05_load_trace.yaml#L45)
+  - You can choose which application traces to load in the profile—please modify both lines: [here](https://github.com/shsym/mind/blob/5da9130db51f4da10fd4b84d64ae1f01dc008fb9/ctrl_scripts/scripts/profiles/05_load_trace.yaml#L38) and [here](https://github.com/shsym/mind/blob/5da9130db51f4da10fd4b84d64ae1f01dc008fb9/ctrl_scripts/scripts/profiles/05_load_trace.yaml#L45)
     - tf: TensorFlow, gc: GraphChi, ma: Memcached w/ YCSB workloadA, mc: Memcached w/ YCSB workloadC
 
 ```
@@ -52,7 +52,8 @@ python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
 - (Fig. 6 and 8-left, default setup: Memcached with YCSB workloada)
   - Please setup `04_macro_bench.yaml` to have the same application you loaded: [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L30), [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L47), and [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L55)
 - Result from compute blade VMs will be placed in `~/Downloads/04_macro_bench_[APP]` (see `04_macro_bench.yaml` for details)
-  - Inside the files `progress.[APP]_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE].log`, `Time [1234566789]` shows the highest value among threads. We used the highest value among blades (e.g., the slowest thread among 80 threads).
+  - Inside the files `progress.[APP]_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE].log`, `Time [1234566789]: ...` at the beginning of each line shows the highest value among threads. We used the highest value among blades (e.g., the slowest thread among 80 threads).
+  - We calculated the inverse of the time as a performance (i.e., 1 / [the highest time value]), then the performance values are normalized by comparing agains MIND's result with 1 and 10 threads for Fig. 6 left and right, respectively (Fig. 6 itself also shows which data point is the base of the normalization).
 - Result from switch will be placed at `~/Download/latest.log`
   - A new result will override any previous result having the same filename.
   - Inside the log file, each line `23:07:02:512201, 7473, 1` represents `[TIMESTAMP], [#FREE DIRECTORY ENTRIES], [SPLIT/MERGE THRESHOLD]`
