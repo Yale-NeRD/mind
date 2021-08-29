@@ -27,7 +27,7 @@ Each allocation algorithm can be printed at the top of each log:
 ==Simulation results==
 SizeBalancingAllocator & FirstFitAllocator — granularity: 2097152 , second-layer-pgtable: False
 ```
-- 1 GB page table (as a coarse granularity first level table)
+- 1 GB page table (1 GB as a page size of the coarse-grained first level table)
 ```
 ==Simulation results==
  SizeBalancingAllocator & FirstFitAllocator — granularity: 1073741824 , second-layer-pgtable: True
