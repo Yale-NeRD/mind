@@ -39,6 +39,7 @@ We prepared experiment profiles (.yaml format) so that you can easily change con
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces
 ***We assume that you are in this directory `mind/ctrl_scripts/` on the experiment management server***
 
+### Prepare traces
 ```
 python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
 ```
@@ -46,11 +47,15 @@ python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
   - You can choose which application traces to load in the profile—please modify both lines: [here](https://github.com/shsym/mind/blob/5da9130db51f4da10fd4b84d64ae1f01dc008fb9/ctrl_scripts/scripts/profiles/05_load_trace.yaml#L38) and [here](https://github.com/shsym/mind/blob/5da9130db51f4da10fd4b84d64ae1f01dc008fb9/ctrl_scripts/scripts/profiles/05_load_trace.yaml#L45)
     - tf: TensorFlow, gc: GraphChi, ma: Memcached w/ YCSB workloadA, mc: Memcached w/ YCSB workloadC
 
+### How to run the benchmark
+- ***Each experiment would take a few hours to run (usually 2 to 5 hours per data point). Please modify `04_macro_bench.yaml` to reduce the running time by limiting number of steps***
+  - Update [this line](https://github.com/shsym/mind/blob/153c0d1fe2ed089e7f6b984dafadb8de507c7cd9/ctrl_scripts/scripts/profiles/04_macro_profile.yaml#L33) to a smaller value than that we used.
+    - The values we used for complete memory traces are specified in the next lines
+- (Fig. 6 and 8-left, default setup: Memcached with YCSB workloada)
+  - Please setup `04_macro_bench.yaml` to have the same application you loaded: [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L30), [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L47), and [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L55)
 ```
 python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
 ```
-- (Fig. 6 and 8-left, default setup: Memcached with YCSB workloada)
-  - Please setup `04_macro_bench.yaml` to have the same application you loaded: [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L30), [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L47), and [here](https://github.com/shsym/mind/blob/0a5911fb939b15f3b9975f89bf23f08d756c26cb/ctrl_scripts/scripts/profiles/04_macro_bench.yaml#L55)
 - Result from compute blade VMs will be placed in `~/Downloads/04_macro_bench_[APP]` (see `04_macro_bench.yaml` for details)
   - Inside the files `progress.[APP]_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE].log`, `Time [1234566789]: ...` at the beginning of each line shows the highest value among threads. We used the highest value among blades (e.g., the slowest thread among 80 threads).
   - We calculated the inverse of the time as a performance (i.e., 1 / [the highest time value]), then the performance values are normalized by comparing agains MIND's result with 1 and 10 threads for Fig. 6 left and right, respectively (Fig. 6 itself also shows which data point is the base of the normalization).
@@ -62,21 +67,31 @@ python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
 - For GAM, please check [this repository](https://github.com/charles-typ/mind_ae_gam)
 - For FastSwap, please check [this repository](https://github.com/yyppyy/cfm)
 
+### Measure CDF for PSO/PSO+ estimation
+- Assuming that the memory access trace files are already loaded, please run
+```
+python3 scripts/run_commands.py --profile=profiles/04_macro_profile.yaml
+```
+- Result CDF files will be placed at `~/Downloads/04_macro_profile_[APP]/`
+  - Each sub directory `cdf.[APP]_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE]` represents CDF collected from each compute blade 
+
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases
+- (Fig. 7-left, default setup: shared state to modified state, 8 compute blades)
+  - Update [the corresponding profile `03b_latency.yaml`](https://github.com/shsym/mind/blob/153c0d1fe2ed089e7f6b984dafadb8de507c7cd9/ctrl_scripts/scripts/profiles/03b_latency.yaml#L35-L36) to test various state transition (shared to shared, modified to shared, modified to modified, etc.)
 ```
 python3 scripts/run_commands.py --profile profiles/03b_latency.yaml
 ```
-- (Fig. 7-left, default setup: shared state to modified state, 8 compute blades)
 - Result will be placed in `~/Downloads/03b_latency`
   - The name `shared_to_modified_total_8_blades.log` represent it was transition from Shared to Modified states for 8 blades (7 sharer to 1 writer).
   - Inside the file, `FH_fetch_remote_tot` shows network latency
   - Inside the file, `FH_ack_waiting_node` shows latency for waiting ACK/invalidation
 
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Benchmark with various sharing and read/write ratios
+- (Fig. 7-right, default setup: sharing ratio = 50%, read ratio = 50%)
+  - Modify [the profile `03_sharing_ratio.yaml`](https://github.com/shsym/mind/blob/153c0d1fe2ed089e7f6b984dafadb8de507c7cd9/ctrl_scripts/scripts/profiles/03_sharing_ratio.yaml#L30-L31) to test various sharing and read ratios
 ```
 python3 scripts/run_commands.py --profile profiles/03_sharing_ratio.yaml
 ```
-- (Fig. 7-right, default setup: sharing ratio = 50%, read ratio = 50%)
 - Result will be placed in `~/Downloads/03a_sharing_ratio`
   - The name `res_2_sr050_rw050.log` presents it was from the 3rd blade (id=2), and sharing ratio was 50% and read ratio was 50%.
   - Inside the file, the last line shows 4KB IOPS. We used the sum over 8 blades.
