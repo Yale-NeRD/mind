@@ -6,12 +6,7 @@
 - Place this directory at `$SDE/pkgsrc/p4-examples/p4_16_programs/tna_disagg_switch`
   - Note: here, `mind_p4` becomes `tna_disagg_switch`
 
-- Move `configure_p4_build.sh` file in this directory to `$SDE/pkgsrc/p4-examples/p4_16_programs/configure_p4_build.sh`
-
 - `cd $SDE/pkgsrc/p4-examples/p4_16_programs`
-
-- Configure build system by: `sh configure_p4_build.sh tna_disagg_switch`
-
-- `cd $SDE/pkgsrc/p4-examples/p4_16_programs`
-
-- Build P4 program by: `make && make install`
+  - Move `$SDE/pkgsrc/p4-examples/p4_16_programs/tna_disagg_switch/configure_p4_build.sh` file to `$SDE/pkgsrc/p4-examples/p4_16_programs/configure_p4_build.sh`
+  - Configure build system by: `sh configure_p4_build.sh tna_disagg_switch`
+  - Build P4 program by: `make && make install`

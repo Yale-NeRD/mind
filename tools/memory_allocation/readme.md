@@ -7,8 +7,11 @@ For the memory allocation results of TensorFlow, Graphchi, and Memcached A/C tra
 - `./run_gc.sh`
 - `./run_md.sh`
 
-*Note*
-Due to the computation time (epecially for the GraphChi trace with 80 threads), simulation for 2 MB page tables are disabled by default. If you want to run it, please enable [3 lines in this part](https://github.com/shsym/mind/blob/83a8ae4e2bf7a2d9299ef02f80ed4486f21a4b64/tools/memory_allocation/main.py#L103).
+*Note*) Due to the computation time (epecially for the GraphChi trace with 80 threads), simulation for 2 MB page tables are disabled by default. If you want to run it, please enable [3 lines in this part](https://github.com/shsym/mind/blob/83a8ae4e2bf7a2d9299ef02f80ed4486f21a4b64/tools/memory_allocation/main.py#L103).
+
+- Even without actual simulation, the result for 2 MB page table can be estimated as follows:
+  - Number of pages = [size of allocated memory] / 2 MB
+  - Fairness = 1.0 (since the size of allocated memory > 1 GB, 2 MB pages can be evenly distributed over memory blades, almost perfectly)
 
 ## Result representation
 The script will print out *Jain's fairness* and *number of address translation / memory protection* entries.
@@ -24,7 +27,7 @@ Each allocation algorithm can be printed at the top of each log:
 ==Simulation results==
 SizeBalancingAllocator & FirstFitAllocator — granularity: 2097152 , second-layer-pgtable: False
 ```
-- 1 GB page table (as a coarse granularity first level table)
+- 1 GB page table (1 GB as a page size of the coarse-grained first level table)
 ```
 ==Simulation results==
  SizeBalancingAllocator & FirstFitAllocator — granularity: 1073741824 , second-layer-pgtable: True
