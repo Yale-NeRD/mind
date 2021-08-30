@@ -214,6 +214,15 @@ def build_vm_macro_bench_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v
                                   + str(thread_num) + " " + trace + " " + str(step_num))
 
 
+def build_vm_macro_profile_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key,
+                                 script_dir, node_id=0, trace='tf', thread_num=10, node_num=1, step_num=1000):
+    return build_vm_brick_command(server_ip, s_user, s_key,
+                                  vm_ctrl_ip, v_user, v_key, script_dir,
+                                  "v_04_run_macro_profile.sh "
+                                  + str(node_id) + " " + str(node_num) + " "
+                                  + str(thread_num) + " " + trace + " " + str(step_num))
+
+
 def build_switch_restart_command(switch_ip, s_user, s_key, script_dir):
     return build_in_brick_command(switch_ip, s_user, s_key, script_dir,
                                   "source ./h_switch_env.sh && ./h_switch_reset.sh")
@@ -528,17 +537,27 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                                                                     vm[key_ip], v_user_id, v_ssh_key, script_root,
                                                                     vm[key_id], job_args[key_state_from], job_args[key_state_to],
                                                                     job_args[key_node_num])
-                    elif job == "macro_bench":
+                    elif job == "macro_bench" or job == "macro_profile":
                         if (job_args is not None) and (key_trace in job_args)\
                             and (key_thread_num in job_args) and (key_node_num in job_args)\
                             and (key_step_num in job_args):
-                            cmd = build_vm_macro_bench_command(server[key_ip], s_user_id, s_ssh_key,
-                                                               vm[key_ip], v_user_id, v_ssh_key, script_root,
-                                                               node_id=vm[key_id],
-                                                               trace=job_args[key_trace],
-                                                               thread_num=job_args[key_thread_num],
-                                                               node_num=job_args[key_node_num],
-                                                               step_num=job_args[key_step_num])
+                            if job == "macro_bench":
+                                cmd = build_vm_macro_bench_command(server[key_ip], s_user_id, s_ssh_key,
+                                                                vm[key_ip], v_user_id, v_ssh_key, script_root,
+                                                                node_id=vm[key_id],
+                                                                trace=job_args[key_trace],
+                                                                thread_num=job_args[key_thread_num],
+                                                                node_num=job_args[key_node_num],
+                                                                step_num=job_args[key_step_num])
+                            elif job == "macro_profile":
+                                cmd = build_vm_macro_profile_command(server[key_ip], s_user_id, s_ssh_key,
+                                                                     vm[key_ip], v_user_id, v_ssh_key, script_root,
+                                                                     node_id=vm[key_id],
+                                                                     trace=job_args[key_trace],
+                                                                     thread_num=job_args[key_thread_num],
+                                                                     node_num=job_args[key_node_num],
+                                                                     step_num=job_args[key_step_num])
+
                     elif job == "collect_from_vms":
                         if (job_args is not None) and (key_remote in job_args) and (key_local in job_args):
                             cmd = build_server_dir_download(server[key_ip], s_user_id, s_ssh_key,
