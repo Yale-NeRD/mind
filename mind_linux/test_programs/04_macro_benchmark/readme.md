@@ -6,7 +6,7 @@
 - Inside a VM, we *recommand* users install NFS in the host machine and use it as the NFS server (which is a default setup that we used--with QEMU and its default IP address, `192.168.122.1`)
 
 # Usage
-- `make run_[application]ma_[thread_per_blade] NUM_NODE=[total_blade] NODE_ID=[current_node]`
+- `make run_[application]_[thread_per_blade] NUM_NODE=[total_blade] NODE_ID=[current_node]`
 
 ## Parameters
 `application`
