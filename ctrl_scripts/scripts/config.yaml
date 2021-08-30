@@ -10,6 +10,7 @@ default:
   user: sosp_ae
   key: ~/.ssh/vmhost_acc
   cluster gw: 10.10.10.0
+  nic: ens9  
 
 # id of switch must be -1
 switch:
@@ -66,6 +67,7 @@ compute servers:
       vm name: Ubuntu-CN4
       user: sslee
       key: ~/.ssh/id_rsa_for_vm
+      nic: ens10
 - c_server3:
   id: 3
   control ip: 172.28.229.151
@@ -121,6 +123,7 @@ memory servers:
         vm name: Ubuntu-MN
         user: sslee
         key: ~/.ssh/switch_acc
+        nic: ens10
 
 # list of storage servers
 storage servers:

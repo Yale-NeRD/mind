@@ -162,10 +162,15 @@ def build_in_brick_command(server_ip, s_user, s_key, script_dir, commands):
     return cmd
 
 
-def build_vm_init_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir):
+def build_vm_init_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir, v_id, v_nic):
     return build_vm_brick_command(server_ip, s_user, s_key,
                                   vm_ctrl_ip, v_user, v_key,
-                                  script_dir, "v_init_module.sh")
+                                  script_dir, "v_init_module.sh " + v_id + " " + v_nic)
+
+def build_vm_init_mn_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir, v_id, v_nic):
+    return build_vm_brick_command(server_ip, s_user, s_key,
+                                  vm_ctrl_ip, v_user, v_key,
+                                  script_dir, "v_init_mn_module.sh " + v_id + " " + v_nic)
 
 
 def build_vm_update_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir):
@@ -238,11 +243,14 @@ def build_host_load_trace_command(server_ip, s_user, s_key, script_dir, trace, s
 def load_access_cfg(cfg, target):
     _user_id = cfg[key_default][key_user]
     _ssh_key = cfg[key_default][key_ssh_key]
+    _nic = cfg[key_default][key_nic]
     if key_user in target:
         _user_id = target[key_user]
     if key_ssh_key in target:
         _ssh_key = target[key_ssh_key]
-    return _user_id, _ssh_key
+    if key_nic in target:
+        _nic = target[key_nic]
+    return _user_id, _ssh_key, _nic
 
 
 async def terminate(sig, loop):
@@ -313,7 +321,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                 script_root = cfg[key_default][key_script]
                 if key_script in switch:
                     script_root = switch[key_script]
-                s_user_id, s_ssh_key = load_access_cfg(cfg, switch)
+                s_user_id, s_ssh_key, s_nic = load_access_cfg(cfg, switch)
 
                 # per server work
                 cmd = None
@@ -342,7 +350,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
         # for memory servers
         if key_ms in cfg:
             for server in cfg[key_ms]:
-                s_user_id, s_ssh_key = load_access_cfg(cfg, server)
+                s_user_id, s_ssh_key, s_nic = load_access_cfg(cfg, server)
 
                 # per server work
                 cmd = None
@@ -376,7 +384,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     script_root = cfg[key_default][key_script]
                     if key_script in vm:
                         script_root = vm[key_script]
-                    v_user_id, v_ssh_key = load_access_cfg(cfg, vm)
+                    v_user_id, v_ssh_key, v_nic = load_access_cfg(cfg, vm)
 
                     if job == "first_access":
                         cmd = build_first_access_vm_command(server[key_ip], s_user_id, s_ssh_key,
@@ -393,9 +401,12 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     elif job == "shutdown":
                         cmd = build_vm_shutdown_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
                     elif job == "init":
-                        cmd = build_vm_custom_command(server[key_ip], s_user_id, s_ssh_key,
-                                                      vm[key_ip], v_user_id, v_ssh_key,
-                                                      "source ~/.init_mn.sh")
+                        # cmd = build_vm_custom_command(server[key_ip], s_user_id, s_ssh_key,
+                        #                               vm[key_ip], v_user_id, v_ssh_key,
+                        #                               "source ~/.init_mn.sh")
+                        cmd = build_vm_init_mn_command(server[key_ip], s_user_id, s_ssh_key,
+                                                       vm[key_ip], v_user_id, v_ssh_key, script_root, 
+                                                       vm[key_id], v_nic)
                     elif job == "update":
                         cmd = build_vm_update_command(server[key_ip], s_user_id, s_ssh_key,
                                                       vm[key_ip], v_user_id, v_ssh_key, script_root)
@@ -413,7 +424,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
         # for compute servers
         if key_cs in cfg:
             for server in cfg[key_cs]:
-                s_user_id, s_ssh_key = load_access_cfg(cfg, server)
+                s_user_id, s_ssh_key, s_nic = load_access_cfg(cfg, server)
 
                 # per server work
                 cmd = None
@@ -489,7 +500,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     script_root = cfg[key_default][key_script]
                     if key_script in vm:
                         script_root = vm[key_script]
-                    v_user_id, v_ssh_key = load_access_cfg(cfg, vm)
+                    v_user_id, v_ssh_key, v_nic = load_access_cfg(cfg, vm)
 
                     if job == "first_access":
                         cmd = build_first_access_vm_command(server[key_ip], s_user_id, s_ssh_key,
@@ -510,7 +521,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                                                       vm[key_ip], v_user_id, v_ssh_key, "ls")
                     elif job == "init":
                         cmd = build_vm_init_command(server[key_ip], s_user_id, s_ssh_key,
-                                                    vm[key_ip], v_user_id, v_ssh_key, script_root)
+                                                    vm[key_ip], v_user_id, v_ssh_key, script_root, vm[key_id], v_nic)
                     elif job == "update":
                         cmd = build_vm_update_command(server[key_ip], s_user_id, s_ssh_key,
                                                       vm[key_ip], v_user_id, v_ssh_key, script_root)
