@@ -42,6 +42,7 @@ key_dir_1 = 'dir_1'
 key_dir_2 = 'dir_2'
 dir_receipes = '/recipes'
 dir_bricks = '/bricks'
+mem_blade_id_start = 16
 
 app_name_map = {
     'ma': 'memcached_a',
@@ -165,12 +166,14 @@ def build_in_brick_command(server_ip, s_user, s_key, script_dir, commands):
 def build_vm_init_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir, v_id, v_nic):
     return build_vm_brick_command(server_ip, s_user, s_key,
                                   vm_ctrl_ip, v_user, v_key,
-                                  script_dir, "v_init_module.sh " + v_id + " " + v_nic)
+                                  script_dir, "v_init_module.sh " + str(v_id) + " " + str(v_nic))
 
 def build_vm_init_mn_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir, v_id, v_nic):
     return build_vm_brick_command(server_ip, s_user, s_key,
                                   vm_ctrl_ip, v_user, v_key,
-                                  script_dir, "v_init_mn_module.sh " + v_id + " " + v_nic)
+                                  script_dir, "v_init_mn_module.sh "
+                                  + str(int(v_id) - mem_blade_id_start) + " " + str(v_nic))
+                                  # memory blade's ID starts from 16
 
 
 def build_vm_update_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir):
