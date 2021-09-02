@@ -48,7 +48,7 @@ compute servers:
       key: ~/.ssh/key_for_vm
 - c_server3:
   id: 3
-  control ip: amd276.utah.cloudlab.us
+  control ip: amd275.utah.cloudlab.us
   cluster ip: 10.10.10.203
   nic: ens8f0
   data_onwer: yupeng
@@ -62,7 +62,7 @@ compute servers:
       key: ~/.ssh/key_for_vm
 - c_server4:
   id: 4
-  control ip: amd279.utah.cloudlab.us
+  control ip: amd276.utah.cloudlab.us
   cluster ip: 10.10.10.204
   nic: ens8f0
   data_onwer: yupeng
@@ -72,6 +72,34 @@ compute servers:
       control ip: 192.168.122.104
       cluster ip: 10.10.10.204
       vm name: mind_CN4
+      user: sslee
+      key: ~/.ssh/key_for_vm
+- c_server5:
+  id: 5
+  control ip: amd278.utah.cloudlab.us
+  cluster ip: 10.10.10.205
+  nic: ens8f0
+  data_onwer: yupeng
+  vm list:
+    - vm1:
+      id: 4
+      control ip: 192.168.122.105
+      cluster ip: 10.10.10.205
+      vm name: mind_CN5
+      user: sslee
+      key: ~/.ssh/key_for_vm
+- c_server6:
+  id: 6
+  control ip: amd279.utah.cloudlab.us
+  cluster ip: 10.10.10.206
+  nic: ens8f0
+  data_onwer: yupeng
+  vm list:
+    - vm1:
+      id: 5
+      control ip: 192.168.122.106
+      cluster ip: 10.10.10.206
+      vm name: mind_CN6
       user: sslee
       key: ~/.ssh/key_for_vm
 
