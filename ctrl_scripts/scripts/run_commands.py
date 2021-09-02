@@ -328,19 +328,23 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
 
                 # per server work
                 cmd = None
-                if job == "first_access":
-                    cmd = build_first_access_command(switch[key_ip], s_user_id, s_ssh_key)
-                elif job == "git_clone":
-                    if (job_args is not None) and (key_repo_url in job_args):
-                        cmd = build_server_custom_command(
-                            switch[key_ip], s_user_id, s_ssh_key,
-                            "cd ~ && git clone " + job_args[key_repo_url] + " || ls")
-                elif job == "reset":
-                    cmd = build_switch_restart_command(switch[key_ip], s_user_id, s_ssh_key, script_root)
+                # if job == "first_access":
+                #     cmd = build_first_access_command(switch[key_ip], s_user_id, s_ssh_key)
+                # elif job == "git_clone":
+                #     if (job_args is not None) and (key_repo_url in job_args):
+                #         cmd = build_server_custom_command(
+                #             switch[key_ip], s_user_id, s_ssh_key,
+                #             "cd ~ && git clone " + job_args[key_repo_url] + " || ls")
+                # elif job == "reset":
+                #     cmd = build_switch_restart_command(switch[key_ip], s_user_id, s_ssh_key, script_root)
+                # elif job == "switch_log":
+                #     if (job_args is not None) and (key_remote in job_args) and (key_local in job_args):
+                #         cmd = build_file_from_server(switch[key_ip], s_user_id, s_ssh_key,
+                #                                      job_args[key_remote], job_args[key_local])
+                if job == "reset":
+                    cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=restart_switch"
                 elif job == "switch_log":
-                    if (job_args is not None) and (key_remote in job_args) and (key_local in job_args):
-                        cmd = build_file_from_server(switch[key_ip], s_user_id, s_ssh_key,
-                                                     job_args[key_remote], job_args[key_local])
+                    cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=download_log"
                 else:
                     break
 
