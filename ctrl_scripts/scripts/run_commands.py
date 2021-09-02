@@ -118,22 +118,22 @@ def build_first_access_vm_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, 
 
 def build_setup_compute_server_command(server_ip, user, key, idx):
     cmd = build_ssh_base(server_ip, user, key)
-    cmd +=  '-t \"cd /local/repository/ && echo Y | ./init_env.sh && ./localize_data.sh CN ' + str(idx) + ' ' + str(idx) + '\"'
+    cmd +=  ' -t \"cd /local/repository/ && echo Y | ./init_env.sh && ./localize_data.sh CN ' + str(idx) + ' ' + str(idx) + '\"'
     return cmd
 
 def build_setup_memory_server_command(server_ip, user, key):
     cmd = build_ssh_base(server_ip, user, key)
-    cmd +=  '-t \"cd /local/repository/ && echo Y | ./init_env.sh && ./localize_data.sh MN\"'
+    cmd +=  ' -t \"cd /local/repository/ && echo Y | ./init_env.sh && ./localize_data.sh MN\"'
     return cmd
 
 def build_vm_cn_create_command(server_ip, user, key, idx, system_name="mind"):
     cmd = build_ssh_base(server_ip, user, key)
-    cmd +=  '-t \"cd /local/repository/ && echo Y | ./setup_CN.sh ' + system_name + ' ' + str(idx) + ' ' + str(idx) + '\"'
+    cmd +=  ' -t \"cd /local/repository/ && echo Y | ./setup_CN.sh ' + system_name + ' ' + str(idx) + ' ' + str(idx) + '\"'
     return cmd
 
 def build_vm_mn_create_command(server_ip, user, key, system_name="mind"):
     cmd = build_ssh_base(server_ip, user, key)
-    cmd +=  '-t \"cd /local/repository/ && echo Y | ./setup_MN.sh ' + system_name + '\"'
+    cmd +=  ' -t \"cd /local/repository/ && echo Y | ./setup_MN.sh ' + system_name + '\"'
     return cmd
 
 def build_vm_start_command(server_ip, user, key, vm_name):
