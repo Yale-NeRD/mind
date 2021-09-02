@@ -78,6 +78,7 @@ compute servers:
 # list of memory servers
 memory servers:
   - m_server1:
+    id: 1
     control ip: amd280.utah.cloudlab.us
     vm list:
       - vm1:
