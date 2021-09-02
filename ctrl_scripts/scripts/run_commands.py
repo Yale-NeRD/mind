@@ -344,7 +344,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                 if job == "reset":
                     cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=restart_switch"
                 elif job == "switch_log":
-                    cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=download_log"
+                    cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=download_log --user=" + s_user_id
                 else:
                     break
 

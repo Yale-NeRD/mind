@@ -15,7 +15,6 @@ switch:
   id: -1
   control ip: 128.110.219.201 # control plane IP
   cluster ip: 10.10.10.1      # data plane IP
-  user: user                  # user to login
 
 # list of compute servers
 compute servers:
