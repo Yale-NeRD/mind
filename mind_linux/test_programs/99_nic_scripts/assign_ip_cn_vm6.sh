@@ -14,5 +14,6 @@ unset MLX5_SHUT_UP_BF
 
 # local host and vm
 # ping -c 3 10.10.10.101
-sh 13_register_vm_arp.sh ens9
+# sh 13_register_vm_arp.sh ens9
+sudo arp -i ens9 -s 10.10.10.1 00:02:00:00:03:00
 sudo ibv_devinfo

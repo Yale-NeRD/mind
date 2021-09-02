@@ -30,8 +30,8 @@
 // TODO: this should be configurable from kernel config
 #define MEM_NODE_ID DISAGG_MEMORY_NODE_ID
 #define MEMORY_BASE_LOCATION    0x200000000     // start from 8 GB
-#define MEMORY_TOTAL_SIZE       0x1E00000000       // 120 GB
-// #define MEMORY_TOTAL_SIZE       0x800000000       // 32 GB (which uses 8 ~ 40 GB)
+// #define MEMORY_TOTAL_SIZE       0x1E00000000       // 120 GB
+#define MEMORY_TOTAL_SIZE       0x800000000       // 32 GB (which uses 8 ~ 40 GB)
 
 // Intializer
 int init_mn_man(void);

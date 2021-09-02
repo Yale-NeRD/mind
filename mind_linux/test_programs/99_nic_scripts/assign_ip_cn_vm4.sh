@@ -1,7 +1,7 @@
 #!/bin/bash
-sudo ip addr add 10.10.10.204/24 dev ens10
-sudo ifconfig ens10 mtu 9000
-sudo ifconfig ens10 up
+sudo ip addr add 10.10.10.204/24 dev ens9
+sudo ifconfig ens9 mtu 9000
+sudo ifconfig ens9 up
 
 # blueflame
 export MLX5_POST_SEND_PREFER_BF=1
@@ -14,5 +14,6 @@ unset MLX5_SHUT_UP_BF
 
 # local host and vm
 # ping -c 3 10.10.10.101
-sh 13_register_vm_arp.sh ens10
+# sh 13_register_vm_arp.sh ens9
+sudo arp -i ens9 -s 10.10.10.1 00:02:00:00:03:00
 sudo ibv_devinfo
