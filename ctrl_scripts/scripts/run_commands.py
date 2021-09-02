@@ -128,12 +128,12 @@ def build_setup_memory_server_command(server_ip, user, key):
 
 def build_vm_cn_create_command(server_ip, user, key, idx, system_name="mind"):
     cmd = build_ssh_base(server_ip, user, key)
-    cmd +=  '-t \"cd /local/repository/ && echo Y |  ./setup_CN.sh ' + system_name + ' ' + str(idx + 1) + ' ' + str(idx + 1) + '\"'
+    cmd +=  '-t \"cd /local/repository/ && echo Y | ./setup_CN.sh ' + system_name + ' ' + str(idx + 1) + ' ' + str(idx + 1) + '\"'
     return cmd
 
 def build_vm_mn_create_command(server_ip, user, key, system_name="mind"):
     cmd = build_ssh_base(server_ip, user, key)
-    cmd +=  '-t \"cd /local/repository/ && echo Y |  ./setup_MN.sh ' + system_name + '\"'
+    cmd +=  '-t \"cd /local/repository/ && echo Y | ./setup_MN.sh ' + system_name + '\"'
     return cmd
 
 def build_vm_start_command(server_ip, user, key, vm_name):
@@ -360,6 +360,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                 #         cmd = build_file_from_server(switch[key_ip], s_user_id, s_ssh_key,
                 #                                      job_args[key_remote], job_args[key_local])
                 if job == "first_access":
+                    # this let switch to push data using private key which is already placed in the switch
                     cmd = "echo ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN9fJsOwkHhjt06p8/+OdSv1J/pOQF4SgDTO0T22Zmvd seung-seob.lee@yale.edu >> ~/.ssh/authorized_keys"
                 elif job == "reset":
                     cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=restart_switch"
