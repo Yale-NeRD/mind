@@ -1,13 +1,13 @@
 # Profile for tasks/commands in order
-- name: register ssh keys
-  job: first_access
-  per_command_delay: 1
-  post_delay: 10
-
-- name: set up cluster
-  job: setup_cluster
-  per_command_delay: 1
-  post_delay: 0
+# - name: register ssh keys
+#   job: first_access
+#   per_command_delay: 1
+#   post_delay: 10
+# 
+# - name: set up cluster
+#   job: setup_cluster
+#   per_command_delay: 1
+#   post_delay: 0
 
 - name: create VMs
   job: create

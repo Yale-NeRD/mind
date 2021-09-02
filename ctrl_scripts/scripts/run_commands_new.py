@@ -118,7 +118,7 @@ def build_first_access_vm_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, 
 
 def build_setup_compute_server_command(server_ip, user, key, idx):
     cmd = build_ssh_base(server_ip, user, key)
-    cmd +=  '-t \"cd /local/repository/ && echo Y | ./init_env.sh && ./localize_data.sh CN ' + str(idx) + ' ' + str(idx) + '\"'
+    cmd +=  '-t \"cd /local/repository/ && echo Y | ./init_env.sh && ./localize_data.sh CN ' + str(idx + 1) + ' ' + str(idx + 1) + '\"'
     return cmd
 
 def build_setup_memory_server_command(server_ip, user, key):
@@ -128,14 +128,12 @@ def build_setup_memory_server_command(server_ip, user, key):
 
 def build_vm_cn_create_command(server_ip, user, key, idx, system_name="mind"):
     cmd = build_ssh_base(server_ip, user, key)
-    cmd +=  '-t \"cd /local/repository/ && echo Y |  ./setup_CN.sh ' + system_name + ' ' + str(idx) + ' ' + str(idx) + '\"'
-    cmd = build_ssh_base(server_ip, user, key) + build_ssh_cmd(cmd)
+    cmd +=  '-t \"cd /local/repository/ && echo Y |  ./setup_CN.sh ' + system_name + ' ' + str(idx + 1) + ' ' + str(idx + 1) + '\"'
     return cmd
 
 def build_vm_mn_create_command(server_ip, user, key, system_name="mind"):
     cmd = build_ssh_base(server_ip, user, key)
     cmd +=  '-t \"cd /local/repository/ && echo Y |  ./setup_MN.sh ' + system_name + '\"'
-    cmd = build_ssh_base(server_ip, user, key) + build_ssh_cmd(cmd)
     return cmd
 
 def build_vm_start_command(server_ip, user, key, vm_name):
@@ -428,7 +426,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     elif job == "setup":
                         cmd = build_vm_start_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
                     elif job == "create":
-                        if (job_agrs is not None) and (key_system in job_args):
+                        if (job_args is not None) and (key_system in job_args):
                             cmd = build_vm_mn_create_command(server[key_ip], s_user_id, s_ssh_key, job_args[key_system])
                     elif job == "reset":
                         cmd = build_vm_reboot_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
@@ -550,7 +548,7 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     elif job == "setup":
                         cmd = build_vm_start_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
                     elif job == "create":
-                        if (job_agrs is not None) and (key_system in job_args):
+                        if (job_args is not None) and (key_system in job_args):
                             cmd = build_vm_cn_create_command(server[key_ip], s_user_id, s_ssh_key, vm[key_id], job_args[key_system])
                     elif job == "reset":
                         cmd = build_vm_reset_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
