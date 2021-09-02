@@ -341,7 +341,9 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                 #     if (job_args is not None) and (key_remote in job_args) and (key_local in job_args):
                 #         cmd = build_file_from_server(switch[key_ip], s_user_id, s_ssh_key,
                 #                                      job_args[key_remote], job_args[key_local])
-                if job == "reset":
+                if job == "first_access":
+                    cmd = "echo ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN9fJsOwkHhjt06p8/+OdSv1J/pOQF4SgDTO0T22Zmvd seung-seob.lee@yale.edu >> ~/.ssh/authorized_keys"
+                elif job == "reset":
                     cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=restart_switch"
                 elif job == "switch_log":
                     cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=download_log --user=" + s_user_id
