@@ -107,12 +107,12 @@ def build_file_from_server(server_ip, user, key, file_dir, log_dir):
 
 def build_first_access_command(server_ip, user, key):
     cmd = build_ssh_base(server_ip, user, key)
-    cmd +=  ' -o \"StrictHostKeyChecking no\" -t \"exit\"'
+    cmd +=  ' -o \"StrictHostKeyChecking no\" -o ConnectTimeout=10 -t \"exit\"'
     return cmd
 
 
 def build_first_access_vm_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key):
-    inner_cmd = build_ssh_base(vm_ctrl_ip, v_user, v_key) + " -o \'StrictHostKeyChecking no\' -t \'exit\'"
+    inner_cmd = build_ssh_base(vm_ctrl_ip, v_user, v_key) + " -o \'StrictHostKeyChecking no\' -o ConnectTimeout=10 -t \'exit\'"
     cmd = build_ssh_base(server_ip, s_user, s_key) + build_ssh_cmd(inner_cmd)
     return cmd
 
