@@ -1,40 +1,52 @@
 # Profile for tasks/commands in order
-- name: register ssh keys
-  job: first_access
-  per_command_delay: 1
-  post_delay: 10
+# - name: register ssh keys
+#   job: first_access
+#   per_command_delay: 1
+#   post_delay: 10
+# 
+# - name: set up cluster
+#   job: setup_cluster
+#   per_command_delay: 1
+#   post_delay: 0
 
-- name: start VMs
-  job: setup
-  per_command_delay: 1
-  post_delay: 60
-
-- name: register ssh keys
-  job: first_access
-  per_command_delay: 1
-  post_delay: 10
-
-- name: clone this repo
-  job: git_clone
+- name: create VMs
+  job: create
   job_args:
-    git url: git@tscript.github.com:shsym/mind.git
+    target_system: mind         # can be also gam or fastswap
   per_command_delay: 1
-  post_delay: 10
+  post_delay: 0
 
-- name: update repo
-  job: update
-  per_command_delay: 1
-  post_delay: 60
-
-- name: (re)build kernel
-  job: update_kernel
-  per_command_delay: 0
-  post_delay: 60
-
-- name: restart and reset VMs
-  job: reset
-  per_command_delay: 0
-  post_delay: 60
+  # - name: start VMs
+  #   job: setup
+  #   per_command_delay: 1
+  #   post_delay: 60
+  # 
+  # - name: register ssh keys
+  #   job: first_access
+  #   per_command_delay: 1
+  #   post_delay: 10
+  # 
+  # - name: clone this repo
+  #   job: git_clone
+  #   job_args:
+  #     git url: git@tscript.github.com:shsym/mind.git
+  #   per_command_delay: 1
+  #   post_delay: 10
+  # 
+  # - name: update repo
+  #   job: update
+  #   per_command_delay: 1
+  #   post_delay: 60
+  # 
+  # - name: (re)build kernel
+  #   job: update_kernel
+  #   per_command_delay: 0
+  #   post_delay: 60
+  # 
+  # - name: restart and reset VMs
+  #   job: reset
+  #   per_command_delay: 0
+  #   post_delay: 60
 
 
 # === IF we need to shutdown VMs === #

@@ -40,7 +40,7 @@ compute servers:
   data_onwer: yanpeng
   vm list:
     - vm1:
-      id: 2
+      id: 1
       control ip: 192.168.122.102
       cluster ip: 10.10.10.202
       vm name: Ubuntu-CN2
@@ -54,7 +54,7 @@ compute servers:
   data_onwer: yupeng
   vm list:
     - vm1:
-      id: 4
+      id: 2
       control ip: 192.168.122.103
       cluster ip: 10.10.10.203
       vm name: Ubuntu-CN3
@@ -68,7 +68,7 @@ compute servers:
   data_onwer: yupeng
   vm list:
     - vm1:
-      id: 6
+      id: 3
       control ip: 192.168.122.104
       cluster ip: 10.10.10.204
       vm name: Ubuntu-CN4
