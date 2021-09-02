@@ -23,6 +23,7 @@ key_script = 'script root'
 key_default = 'default'
 key_user = 'user'
 key_ssh_key = 'key'
+key_system = 'target_system'
 key_sr = 'sharing ratio'
 key_rwr = 'rw ratio'
 key_repo_url = 'git url'
@@ -110,18 +111,35 @@ def build_first_access_command(server_ip, user, key):
     cmd +=  ' -o \"StrictHostKeyChecking no\" -o ConnectTimeout=10 -t \"exit\"'
     return cmd
 
-
 def build_first_access_vm_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key):
     inner_cmd = build_ssh_base(vm_ctrl_ip, v_user, v_key) + " -o \'StrictHostKeyChecking no\' -o ConnectTimeout=10 -t \'exit\'"
     cmd = build_ssh_base(server_ip, s_user, s_key) + build_ssh_cmd(inner_cmd)
     return cmd
 
+def build_setup_compute_server_command(server_ip, user, key, idx):
+    cmd = build_ssh_base(server_ip, user, key)
+    cmd +=  '-t \"cd /local/repository/ && echo Y | ./init_env.sh && ./localize_data.sh CN ' + str(idx + 1) + ' ' + str(idx + 1) + '\"'
+    return cmd
+
+def build_setup_memory_server_command(server_ip, user, key):
+    cmd = build_ssh_base(server_ip, user, key)
+    cmd +=  '-t \"cd /local/repository/ && echo Y | ./init_env.sh && ./localize_data.sh MN\"'
+    return cmd
+
+def build_vm_cn_create_command(server_ip, user, key, idx, system_name="mind"):
+    cmd = build_ssh_base(server_ip, user, key)
+    cmd +=  '-t \"cd /local/repository/ && echo Y |  ./setup_CN.sh ' + system_name + ' ' + str(idx + 1) + ' ' + str(idx + 1) + '\"'
+    return cmd
+
+def build_vm_mn_create_command(server_ip, user, key, system_name="mind"):
+    cmd = build_ssh_base(server_ip, user, key)
+    cmd +=  '-t \"cd /local/repository/ && echo Y |  ./setup_MN.sh ' + system_name + '\"'
+    return cmd
 
 def build_vm_start_command(server_ip, user, key, vm_name):
     cmd = "sudo virsh start " + vm_name
     cmd = build_ssh_base(server_ip, user, key) + build_ssh_cmd(cmd)
     return cmd
-
 
 def build_vm_reboot_command(server_ip, user, key, vm_name):
     cmd = "sudo virsh reboot " + vm_name
@@ -365,6 +383,8 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                 cmd = None
                 if job == "first_access":
                     cmd = build_first_access_command(server[key_ip], s_user_id, s_ssh_key)
+                elif job == "setup_cluster":
+                    cmd = build_setup_memory_server_command(server[key_ip], s_user_id, s_ssh_key)
                 elif job == "git_clone":
                     if (job_args is not None) and (key_repo_url in job_args):
                         cmd = build_server_custom_command(
@@ -405,6 +425,9 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                                                           "cd ~ && git clone " + job_args[key_repo_url] + " || ls")
                     elif job == "setup":
                         cmd = build_vm_start_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
+                    elif job == "create":
+                        if (job_args is not None) and (key_system in job_args):
+                            cmd = build_vm_mn_create_command(server[key_ip], s_user_id, s_ssh_key, job_args[key_system])
                     elif job == "reset":
                         cmd = build_vm_reboot_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
                     elif job == "shutdown":
@@ -439,6 +462,9 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                 cmd = None
                 if job == "first_access":
                     cmd = build_first_access_command(server[key_ip], s_user_id, s_ssh_key)
+                elif job == "setup_cluster":
+                    if key_id in server:
+                        cmd = build_setup_compute_server_command(server[key_ip], s_user_id, s_ssh_key, server[key_id])
                 elif job == "git_clone":
                     if (job_args is not None) and (key_repo_url in job_args):
                         cmd = build_server_custom_command(
@@ -521,6 +547,9 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                                                           "cd ~ && git clone " + job_args[key_repo_url] + " || ls")
                     elif job == "setup":
                         cmd = build_vm_start_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
+                    elif job == "create":
+                        if (job_args is not None) and (key_system in job_args):
+                            cmd = build_vm_cn_create_command(server[key_ip], s_user_id, s_ssh_key, vm[key_id], job_args[key_system])
                     elif job == "reset":
                         cmd = build_vm_reset_command(server[key_ip], s_user_id, s_ssh_key, vm[key_vm_name])
                     elif job == "shutdown":
@@ -705,3 +734,4 @@ if __name__ == "__main__":
     # Update and rebuild kernel
     # run_on_all_vms(mind_config, job="update_kernel", verbose=args.verbose,
     #                per_command_delay=0, post_delay=0)
+
