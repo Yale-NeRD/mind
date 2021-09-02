@@ -82,7 +82,7 @@ memory servers:
     vm list:
       - vm1:
         id: 16
-        control ip: 192.168.122.102
+        control ip: 192.168.122.11
         cluster ip: 10.10.10.221
         vm name: Ubuntu-MN
         user: sslee
