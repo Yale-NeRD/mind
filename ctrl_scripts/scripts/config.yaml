@@ -29,9 +29,9 @@ compute servers:
       id: 0
       control ip: 192.168.122.101
       cluster ip: 10.10.10.201
-      vm name: Ubuntu-CN1
+      vm name: mind_CN1
       user: sslee
-      key: ~/.ssh/id_rsa_for_vm
+      key: ~/.ssh/key_for_vm
 - c_server2:
   id: 2
   control ip: amd274.utah.cloudlab.us
@@ -43,9 +43,9 @@ compute servers:
       id: 1
       control ip: 192.168.122.102
       cluster ip: 10.10.10.202
-      vm name: Ubuntu-CN2
+      vm name: mind_CN2
       user: sslee
-      key: ~/.ssh/id_rsa_for_vm
+      key: ~/.ssh/key_for_vm
 - c_server3:
   id: 3
   control ip: amd276.utah.cloudlab.us
@@ -57,9 +57,9 @@ compute servers:
       id: 2
       control ip: 192.168.122.103
       cluster ip: 10.10.10.203
-      vm name: Ubuntu-CN3
+      vm name: mind_CN3
       user: sslee
-      key: ~/.ssh/id_rsa_for_vm
+      key: ~/.ssh/key_for_vm
 - c_server4:
   id: 4
   control ip: amd279.utah.cloudlab.us
@@ -71,9 +71,9 @@ compute servers:
       id: 3
       control ip: 192.168.122.104
       cluster ip: 10.10.10.204
-      vm name: Ubuntu-CN4
+      vm name: mind_CN4
       user: sslee
-      key: ~/.ssh/id_rsa_for_vm
+      key: ~/.ssh/key_for_vm
 
 # list of memory servers
 memory servers:
@@ -85,9 +85,9 @@ memory servers:
         id: 16
         control ip: 192.168.122.11
         cluster ip: 10.10.10.221
-        vm name: Ubuntu-MN
+        vm name: mind_MN
         user: sslee
-        key: ~/.ssh/switch_acc
+        key: ~/.ssh/key_for_vm
         nic: ens10
 
 # list of storage servers
