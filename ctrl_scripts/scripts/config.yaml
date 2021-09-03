@@ -7,7 +7,7 @@ default:
   user: sslee_cs
   key: ~/.ssh/id_rsa
   cluster gw: 10.10.10.0
-  nic: ens9  
+  nic: ens9
 
 # id of switch must be -1
 switch:
@@ -29,6 +29,7 @@ compute servers:
       id: 0
       control ip: 192.168.122.101
       cluster ip: 10.10.10.201
+      mac: 00:11:22:33:44:55
       vm name: mind_CN1
       user: sslee
       key: ~/.ssh/key_for_vm
@@ -43,6 +44,7 @@ compute servers:
       id: 1
       control ip: 192.168.122.102
       cluster ip: 10.10.10.202
+      mac: 00:11:22:33:44:55
       vm name: mind_CN2
       user: sslee
       key: ~/.ssh/key_for_vm
@@ -57,6 +59,7 @@ compute servers:
       id: 2
       control ip: 192.168.122.103
       cluster ip: 10.10.10.203
+      mac: 00:11:22:33:44:55
       vm name: mind_CN3
       user: sslee
       key: ~/.ssh/key_for_vm
@@ -71,6 +74,7 @@ compute servers:
       id: 3
       control ip: 192.168.122.104
       cluster ip: 10.10.10.204
+      mac: 00:11:22:33:44:55
       vm name: mind_CN4
       user: sslee
       key: ~/.ssh/key_for_vm
@@ -85,6 +89,7 @@ compute servers:
       id: 4
       control ip: 192.168.122.105
       cluster ip: 10.10.10.205
+      mac: 00:11:22:33:44:55
       vm name: mind_CN5
       user: sslee
       key: ~/.ssh/key_for_vm
@@ -99,6 +104,7 @@ compute servers:
       id: 5
       control ip: 192.168.122.106
       cluster ip: 10.10.10.206
+      mac: 00:11:22:33:44:55
       vm name: mind_CN6
       user: sslee
       key: ~/.ssh/key_for_vm

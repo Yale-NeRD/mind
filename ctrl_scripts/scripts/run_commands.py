@@ -52,6 +52,8 @@ app_name_map = {
     'gc': 'graphchi'
 }
 
+compute_mac_list = []
+
 
 # color map from: https://stackoverflow.com/questions/287871/how-to-print-colored-text-to-the-terminal
 # orignal ref: https://svn.blender.org/svnroot/bf-blender/trunk/blender/build_files/scons/tools/bcolors.py
@@ -183,16 +185,26 @@ def build_in_brick_command(server_ip, s_user, s_key, script_dir, commands):
     return cmd
 
 
+def generate_arp_cmd(v_nic):
+    _cmd = " && sleep 1"  # barrier after the previous command (sleep time does not matter)
+    for mac_rec in compute_mac_list:
+        _cmd += " & sudo arp -i " + str(v_nic) + " -s " + mac_rec[key_cluster_ip] + " " + mac_rec[key_mac]
+    _cmd += " & wait"
+    return _cmd
+
+
 def build_vm_init_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir, v_id, v_nic):
     return build_vm_brick_command(server_ip, s_user, s_key,
                                   vm_ctrl_ip, v_user, v_key,
                                   script_dir, "v_init_module.sh " + str(v_id) + " " + str(v_nic))
 
+
 def build_vm_init_mn_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir, v_id, v_nic):
     return build_vm_brick_command(server_ip, s_user, s_key,
                                   vm_ctrl_ip, v_user, v_key,
                                   script_dir, "v_init_mn_module.sh "
-                                  + str(int(v_id) - mem_blade_id_start) + " " + str(v_nic))
+                                  + str(int(v_id) - mem_blade_id_start) + " " + str(v_nic)
+                                  + generate_arp_cmd(v_nic))
                                   # memory blade's ID starts from 16
 
 
@@ -648,6 +660,14 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
     # loop.close()
 
 
+def init_mac_addr(cfg):
+    if key_cs in cfg:
+        for server in cfg[key_cs]:
+            for vm in server[key_vm]:
+                if (key_id in vm) and (key_mac in vm) and (key_cluster_ip in vm):
+                    compute_mac_list.append({key_id: vm[key_id], key_mac: vm[key_mac], key_cluster_ip: vm[key_cluster_ip]})
+
+
 if __name__ == "__main__":
     # a) args
     parser = argparse.ArgumentParser()
@@ -674,11 +694,16 @@ if __name__ == "__main__":
         print(err)
         exit(0)
 
+    init_mac_addr(mind_config)
+
     print("== Cluster Configuration ==")
     print(mind_config, "\n")
 
     print("== Test Profile ==")
     print(mind_profile)
+
+    print("== MAC addr list ==")
+    print(compute_mac_list)
 
     for task in mind_profile:
         if "job" in task:
