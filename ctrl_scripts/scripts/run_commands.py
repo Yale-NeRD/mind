@@ -193,18 +193,26 @@ def generate_arp_cmd(v_nic):
     return _cmd
 
 
-def build_vm_init_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir, v_id, v_nic):
+# sudo ip route add 10.10.10.0/24 dev ens10
+def generate_route_cmd(v_nic, cluster_gw):
+    _cmd = " && sudo ip route add " + cluster_gw + "/24 dev " + str(v_nic)
+    # _cmd += " & wait"
+    return _cmd
+
+
+def build_vm_init_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir, v_id, v_nic, cluster_gw):
     return build_vm_brick_command(server_ip, s_user, s_key,
                                   vm_ctrl_ip, v_user, v_key,
-                                  script_dir, "v_init_module.sh " + str(v_id) + " " + str(v_nic))
+                                  script_dir, "v_init_module.sh " + str(v_id) + " " + str(v_nic)
+                                  # + generate_arp_cmd(v_nic))
+                                  + generate_route_cmd(v_nic, cluster_gw))
 
 
 def build_vm_init_mn_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir, v_id, v_nic):
     return build_vm_brick_command(server_ip, s_user, s_key,
                                   vm_ctrl_ip, v_user, v_key,
                                   script_dir, "v_init_mn_module.sh "
-                                  + str(int(v_id) - mem_blade_id_start) + " " + str(v_nic)
-                                  + generate_arp_cmd(v_nic))
+                                  + str(int(v_id) - mem_blade_id_start) + " " + str(v_nic))
                                   # memory blade's ID starts from 16
 
 
@@ -574,7 +582,8 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                                                       vm[key_ip], v_user_id, v_ssh_key, "ls")
                     elif job == "init":
                         cmd = build_vm_init_command(server[key_ip], s_user_id, s_ssh_key,
-                                                    vm[key_ip], v_user_id, v_ssh_key, script_root, vm[key_id], v_nic)
+                                                    vm[key_ip], v_user_id, v_ssh_key, script_root, vm[key_id], v_nic,
+                                                    cfg[key_default][key_cluster_gw])
                     elif job == "update":
                         cmd = build_vm_update_command(server[key_ip], s_user_id, s_ssh_key,
                                                       vm[key_ip], v_user_id, v_ssh_key, script_root)
