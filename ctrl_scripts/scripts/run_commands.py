@@ -204,8 +204,8 @@ def build_vm_init_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, s
     return build_vm_brick_command(server_ip, s_user, s_key,
                                   vm_ctrl_ip, v_user, v_key,
                                   script_dir, "v_init_module.sh " + str(v_id) + " " + str(v_nic)
-                                  # + generate_arp_cmd(v_nic))
-                                  + generate_route_cmd(v_nic, cluster_gw))
+                                  + generate_arp_cmd(v_nic))
+                                #   + generate_route_cmd(v_nic, cluster_gw))
 
 
 def build_vm_init_mn_command(server_ip, s_user, s_key, vm_ctrl_ip, v_user, v_key, script_dir, v_id, v_nic):
