@@ -1,6 +1,5 @@
 # Script to run programs on *MIND* cluster
 This directory contains script to send commands to the servers consising MIND cluster.
-![cluster_setup](https://raw.githubusercontent.com/shsym/mind/main/ctrl_scripts/exp_cluster.png)
 
 ## Summary
 This readme.md contains the following three benchmarks:
@@ -9,6 +8,8 @@ This readme.md contains the following three benchmarks:
 - ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases (Fig. 7-left)
 - ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Benchmark with various sharing and read/write ratios (Fig. 7-right)
 
+## Cluster setup
+![cluster_setup](https://raw.githubusercontent.com/shsym/mind/main/ctrl_scripts/exp_cluster.png)
 We prepared experiment profiles (.yaml format) so that you can easily change configuration of the evaluations. Please refer the details below.
 
 ## Dependencies
