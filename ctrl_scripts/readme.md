@@ -62,7 +62,7 @@ python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
     ```bash
     scripts/post_processing/04macro_bench_res.sh
     ```
-  - Result representation
+  - Result representation: how final numbers are calculated
     - Inside the files `progress.[APP]_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE].log`, `Time [1234566789]: ...` at the beginning of each line shows the highest value among threads. We used the highest value among blades (e.g., the slowest thread among 80 threads).
     - We calculated the inverse of the time as a performance (i.e., 1 / [the highest time value]), then the performance values are normalized by comparing agains MIND's result with 1 and 10 threads for Fig. 6 left and right, respectively (Fig. 6 itself also shows which data point is the base of the normalization).
 - Result from switch will be placed at `~/Download/latest.log`
