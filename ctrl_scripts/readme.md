@@ -58,8 +58,13 @@ python3 scripts/run_commands.py --profile profiles/05_load_trace.yaml
 python3 scripts/run_commands.py --profile profiles/04_macro_bench.yaml
 ```
 - Result from compute blade VMs will be placed in `~/Downloads/04_macro_bench_[APP]` (see `04_macro_bench.yaml` for details)
-  - Inside the files `progress.[APP]_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE].log`, `Time [1234566789]: ...` at the beginning of each line shows the highest value among threads. We used the highest value among blades (e.g., the slowest thread among 80 threads).
-  - We calculated the inverse of the time as a performance (i.e., 1 / [the highest time value]), then the performance values are normalized by comparing agains MIND's result with 1 and 10 threads for Fig. 6 left and right, respectively (Fig. 6 itself also shows which data point is the base of the normalization).
+  - Please run [this script](https://github.com/shsym/mind/blob/main/ctrl_scripts/scripts/post_processing/04macro_bench_res.sh) for calculating final numbers from the logs
+    ```bash
+    scripts/post_processing/04macro_bench_res.sh
+    ```
+  - Result representation
+    - Inside the files `progress.[APP]_[BLADE ID]_of_[NUM OF BLADES]_[#THREADS PER BLADE].log`, `Time [1234566789]: ...` at the beginning of each line shows the highest value among threads. We used the highest value among blades (e.g., the slowest thread among 80 threads).
+    - We calculated the inverse of the time as a performance (i.e., 1 / [the highest time value]), then the performance values are normalized by comparing agains MIND's result with 1 and 10 threads for Fig. 6 left and right, respectively (Fig. 6 itself also shows which data point is the base of the normalization).
 - Result from switch will be placed at `~/Download/latest.log`
   - A new result will override any previous result having the same filename.
   - Inside the log file, each line `23:07:02:512201, 7473, 1` represents `[TIMESTAMP], [#FREE DIRECTORY ENTRIES], [SPLIT/MERGE THRESHOLD]`
@@ -78,12 +83,14 @@ python3 scripts/run_commands.py --profile=profiles/04_macro_profile.yaml
 
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases
 - (Fig. 7-left, default setup: shared state to modified state, 8 compute blades)
-  - Update [the corresponding profile `03b_latency.yaml`](https://github.com/shsym/mind/blob/153c0d1fe2ed089e7f6b984dafadb8de507c7cd9/ctrl_scripts/scripts/profiles/03b_latency.yaml#L35-L36) to test various state transition (shared to shared, modified to shared, modified to modified, etc.)
+  - Update [the corresponding profile `03b_latency.yaml`](https://github.com/shsym/mind/blob/153c0d1fe2ed089e7f6b984dafadb8de507c7cd9/ctrl_scripts/scripts/profiles/03b_latency.yaml#L35-L36) to test various state transition scenarios (shared (S) to S, modified (M) to S, S to M, and M to M, with 2, 4 and 8 blades.)
+    - Idle to S/M can be tested by setting the number of blade as 1 (i.e., profile setup with S to S/M and 1 blade = transition from idle to S/M)
+    - Since only one blade can be in M (exclusive write permission), we used only 2 blades for the transition from M to S/M
 ```
 python3 scripts/run_commands.py --profile profiles/03b_latency.yaml
 ```
 - Result will be placed in `~/Downloads/03b_latency`
-  - The name `shared_to_modified_total_8_blades.log` represent it was transition from Shared to Modified states for 8 blades (7 sharer to 1 writer).
+  - The name `shared_to_modified_total_8_blades.log` represent the transition from `Shared` to `Modified` states for `8` blades (7 sharer to 1 writer).
   - Inside the file, `FH_fetch_remote_tot` shows network latency
   - Inside the file, `FH_ack_waiting_node` shows latency for waiting ACK/invalidation
 
@@ -94,7 +101,7 @@ python3 scripts/run_commands.py --profile profiles/03b_latency.yaml
 python3 scripts/run_commands.py --profile profiles/03_sharing_ratio.yaml
 ```
 - Result will be placed in `~/Downloads/03a_sharing_ratio`
-  - The name `res_2_sr050_rw050.log` presents it was from the 3rd blade (id=2), and sharing ratio was 50% and read ratio was 50%.
+  - The name `res_2_sr050_rw050.log` presents it was from the 3rd blade (id=`2`), and sharing ratio was `50%` and read ratio was `50%`.
   - Inside the file, the last line shows 4KB IOPS. We used the sum over 8 blades.
 
 ## (Re-)Build MIND kernel
