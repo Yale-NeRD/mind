@@ -3,9 +3,12 @@ This directory contains command lines with minimal description. Please check mor
 
 ## Summary
 We will run the following experiments:
-- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces (Fig. 6 and 8-left)
-- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases (Fig. 7-left)
-- ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Benchmark with various sharing and read/write ratios (Fig. 7-right)
+- Performance evaluation with memory traces (Fig. 6 and 8-left)
+- Latency measurements for state transision cases (Fig. 7-left)
+- Benchmark with various sharing and read/write ratios (Fig. 7-right)
+- Other tools
+  - Memory allocator comparison (Fig. 8-center and right)
+  - Cache coherence emulator (Fig. 9 and PSO/PSO+ in Fig. 6-right)
 
 Generating each data point will take 5~25 minutes.
 
@@ -91,7 +94,7 @@ To compute the final number of the result, please run
 ```bash
 cd post_processing && ./04macro_bench_res.sh && cd ..
 ```
-- This script scan will scan through the directories for all the applications and number of compute blades and calculate normalized computing speed.
+- This script will scan through the directories for all the applications and number of compute blades then calculate normalized computing speed.
   - The value is calculated by (total amount of task / processing time): [actual code](https://github.com/shsym/mind/blob/8cf7e8baa05bd2489ad3058437d06acd92c8aa43/ctrl_scripts/scripts/post_processing/04macro_bench.py#L54)
 
 Result from the switch will be placed at `~/Download/latest.log`
@@ -181,3 +184,57 @@ If you want to pull the lastest repo inside blades (i.e., VMs) and then rebuild 
 python3 run_commands.py --profile profiles/01_restart_vms.yaml
 ```
 - This profile will clone this repo (which will print warnings because our VMs already have the repo), build kernel, and restart VMs.
+
+---
+## Memory allocator comparison (Fig. 8-center and right)
+We simply explain here how to calculate number of pages and fairness for each memory allocation scheme.
+```bash
+cd ~/mind/tools/memory_allocation/
+```
+The memory allocation traces we collected from applications are placed in `input` directory. For the comparison, please run the following commands and find ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) green colored `[RESULT]` (each command can take up to 10 minutes)
+- TensorFlow
+  ```bash
+  ./run_tf.sh
+  ```
+- GraphChi
+  ```bash
+  ./run_gc.sh
+  ```
+- Memcached
+  ```bash
+  ./run_md.sh
+  ```
+- Due to the computation time (especially for the GraphChi trace with 80 threads), simulation for 2 MB page tables are disabled by default. If you want to run it, please enable 3 lines in this part.
+- *Please find more details in [here](https://github.com/shsym/mind/blob/main/tools/memory_allocation/readme.md)*
+
+---
+
+## Cache coherence emulator (PSO/PSO+ in Fig. 6-right and Fig. 9)
+In this section, we simply use the pre-computed inputs to calculate PSO/PSO+ and outputs for bounded splitting algorithm due to the computation time (computation for each application would take up to 2 days).
+- The huge computation overheads are majorly coming from emulation overhead. Since the goal of the experiments presented here is to examine trade-off over extreme cases which are not feasible in real hardware (e.g., PSO simulation, unlimited directory entries in PSO+, fine-grained directory entries, etc.), we needed to do emulation.
+- ***Please find detailed information (e.g., how to use the tools to run experiments) in***
+  - [Cache coherence emulator for bounded splitting algorithm](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim)
+    - It also performs analysis for memory access ordering, which is used for PSO/PSO+
+  - [PSO/PSO+ estimation](https://github.com/shsym/mind/tree/main/tools/pso_estimator)
+
+### PSO/PSO+
+```
+cd ~/mind/tools/pso_estimator/
+```
+Please find results (performance per blade performance) which are green colored. We can compare this value with the results from [macro benchmark results](https://github.com/shsym/mind/blob/main/artifacts/how_to_yale.md#-performance-evaluation-with-memory-traces-fig-6-and-8-left).
+- TensorFlow
+```
+./run_tf.sh
+```
+- GraphChi
+```
+./run_gc.sh
+```
+- Memecached with YCSB workloadA and C
+```
+./run_ma.sh
+./run_mc.sh
+```
+
+### Bounded splitting algorithm
+- Please find pre-computed [output](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim/bounded_split_eval).

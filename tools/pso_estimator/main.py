@@ -121,7 +121,7 @@ def analysis_stat(stat, remote_start_idx, remote_adjust):
         stat['remote_write_lat'] *= remote_adjust
 
 
-def print_stat(stat, ext_pass, ext_ratio):
+def print_stat(stat, ext_pass, ext_ratio, proc_time):
     print("Local Read: %d accesses, %.5f us" % (stat['total_local_read'], stat['local_read_lat']))
     print("Remote Read: %d accesses, %.5f us" % (stat['total_remote_read'], stat['remote_read_lat']))
     print("Local Write: %d accesses, %.3f us" % (stat['total_local_write'], stat['local_write_lat']))
@@ -130,10 +130,10 @@ def print_stat(stat, ext_pass, ext_ratio):
     # print("Est. time - PSO [%.2f]: " % (max(stat['est_time'])), stat['est_time'])
     # print("Est. time - SC  [%.2f]: " % (max(stat['est_time_sc'])), stat['est_time_sc'])
     print(bcolors.OKGREEN + "Est. Performance per blade - PSO for %d: [%f]"
-            % (ext_pass, float(ext_pass) / (max(stat['est_time']) * ext_ratio))
+            % (ext_pass, float(ext_pass) / (max(stat['est_time'] + proc_time) * ext_ratio))
             + bcolors.ENDC)
     print(bcolors.OKGREEN + "Est. Performance per blade - SC  for %d: [%f]"
-            % (ext_pass, float(ext_pass) / (max(stat['est_time_sc']) * ext_ratio))
+            % (ext_pass, float(ext_pass) / (max(stat['est_time_sc'] + proc_time) * ext_ratio))
             + bcolors.ENDC)
 
 
@@ -448,6 +448,8 @@ if __name__ == '__main__':
     parser.add_argument('--remote_adjust', type=float,
                         help='adjust latency (profile to actual run, not only for remote)',
                         default=float(0.74))
+    parser.add_argument('--proc_time', type=int, help='processing time that needs to be added'
+                        ' on the top of the estimated memory access time', default=0)
     # Only one of the following two can be true
     # DEFAULT: both of them are disabled
     parser.add_argument('--best_match', type=bool, help='use best match mode instead of pdf summation', default=False)
@@ -589,6 +591,6 @@ if __name__ == '__main__':
 
     # d) print result
     # print_sim_versus_impl(stat)
-    print_stat(stat, args.ext, float(args.ext / args.tar))
+    print_stat(stat, args.ext, float(args.ext / args.tar), args.proc_time)
     print("")
     pass
