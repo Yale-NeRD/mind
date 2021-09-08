@@ -129,10 +129,10 @@ def print_stat(stat, ext_pass, ext_ratio):
     # print("Benefit: ", stat['remote_write_benefits'])
     # print("Est. time - PSO [%.2f]: " % (max(stat['est_time'])), stat['est_time'])
     # print("Est. time - SC  [%.2f]: " % (max(stat['est_time_sc'])), stat['est_time_sc'])
-    print(bcolors.OKGREEN + "Est. Performance per blade - PSO for %d: [%.2f]"
+    print(bcolors.OKGREEN + "Est. Performance per blade - PSO for %d: [%f]"
             % (ext_pass, float(ext_pass) / (max(stat['est_time']) * ext_ratio))
             + bcolors.ENDC)
-    print(bcolors.OKGREEN + "Est. Performance per blade - SC  for %d: [%.2f]"
+    print(bcolors.OKGREEN + "Est. Performance per blade - SC  for %d: [%f]"
             % (ext_pass, float(ext_pass) / (max(stat['est_time_sc']) * ext_ratio))
             + bcolors.ENDC)
 
