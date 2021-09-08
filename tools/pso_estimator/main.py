@@ -120,9 +120,9 @@ def print_stat(stat, ext_pass, ext_ratio):
     print("Remote Read: %d accesses, %.5f us" % (stat['total_remote_read'], stat['remote_read_lat']))
     print("Local Write: %d accesses, %.3f us" % (stat['total_local_write'], stat['local_write_lat']))
     print("Remote Write: %d accesses, %.3f us" % (stat['total_remote_write'], stat['remote_write_lat']))
-    print("Benefit: ", stat['remote_write_benefits'])
-    print("Est. time - PSO [%.2f]: " % (max(stat['est_time'])), stat['est_time'])
-    print("Est. time - SC  [%.2f]: " % (max(stat['est_time_sc'])), stat['est_time_sc'])
+    # print("Benefit: ", stat['remote_write_benefits'])
+    # print("Est. time - PSO [%.2f]: " % (max(stat['est_time'])), stat['est_time'])
+    # print("Est. time - SC  [%.2f]: " % (max(stat['est_time_sc'])), stat['est_time_sc'])
     print("Est. time - PSO for %d: [%.2f]" % (ext_pass, max(stat['est_time']) * ext_ratio))
     print("Est. time - SC  for %d: [%.2f]" % (ext_pass, max(stat['est_time_sc']) * ext_ratio))
 
