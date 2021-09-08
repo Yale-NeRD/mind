@@ -52,8 +52,9 @@ if __name__ == '__main__':
         max_val = max(res_time_list[key]['time'])
         if max_val > 0:
             # total amount of work / time = number of blades * number of passes per blade / maximum time among blades
+            norm_val = str(float(key) * float(res_time_list[key]['pass'][0]) / max_val) 
             print(bcolors.OKGREEN + "Normalized Max for #blade[" + str(key) + "]: "
-                  + str(float(key) * float(res_time_list[key]['pass'][0]) / max_val) + bcolors.ENDC)
+                  + norm_val + bcolors.ENDC)
         else:
             print(bcolors.WARNING + "Normalized Max for #blade[" + str(key) + "]: No data found")
     print("")
