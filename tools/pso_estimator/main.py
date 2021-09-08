@@ -145,7 +145,7 @@ def calculate_est_time(stat, t_id):
     stat['est_time'][t_id] = est_time - stat['remote_write_benefits'][t_id]
                                         # (stat['remote_write_benefits'][t_id]
                                         #  * float(rec[3] / stat['rw_record'][t_id][3]))
-    print("Est[" + str(t_id) + "] .. done")
+    # print("Est[" + str(t_id) + "] .. done")
     pass
 
 
@@ -237,8 +237,8 @@ def apply_unlimited_expectation(stat, unlimit_stat):
                         remain = 0
                         break
             stat['thread_' + acc_type][idx] = new_dist[:]
-            print(idx, end=' ', flush=True)
-        print('', flush=True)
+        #     print(idx, end=' ', flush=True)
+        # print('', flush=True)
     # recount sum
     for acc_type in ['read', 'write']:
         for idx, read_num in enumerate(stat['thread_' + acc_type]):  # over thread
@@ -335,9 +335,9 @@ def parse_pso_file(filep, t_id, stat, remote_start_idx, remote_adjust, is_best_m
 
 def load_pso_file(filename, stat, t_id, remote_start_idx, remote_adjust, is_best_match, is_ideal):
     fp = open(filename, "r")
-    print("[" + str(t_id) + "] " + filename + "..started", flush=True)
+    # print("[" + str(t_id) + "] " + filename + "..started", flush=True)
     parse_pso_file(fp, t_id, stat, remote_start_idx, remote_adjust, is_best_match, is_ideal)
-    print("[" + str(t_id) + "] " + filename + "..done", flush=True)
+    # print("[" + str(t_id) + "] " + filename + "..done", flush=True)
     fp.close()
 
 
@@ -358,7 +358,7 @@ def parse_rw_file(filename, stat, t_id, target_line):
 
     stat['rw_record'][t_id] = deepcopy(last_rec)
     stat['target_ratio'][t_id] = float(target_line / max(1., line_no))
-    print("[" + str(t_id) + "] " + filename + "..done", flush=True)
+    # print("[" + str(t_id) + "] " + filename + "..done", flush=True)
     fp.close()
 
 
@@ -405,7 +405,7 @@ def check_and_rename_files(dir_name):
 
 
 if __name__ == '__main__':
-    print("start parsing cdf logs")
+    # print("start parsing cdf logs")
     # example
     '''
     --dir=/home/sslee/workspace/disaggregated_mem_python/profile/ma/t20_tso/
@@ -447,7 +447,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     profile_overhead = args.profile_overhead
 
-    print(args)
+    # print(args)
 
     # a2) init
     proc_num = args.proc_num
@@ -496,7 +496,7 @@ if __name__ == '__main__':
     for idx, filename in enumerate(filelist):
         fp = open(filename, "r")
         parse_cdf_file(fp, args.tar, rw_stat, idx)
-        print("[%d]CDF file: " % idx, filename)
+        # print("[%d]CDF file: " % idx, filename)
 
     # load cdf and calculate difference: limit versus unlimit from simulator
     if args.unlimited_dir_sim:
@@ -512,7 +512,7 @@ if __name__ == '__main__':
             for idx in range(num_thread):
                 fp = open(stat_rec['filelist'][idx], "r")
                 parse_cdf_file(fp, args.unlimit_tar, stat_rec, idx)
-                print("[%d]CDF file: " % idx, filename)
+                # print("[%d]CDF file: " % idx, filename)
         calculate_difference_cdf(unlimit_stat)
         # apply calculated difference in CDF
         apply_unlimited_expectation(rw_stat, unlimit_stat)
@@ -578,6 +578,6 @@ if __name__ == '__main__':
             pp.join()
 
     # d) print result
-    print_sim_versus_impl(stat)
+    # print_sim_versus_impl(stat)
     print_stat(stat, args.ext, float(args.ext / args.tar))
     pass
