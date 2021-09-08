@@ -13,6 +13,8 @@ if __name__ == '__main__':
     url="http://" + args.switch + ":9009/hooks/"
     restart_hook = "restart_switch"
     download_hook = "download_log"
+    mind_switch_hook = "setup_mind_switch"
+    normal_switch_hook = "setup_normal_switch"
     if args.local == "":
         my_ip = socket.gethostbyname(socket.gethostname())
         # my_ip = "172.29.249.30"
@@ -22,7 +24,11 @@ if __name__ == '__main__':
     if args.cmd == "restart_switch":
         req = requests.get(url = url + restart_hook, params={'remote-addr': str(my_ip)}) 
     elif args.cmd == "download_log":
-        req = requests.get(url = url + download_hook, params={'remote-addr': str(my_ip), 'remote-user': args.user}) 
+        req = requests.get(url = url + download_hook, params={'remote-addr': str(my_ip), 'remote-user': args.user})
+    elif args.cmd == "setup_mind_switch":
+        req = requests.get(url = url + mind_switch_hook, params={'remote-addr': str(my_ip)})
+    elif args.cmd == "setup_normal_switch":
+        req = requests.get(url = url + normal_switch_hook, params={'remote-addr': str(my_ip)})
     else:
         exit(0)
     print("Please wait for 1 min to finish running the script")

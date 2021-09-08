@@ -386,6 +386,10 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     cmd = "echo ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN9fJsOwkHhjt06p8/+OdSv1J/pOQF4SgDTO0T22Zmvd seung-seob.lee@yale.edu >> ~/.ssh/authorized_keys"
                 elif job == "reset":
                     cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=restart_switch"
+                elif job == "mind_switch":
+                    cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=setup_mind_switch"
+                elif job == "normal_switch":
+                    cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=setup_normal_switch"
                 elif job == "switch_log":
                     cmd = "python3 run_switch_cmds.py --switch=" + switch[key_ip] + " --cmd=download_log --user=" + s_user_id
                     if key_ip in cfg[key_default]:

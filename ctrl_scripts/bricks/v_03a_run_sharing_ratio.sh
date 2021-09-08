@@ -12,7 +12,7 @@ pwd
 make_cmd="run_shared_$2_$3"
 # echo "Log file: ${LOG_DIR}/$2_$3"
 echo "Make cmd: ${make_cmd}"
-make $make_cmd NODE_ID=$1 NUM_NODE=$4 > /dev/null 2>&1 &
+make $make_cmd NODE_ID=$1 NUM_NODE=$4 #> /dev/null 2>&1 &
 sleep 240
 cp logs_03a_sharing_ratio/* ${LOG_DIR}/.
 cd ${MIND_PATH}/mind_linux/util_modules
@@ -20,4 +20,4 @@ make
 sudo rmmod pprint.ko
 sudo insmod pprint.ko
 sleep 5
-tail -n 100 /var/log/kern.log >> ${LOG_DIR}/kern.node_$1_of_$4_sr_$2_rw_$3.log
+tail -n 20 /var/log/kern.log >> ${LOG_DIR}/kern.node_$1_of_$4_sr_$2_rw_$3.log

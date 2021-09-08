@@ -1,0 +1,5 @@
+# Profile for tasks/commands in order
+- name: setup mind switch
+  job: mind_switch
+  per_command_delay: 1
+  post_delay: 120

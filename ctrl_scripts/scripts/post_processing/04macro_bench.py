@@ -56,6 +56,6 @@ if __name__ == '__main__':
             print(bcolors.OKGREEN + "Normalized Max for #blade[" + str(key) + "]: "
                   + norm_val + bcolors.ENDC)
         else:
-            print(bcolors.WARNING + "Normalized Max for #blade[" + str(key) + "]: No data found")
+            print(bcolors.WARNING + "Normalized Max for #blade[" + str(key) + "]: No data found" + bcolors.ENDC)
     print("")
 
