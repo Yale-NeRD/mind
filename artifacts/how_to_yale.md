@@ -221,7 +221,7 @@ In this section, we simply use the pre-computed inputs to calculate PSO/PSO+ and
 ```
 cd ~/mind/tools/pso_estimator/
 ```
-Please find results (performance per blade performance) which are green colored. We can compare this value with the results from [macro benchmark results](https://github.com/shsym/mind/blob/main/artifacts/how_to_yale.md#-performance-evaluation-with-memory-traces-fig-6-and-8-left).
+Please find results (performance per blade performance) which are green colored. We can multiply the number of compute blades to this value, then compare the value with the results from [macro benchmark results](https://github.com/shsym/mind/blob/main/artifacts/how_to_yale.md#-performance-evaluation-with-memory-traces-fig-6-and-8-left).
 - TensorFlow
 ```
 ./run_tf.sh
