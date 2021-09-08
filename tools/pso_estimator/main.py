@@ -10,6 +10,12 @@ mem_lat = float(0.01)         # can be impacted by workload's locality, L3: ~40 
 # TF: 0.0081 for 10T,
 _num_cdf_bucket = int(512)
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
 
 def cdf_idx_to_latency(idx):
     if idx < 1:
@@ -123,8 +129,12 @@ def print_stat(stat, ext_pass, ext_ratio):
     # print("Benefit: ", stat['remote_write_benefits'])
     # print("Est. time - PSO [%.2f]: " % (max(stat['est_time'])), stat['est_time'])
     # print("Est. time - SC  [%.2f]: " % (max(stat['est_time_sc'])), stat['est_time_sc'])
-    print("Est. time - PSO for %d: [%.2f]" % (ext_pass, max(stat['est_time']) * ext_ratio))
-    print("Est. time - SC  for %d: [%.2f]" % (ext_pass, max(stat['est_time_sc']) * ext_ratio))
+    print(bcolors.OKGREEN + "Est. Performance per blade - PSO for %d: [%.2f]"
+            % (ext_pass, float(ext_pass) / (max(stat['est_time']) * ext_ratio))
+            + bcolors.ENDC)
+    print(bcolors.OKGREEN + "Est. Performance per blade - SC  for %d: [%.2f]"
+            % (ext_pass, float(ext_pass) / (max(stat['est_time_sc']) * ext_ratio))
+            + bcolors.ENDC)
 
 
 def calculate_benefit_from_rec(loc_stat, rec):
@@ -580,4 +590,5 @@ if __name__ == '__main__':
     # d) print result
     # print_sim_versus_impl(stat)
     print_stat(stat, args.ext, float(args.ext / args.tar))
+    print("")
     pass
