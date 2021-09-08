@@ -7,7 +7,7 @@ For the memory allocation results of TensorFlow, Graphchi, and Memcached A/C tra
 - `./run_gc.sh`
 - `./run_md.sh`
 
-*Note*) Due to the computation time (epecially for the GraphChi trace with 80 threads), simulation for 2 MB page tables are disabled by default. If you want to run it, please enable [3 lines in this part](https://github.com/shsym/mind/blob/83a8ae4e2bf7a2d9299ef02f80ed4486f21a4b64/tools/memory_allocation/main.py#L103).
+*Note*) Due to the computation time (especially for the GraphChi trace with 80 threads), simulation for 2 MB page tables are disabled by default. If you want to run it, please enable [3 lines in this part](https://github.com/shsym/mind/blob/83a8ae4e2bf7a2d9299ef02f80ed4486f21a4b64/tools/memory_allocation/main.py#L103).
 
 - Even without actual simulation, the result for 2 MB page table can be estimated as follows:
   - Number of pages = [size of allocated memory] / 2 MB
