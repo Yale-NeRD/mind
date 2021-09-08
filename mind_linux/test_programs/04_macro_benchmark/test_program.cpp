@@ -444,8 +444,9 @@ static void print_time(void)
 			sprintf(progress_text, "%s %lu, ", progress_text, args[i].time);
 		}
 		fprintf(progress, "%s in us\n", progress_text);
-		printf("%s in us\n", progress_text);
 		fflush(progress);
+		printf("%s in us\n", progress_text);
+		fflush(stdout);
 	}
 }
 
