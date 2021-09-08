@@ -422,7 +422,9 @@ static void pin_this_thread(int thread_id)
 		}
 		pin_to_core(cpu_id);
 		used_cpu[cpu_id] = thread_id + 1;
+#ifdef VERBOSE
 		fprintf(stderr, "Pin Thread [%d] -> CPU [%d]\n", thread_id, cpu_id);
+#endif
 		pthread_mutex_unlock(&cpu_pin_mutex);
 		break;
 	}
@@ -522,7 +524,9 @@ int main(int argc, char **argv)
 	for (int i = 0; i < num_threads; ++i)
 	{
 		load_args[i].fd = open(argv[arg_log1 + i], O_RDONLY);
+#ifdef VERBOSE
 		printf("Open: %s\n", argv[arg_log1 + i]); 
+#endif
 		if (load_args[i].fd < 0) {
 			printf("fail to open log input file %d\n", load_args[i].fd);
 			return 1;
@@ -578,10 +582,12 @@ int main(int argc, char **argv)
 		printf("Error: cannot allocate buffer [0x%lx]\n", (unsigned long)data_buf);
 		return -1;
 	}
+#ifdef VERBOSE
 	printf("protocol testing buf addr is: %p\n", data_buf);
 	printf("Allocated: Meta [0x%llx - 0x%llx], Data [0x%llx - 0x%llx]\n",
 		   (unsigned long long)meta_buf, (unsigned long long)meta_buf + TEST_META_ALLOC_SIZE,
 		   (unsigned long long)data_buf, (unsigned long long)data_buf + TEST_MACRO_ALLOC_SIZE);
+#endif
 	// =================
 	for (int i = 0; i < num_threads; ++i)
 	{
