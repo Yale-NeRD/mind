@@ -595,10 +595,11 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                     elif job == "sharing_ratio":
                         if (job_args is not None) and (key_sr in job_args)\
                             and (key_rwr in job_args) and (key_node_num in job_args):
-                            cmd = build_vm_sharing_ratio_command(server[key_ip], s_user_id, s_ssh_key,
-                                                                vm[key_ip], v_user_id, v_ssh_key, script_root,
-                                                                vm[key_id], job_args[key_sr], job_args[key_rwr],
-                                                                job_args[key_node_num])
+                            if int(vm[key_id]) < int(job_args[key_node_num]):
+                                cmd = build_vm_sharing_ratio_command(server[key_ip], s_user_id, s_ssh_key,
+                                                                    vm[key_ip], v_user_id, v_ssh_key, script_root,
+                                                                    vm[key_id], job_args[key_sr], job_args[key_rwr],
+                                                                    job_args[key_node_num])
                     elif job == "latency_prepare":
                         if (job_args is not None) and (key_state_from in job_args)\
                             and (key_state_to in job_args):

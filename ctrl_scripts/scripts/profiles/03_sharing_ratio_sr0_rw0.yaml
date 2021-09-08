@@ -27,9 +27,9 @@
   per_command_delay: 10
   post_delay: 0
   job_args:
-    sharing ratio: 50
-    rw ratio: 50
-    node num: 2
+    sharing ratio: 0
+    rw ratio: 0
+    node num: 8
 
 # = File download part =
 - name: collect log data (vm to server)

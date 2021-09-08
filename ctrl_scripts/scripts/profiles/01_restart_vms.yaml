@@ -1,8 +1,8 @@
 # Profile for tasks/commands in order
-- name: register ssh keys
-  job: first_access
-  per_command_delay: 1
-  post_delay: 10
+# - name: register ssh keys
+#   job: first_access
+#   per_command_delay: 1
+#   post_delay: 10
 
   # - name: set up cluster
   #   job: setup_cluster
@@ -21,10 +21,15 @@
   per_command_delay: 1
   post_delay: 60
 
-- name: register ssh keys
-  job: first_access
-  per_command_delay: 1
-  post_delay: 10
+- name: restart and reset VMs
+  job: reset
+  per_command_delay: 0
+  post_delay: 60
+
+# - name: register ssh keys
+#   job: first_access
+#   per_command_delay: 1
+#   post_delay: 10
 
 - name: clone this repo
   job: git_clone
@@ -43,11 +48,10 @@
   per_command_delay: 0
   post_delay: 60
 
-- name: restart and reset VMs
-  job: reset
-  per_command_delay: 0
-  post_delay: 60
-
+# - name: restart and reset VMs
+#   job: reset
+#   per_command_delay: 0
+#   post_delay: 60
 
 # === IF we need to shutdown VMs === #
 # - name: shutdown VMs

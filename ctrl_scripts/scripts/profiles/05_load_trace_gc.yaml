@@ -1,0 +1,55 @@
+# Profile for tasks/commands in order
+
+# Before run this, the ssh key should be copied first,
+# .ssh/config should have proper entry for tscript.github.com, e.g.:
+# Host tscript.github.com
+# HostName github.com
+# User git
+# IdentityFile ~/.ssh/id_script_deploy
+# IdentitiesOnly yes
+#
+# - name: clone this repo
+#   job: git_clone
+#   job_args:
+#     git url: https://github.com/shsym/mind.git
+#   per_command_delay: 1
+#   post_delay: 0
+
+# - name: update repo
+#   job: update
+#   per_command_delay: 1
+#   post_delay: 10
+
+- name: restart and reset VMs
+  job: reset
+  per_command_delay: 1
+  post_delay: 90
+
+- name: shutdown VMs
+  job: shutdown
+  per_command_delay: 0
+  post_delay: 60
+
+- name: set servers' NIC
+  job: set_nic
+  per_command_delay: 0
+  post_delay: 10
+
+- name: load trace data (storage server to compute server)
+  job: load_trace
+  per_command_delay: 1
+  post_delay: 10
+  job_args:
+    trace: gc
+
+- name: check permission of the traces
+  job: perm_trace
+  per_command_delay: 1
+  post_delay: 10
+  job_args:
+    trace: gc   # this must be the same as the previous 'load_trace' job
+
+# - name: start VMs
+#   job: setup
+#   per_command_delay: 0
+#   post_delay: 60
