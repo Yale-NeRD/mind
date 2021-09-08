@@ -15,6 +15,8 @@
 #include "log_util.h"
 #include "errno.h"
 
+// #define VERBOSE
+
 static pthread_barrier_t s_barrier, e_barrier, rs_barrier;
 // Shared ratio(0, 25%, 50%, 75%, 100%)
 // Read/write ratio (0, 25%, 50%, 75%, 100%)
@@ -167,8 +169,10 @@ int init(struct trace_t *trace) {
           char node_bits[256] = "";
           for (int j = 0; j < MAX_NUM_NODES; ++j)
             sprintf(node_bits, "%s%01d", node_bits, meta_ptr->node_mask[j]);
+#ifdef VERBOSE
           printf("Waiting nodes [%03d]: %d [p:%d] || [0x%x] of [%s]\n",
                  (i / 100) % 100, trace->num_nodes, phase, meta_ptr->node_mask[trace->node_idx], node_bits);
+#endif
         }
         if (i % 200 == 0) {
 #ifdef meta_data_test
@@ -219,11 +223,6 @@ void mem_access_load_func(void *data) {
   char zeros[PAGE_SIZE];
   char *shared_buf, *data_buf;
   struct RWlog *logs;
-  // FILE *fd = arg->fd;
-  // bool LOG_ALL = (fd != NULL);
-  // if (LOG_ALL) {
-  //   logs = malloc(sizeof(struct RWlog) * DATASET_SIZE);
-  // }
   unsigned long num_shared_pages = arg->num_shared_pages;
   unsigned long data_buf_size = arg->data_buf_size;
   unsigned long data_region_size = arg->total_threads * arg->access_size;// size of single region
@@ -232,6 +231,7 @@ void mem_access_load_func(void *data) {
   data_buf = arg->data_buf;
 
   memset(zeros, 0, PAGE_SIZE);
+#ifdef VERBOSE
   printf("Thread[%d]: Data start from: 0x%lx thread addr: 0x%lx - 0x%lx Shared buffer addr: 0x%lx - 0x%lx\n",
          arg->thread_id,
          (unsigned long) start_addr,
@@ -239,6 +239,7 @@ void mem_access_load_func(void *data) {
          (unsigned long) thread_end_addr,
          (unsigned long) arg->data_buf + data_buf_size,
          (unsigned long) (arg->data_buf + data_buf_size + arg->num_shared_pages * PAGE_SIZE));
+#endif
 
 #ifdef DEBUG
   pthread_barrier_wait(&s_barrier);
@@ -253,120 +254,39 @@ void mem_access_load_func(void *data) {
       addr = GetRandom(0, num_shared_pages, &seedp) * PAGE_SIZE;
       addr &= CACHE_MAX_DIR_MASK;
       if (TrueOrFalse(read_ratio, &seedp)) {
-        // if (LOG_ALL) {
-        //   struct RWlog *log = &logs[i];
-        //   log->addr = addr + data_buf_size;
-        //   //printf("LOG Read: 0x%lx it: %lu 0x%lx 0x%lx\n", log->addr, i, addr, data_buf_size);
-        //   log->op = 'R';
-        //   log->usec = 0;
-        // } else 
         {
-          //printf("Read: 0x%lx it: %lu\n", addr + data_buf_size, i);
-          //measure_time_start(&ts_op);
-          // memcpy(zeros, &data_buf[addr + data_buf_size], PAGE_SIZE);
           memcpy(zeros, &data_buf[addr], PAGE_SIZE);
-          //dt_op = measure_time_end(&ts_op);
-          //record_time(arg, dt_op, 1, 1);
         }
       } else {
-        // if (LOG_ALL) {
-        //   struct RWlog *log = &logs[i];
-        //   log->addr = addr + data_buf_size;
-        //   //printf("LOG Write: 0x%lx it: %lu 0x%lx 0x%lx\n", log->addr, i, addr, data_buf_size);
-        //   log->op = 'W';
-        //   log->usec = 0;
-        // } else 
         {
-          //printf("Write: 0x%lx it: %lu\n", addr + data_buf_size, i);
-          //measure_time_start(&ts_op);
-          // memcpy(&data_buf[addr + data_buf_size], zeros, PAGE_SIZE);
           memcpy(&data_buf[addr], zeros, PAGE_SIZE);
-          //dt_op = measure_time_end(&ts_op);
-          //record_time(arg, dt_op, 0, 1);
         }
       }
     } else
       // to the private region
     {
-      //printf("%lu %lu %lu\n", arg->access_size, local_num_pages, CACHE_LINE);
       addr = GetRandom(0, local_num_pages, &seedp) * PAGE_SIZE; // Page aligned
-      // addr -= addr % CACHE_MAX_DIR;
       addr &= CACHE_MAX_DIR_MASK;
       if (TrueOrFalse(read_ratio, &seedp)) {
-        // if (LOG_ALL) {
-        //   struct RWlog *log = &logs[i];
-        //   log->addr = addr + (arg->node_id * arg->total_threads + arg->thread_id) * arg->access_size;
-        //   //printf("LOG Read: 0x%lx it: %lu 0x%lx 0x%lx %d %d %d\n",
-        //   //      log->addr,
-        //   //     i,
-        //   //    addr,
-        //   //   arg->access_size,
-        //   //  arg->node_id,
-        //   // arg->total_threads,
-        //   //arg->thread_id);
-        //   log->op = 'R';
-        //   log->usec = 0;
-        // } else 
         {
-          //printf("Read: 0x%lx it: %lu\n", addr + (arg->node_id * arg->total_threads + arg->thread_id) * arg->access_size, i);
-          //measure_time_start(&ts_op);
-          // memcpy(zeros, &data_buf[addr + (arg->node_id * arg->total_threads + arg->thread_id) * arg->access_size], PAGE_SIZE);
           memcpy(zeros,
                  &data_buf[addr + data_region_size
                      + ((arg->node_id * arg->total_threads + arg->thread_id) * arg->access_size)],
                  PAGE_SIZE);
-          //dt_op = measure_time_end(&ts_op);
-          //record_time(arg, dt_op, 1, 0);
-        }
+          }
       } else {
-        // if (LOG_ALL) {
-        //   struct RWlog *log = &logs[i];
-        //   log->addr = addr + (arg->node_id * arg->total_threads + arg->thread_id) * arg->access_size;
-        //   //printf("LOG Write: 0x%lx it: %lu 0x%lx 0x%lx %d %d %d\n",
-        //   //       log->addr,
-        //   //       i,
-        //   //       addr,
-        //   //       arg->access_size,
-        //   //       arg->node_id,
-        //   //       arg->total_threads,
-        //   //       arg->thread_id);
-        //   log->op = 'W';
-        //   log->usec = 0;
-        // } else 
         {
-          //printf("Write: 0x%lx it: %lu\n", addr + (arg->node_id * arg->total_threads + arg->thread_id) * arg->access_size, i);
-          //measure_time_start(&ts_op);
-          // memcpy(&data_buf[addr + (arg->node_id * arg->total_threads + arg->thread_id) * arg->access_size], zeros, PAGE_SIZE);
           memcpy(&data_buf[addr + data_region_size
               + ((arg->node_id * arg->total_threads + arg->thread_id) * arg->access_size)], zeros, PAGE_SIZE);
-          //dt_op = measure_time_end(&ts_op);
-          //record_time(arg, dt_op, 0, 0);
         }
       }
     }
   }
-  // if (LOG_ALL) {
-  //   long size = fwrite(logs, sizeof(struct RWlog), DATASET_SIZE, fd);
-  //   //printf("Size written: %ld %lu %ld\n", size, sizeof(struct RWlog), DATASET_SIZE);
-  // }
+
   pthread_barrier_wait(&e_barrier);
+#ifdef VERBOSE
   printf("Thread[%d]: ended [j:%d]\n", arg->thread_id, j);
-  /*
-  i = 0;
-  for(i = 0; i < CDF_BUCKET_NUM; i++)
-      printf("SHARED READ %lu\n", arg->cdf_cnt_s_r[i]);
-
-  for(i = 0; i < CDF_BUCKET_NUM; i++)
-      printf("PRIVATE READ %lu\n", arg->cdf_cnt_p_r[i]);
-
-  for(i = 0; i < CDF_BUCKET_NUM; i++)
-      printf("SHARED WRITE %lu\n", arg->cdf_cnt_s_w[i]);
-
-  for(i = 0; i < CDF_BUCKET_NUM; i++)
-      printf("PRIVATE WRITE %lu\n", arg->cdf_cnt_p_w[i]);
-
-  fflush(stdout);
-   */
+#endif
 }
 
 void enforce_ratio_boundary(int *ratio) {
@@ -425,13 +345,15 @@ int main(int argc, char **argv) {
     // if it is local
     local_thread_num = atoi(argv[arg_local_thread_num]);
   }
+#ifdef VERBOSE
   printf("\nTotal threads: %d\n", local_thread_num);
-
+#endif
   if (argc > arg_num_shared_pages) {
     num_shared_pages = atoi(argv[arg_num_shared_pages]);
   }
+#ifdef VERBOSE
   printf("Number of shared pages in pages: %d\n", num_shared_pages);
-
+#endif
   if (argc > arg_num_compute) {
     num_compute = atoi(argv[arg_num_compute]);
     if (num_compute <= 0) {
@@ -448,59 +370,37 @@ int main(int argc, char **argv) {
   if (argc > arg_num_memory) {
     num_memory = atoi(argv[arg_num_memory]);
   }
+#ifdef VERBOSE
   printf("Num memory node: %d\n", num_memory);
+#endif
 
   if (argc > arg_share_ratio) {
     share_ratio = atoi(argv[arg_share_ratio]);
   }
   enforce_ratio_boundary(&share_ratio);
+#ifdef VERBOSE
   printf("Share ratio is: %d\n", share_ratio);
-
+#endif
   if (argc > arg_read_ratio) {
     read_ratio = atoi(argv[arg_read_ratio]);
   }
   enforce_ratio_boundary(&read_ratio);
+#ifdef VERBOSE
   printf("Read ratio is: %d\n", read_ratio);
+#endif
 
+  // no impact, only for compatibility
   if (argc > arg_spatial_locality) {
     spatial_locality = atoi(argv[arg_spatial_locality]);
   }
   enforce_ratio_boundary(&spatial_locality);
-  printf("Spatial locality is: %d\n", spatial_locality);
 
   if (argc > arg_local_num_pages) {
     local_num_pages = atoi(argv[arg_local_num_pages]);
   }
+#ifdef VERBOSE
   printf("Local number of pages is: %d\n", local_num_pages);
-
-  // if (argc > arg_generate_logs) {
-    // LOG_ALL = atoi(argv[arg_generate_logs]);
-    // if (LOG_ALL) {
-    //   fptr = malloc(sizeof(FILE * ) * local_thread_num);
-    //   char *filename;
-    //   char thread_id[12];
-    //   for (i = 0; i < local_thread_num; i++) {
-    //     sprintf(thread_id, "%03d", i);
-    //     filename = concat(5, argv[arg_log1], "_", argv[arg_node_id], "_", thread_id);
-    //     printf("Writing this file %s\n", filename);
-    //     fptr[i] = fopen(filename, "w");
-    //   }
-    //   if (local_thread_num > 0) {
-    //     free(filename);
-    //   }
-    // } else {
-      // for (int i = 0; i < local_thread_num; ++i) {
-      //   load_args[i].fd = open(argv[arg_log1 + i], O_RDONLY);
-      //   printf("Open: %s\n", argv[arg_log1 + i]);
-      //   if (load_args[i].fd < 0) {
-      //     printf("fail to open log input file %d\n", load_args[i].fd);
-      //     return 1;
-      //   }
-      //   load_args[i].arg = &args[i];
-      // }
-    // }
-  // }
-
+#endif
   if (num_memory <= 0) {
     num_memory = 1;
   }
@@ -530,13 +430,14 @@ int main(int argc, char **argv) {
   share_buf = data_buf + data_buf_size;
 #endif
   // allocated memory => | meta | data buffer region for all the thread | shared buffer region | unused |
+#ifdef VERBOSE
   printf("Allocated: Meta [0x%llx - 0x%llx], Data [0x%llx - 0x%llx], Shared [0x%llx - 0x%llx]\n",
          (unsigned long long) meta_buf, (unsigned long long) meta_buf + TEST_META_ALLOC_SIZE,
          (unsigned long long) data_buf,
          (unsigned long long) (data_buf + data_buf_size),
          (unsigned long long) (share_buf),
          (unsigned long long) (share_buf + total_share_size));
-
+#endif
   pthread_barrier_init(&s_barrier, NULL, local_thread_num + 1);
   pthread_barrier_init(&e_barrier, NULL, local_thread_num + 1);
   // let threads know all the remote nodes are initialized
@@ -557,7 +458,9 @@ int main(int argc, char **argv) {
     // }
     //
     args[i].access_size = (unsigned long) thread_local_size;
+#ifdef VERBOSE
     printf("Setting access size to %lu for thread: %u\n", thread_local_size, i);
+#endif
     args[i].thread_id = i;
     args[i].total_threads = local_thread_num;
     args[i].shared_buf = share_buf;
@@ -587,12 +490,14 @@ int main(int argc, char **argv) {
 
   // start time
   pthread_barrier_wait(&s_barrier);
+#ifdef VERBOSE
   printf("Passed the initialization barrier\n");
+#endif
   pthread_barrier_wait(&rs_barrier);
   clock_gettime(CLOCK_MONOTONIC, &start);
-
+#ifdef VERBOSE
   printf("Passed the thread start barrier\n");
-
+#endif
   // end time
   pthread_barrier_wait(&e_barrier);
   clock_gettime(CLOCK_MONOTONIC, &end);
@@ -613,7 +518,7 @@ int main(int argc, char **argv) {
       fprintf(ofp, "Local number of pages is: %d\n", local_num_pages);
       fprintf(ofp, "Share ratio is: %d\n", share_ratio);
       fprintf(ofp, "Read ratio is: %d\n", read_ratio);
-      fprintf(ofp, "Spatial locality is: %d\n", spatial_locality);
+      fprintf(ofp, "[NOT USED] Spatial locality is: %d\n", spatial_locality);
       fprintf(ofp, "\nDone in (%.9lf sec, %.4lf accesses/sec, total incl. remote)\n",
               time_taken, (double) (DATASET_SIZE * local_thread_num) / time_taken);
       fclose(ofp);
@@ -628,9 +533,9 @@ int main(int argc, char **argv) {
     }
   }
 #ifndef DEBUG
-  printf("Wait 600 sec for the other threads\n");
+  printf("Wait 60 sec for the other threads\n");
   fflush(stdout);
-  sleep(600);
+  sleep(60);
 #endif
 #ifdef DEBUG
   munmap(meta_buf, DEBUG_ALLOC_SIZE);

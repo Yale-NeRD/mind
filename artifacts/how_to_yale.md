@@ -39,10 +39,16 @@ $ git status
 $ git log
 (some result here)
 ```
+
 If some files were modified by previous evaluator, please reset the repository by
 ```bash
 git reset --hard HEAD
 git pull
+```
+
+Please tell switch that you are going to run MIND
+```bash
+python3 run_commands.py --profile=profiles/02_setup_mind_switch.yaml
 ```
 
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces (Fig. 6 and 8-left)
@@ -108,18 +114,25 @@ python3 run_commands.py --profile profiles/04_macro_bench_gc.yaml
 ---
 
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases (Fig. 7-left)
+If you tested other systems, please ensure that switch knows about the type of the system—MIND in this case:
+```bash
+python3 run_commands.py --profile=profiles/02_setup_mind_switch.yaml
+```
+
 Now we run latency measurements from idle to modified (M; exclusive, write-able) state
 ```bash
 python3 run_commands.py --profile profiles/03b_latency_I_to_M.yaml
 ```
 - Result will be placed in `~/Downloads/03b_latency` (will replace any previous result)
-  - The name `[shared]_to_[modified]_total_[1]_blades.log` represents the transition from `Shared` (but we only used one blade, so it was actually `Idle` state) to `Modified` states for `1` blades.
-    - Another exampale—`[shared]_to_[modified]_total_[8]_blades.log`: transition from `Shared` to `Modified` states for `8` blades (7 sharers -> 1 writer).
+  - The name `[shared]_to_[modified]_total_[1]_blades.log` represents the transition from `Shared` (it was actually `Idle` state, since we only used one blade) to `Modified` states for `1` blades.
+    - Another example is `[shared]_to_[modified]_total_[8]_blades.log`: transition from `Shared` to `Modified` states for `8` blades (7 sharers -> 1 writer).
   - Please look into the file to check the values reported in the paper
-    - `FH_fetch_remote_tot` shows network latency
-    - `FH_ack_waiting_node` shows latency for waiting ACK/invalidation
+    - Please look at the `Avg(ns)` column
+    - `FH_fetch_remote_tot` shows network latency in ns
+    - `FH_ack_waiting_node` shows latency for waiting ACK/invalidation in ns
+    - (*We ported this useful profiling system from [LegoOS](https://github.com/WukLab/LegoOS)*)
 
-We can run other transition cases (some examples):
+We can test other transition cases (some examples):
 - Modified to Modified
     ```bash
     python3 run_commands.py --profile profiles/03b_latency_M_to_M.yaml
@@ -142,7 +155,11 @@ python3 run_commands.py --profile profiles/03_sharing_ratio_sr50_rw50.yaml
 ```
 - Result will be placed in `~/Downloads/03a_sharing_ratio`
   - The name `res_2_sr050_rw050.log` represents that it was from the 3rd blade (id=`2`), and sharing ratio was `50%` and read ratio was `50%`.
-  - Inside the file, the last line shows 4KB IOPS. We used the sum over 8 blades.
+  - To compute the final output value from the logs:
+    ```bash
+    cd post_processing && ./03sharing_ratio_res.sh && cd ..
+    ```
+    - Inside the file, the last line shows 4KB IOPS. We used the sum over 8 blades.
 
 Please find other example profiles such as `03_sharing_ratio_sr0_rw0.yaml`, ..., `03_sharing_ratio_sr100_rw100.yaml`.
 - Please modify `03_sharing_ratio.yaml` if you want to test your own sharing and read ratios:

@@ -13,7 +13,7 @@ make_cmd="run_shared_$2_$3"
 # echo "Log file: ${LOG_DIR}/$2_$3"
 echo "Make cmd: ${make_cmd}"
 make $make_cmd NODE_ID=$1 NUM_NODE=$4 #> /dev/null 2>&1 &
-sleep 240
+sleep 10
 cp logs_03a_sharing_ratio/* ${LOG_DIR}/.
 cd ${MIND_PATH}/mind_linux/util_modules
 make
