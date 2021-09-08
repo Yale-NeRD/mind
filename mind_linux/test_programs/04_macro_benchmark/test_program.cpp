@@ -455,7 +455,9 @@ void do_log_helper(void *arg)
 	unsigned long dt_cur_step = 0;
 
 	pin_to_core(trace->tid);
+#ifdef VERBOSE
 	fprintf(stderr, "Pin Thread [%d] -> CPU [%d]\n", trace->tid, trace->tid);
+#endif
 	while (!trace->all_done)
 	{
 		if (trace->master_thread)
