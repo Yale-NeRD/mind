@@ -15,15 +15,15 @@
 #   per_command_delay: 1
 #   post_delay: 0
 
-- name: update repo
-  job: update
-  per_command_delay: 1
-  post_delay: 10
+# - name: update repo
+#   job: update
+#   per_command_delay: 1
+#   post_delay: 10
 
-- name: shutdown VMs
-  job: shutdown
-  per_command_delay: 0
-  post_delay: 60
+# - name: shutdown VMs
+#   job: shutdown
+#   per_command_delay: 0
+#   post_delay: 60
 
 - name: set servers' NIC
   job: set_nic
@@ -35,14 +35,14 @@
   per_command_delay: 1
   post_delay: 10
   job_args:
-    trace: ma
+    trace: tf
 
 - name: check permission of the traces
   job: perm_trace
   per_command_delay: 1
   post_delay: 10
   job_args:
-    trace: ma   # this must be the same as the previous 'load_trace' job
+    trace: tf   # this must be the same as the previous 'load_trace' job
 
 # - name: start VMs
 #   job: setup

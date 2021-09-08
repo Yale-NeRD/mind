@@ -30,7 +30,7 @@ if __name__ == '__main__':
         node_idx = fname_split[1]
         node_num = fname_split[3]
         if node_num not in res_time_list:
-            res_time_list[node_num] = []
+            res_time_list[node_num] = {'pass': [], 'time': []}
 
         fpath = res_dir + '/' + fname
         with open(fpath) as f:
@@ -38,16 +38,22 @@ if __name__ == '__main__':
             for line in f:
                 res_line = line
             if res_line != "":
-                res_str = res_line.split('||')[1]
+                res_str = res_line.split('||')
+                pass_str = res_str[0].split('[')[1]
+                pass_str = pass_str.split(']')[0]
+                res_time_list[node_num]['pass'].append(int(pass_str))
+                res_str = res_str[1]
                 res_str = res_str.split('[')[1]
                 res_str = res_str.split(']')[0]
-                res_time_list[node_num].append(int(res_str))
+                res_time_list[node_num]['time'].append(int(res_str))
 
     print("=== Result ===")
     for key in res_time_list:
-        max_val = max(res_time_list[key])
+        max_val = max(res_time_list[key]['time'])
         if max_val > 0:
-            print(bcolors.OKGREEN + "Normalized Max for #blade[" + str(key) + "]: " + str(1. / max_val) + bcolors.ENDC)
+            # total amount of work / time = number of blades * number of passes per blade / maximum time among blades
+            print(bcolors.OKGREEN + "Normalized Max for #blade[" + str(key) + "]: "
+                  + str(float(key) * float(res_time_list[key]['pass'][0]) / max_val) + bcolors.ENDC)
         else:
             print(bcolors.WARNING + "Normalized Max for #blade[" + str(key) + "]: No data found")
     print("")

@@ -1,9 +1,9 @@
 # Profile for tasks/commands in order
 
-# - name: start VMs
-#   job: setup
-#   per_command_delay: 0
-#   post_delay: 60
+- name: start VMs
+  job: setup
+  per_command_delay: 0
+  post_delay: 60
 
 # - name: clone this repo
 #   job: git_clone
@@ -35,7 +35,7 @@
     state from: shared
     state to: modified
     main vm: 0
-    node num: 8
+    node num: 2
 
 # = File download part =
 - name: collect log data (vm to server)

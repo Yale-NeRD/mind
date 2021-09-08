@@ -25,4 +25,4 @@ make
 sudo rmmod pprint.ko
 sudo insmod pprint.ko
 sleep 5
-tail -n 100 /var/log/kern.log >> ${LOG_DIR}/$2_to_$3_total_$4_blades.log
+tail -n 20 /var/log/kern.log >> ${LOG_DIR}/$2_to_$3_total_$4_blades.log

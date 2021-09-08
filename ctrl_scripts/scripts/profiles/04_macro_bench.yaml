@@ -1,20 +1,20 @@
 # Profile for tasks/commands in order
 
 # = Prepare cluster =
-# - name: start VMs
-#   job: setup
-#   per_command_delay: 0
-#   post_delay: 60
+- name: start VMs
+  job: setup
+  per_command_delay: 1
+  post_delay: 60
+
+- name: restart and reset VMs
+  job: reset
+  per_command_delay: 1
+  post_delay: 90
 
 - name: update repo
   job: update
   per_command_delay: 1
   post_delay: 10
-
-- name: restart and reset VMs
-  job: reset
-  per_command_delay: 0
-  post_delay: 60
 
 - name: initialize VMs
   job: init
@@ -27,10 +27,10 @@
   per_command_delay: 10
   post_delay: 0
   job_args:
-    trace: ma
-    node num: 8
+    trace: tf
+    node num: 2
     thread_num: 10
-    step_num: 35000
+    step_num: 5000
 # step_num setup in the paper (depends on memory access pattern)
 # - Tensorflow or tf: 50000
 # - GraphChi or gc: 50000
@@ -44,19 +44,19 @@
   post_delay: 10
   job_args:
     local dir: ~/Downloads/
-    target dir: Downloads/04_macro_bench_ma
+    target dir: Downloads/04_macro_bench_tf
 
 - name: collect log data (server to local)
   job: collect_from_server
-  per_command_delay: 10
+  per_command_delay: 1
   post_delay: 0
   job_args:
     local dir: ~/Downloads/
-    target dir: Downloads/04_macro_bench_ma
+    target dir: Downloads/04_macro_bench_tf
 
 - name: switch side log
   job: switch_log
-  per_command_delay: 10
+  per_command_delay: 1
   post_delay: 0
   job_args:
     local dir: ~/Downloads/

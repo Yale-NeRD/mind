@@ -21,16 +21,16 @@
   per_command_delay: 10
   post_delay: 20
 
-# = Run test =
+# # = Run test =
 - name: run macro benchmark
   job: macro_profile
   per_command_delay: 10
   post_delay: 0
   job_args:
-    trace: ma
-    node num: 8
+    trace: tf
+    node num: 2
     thread_num: 10
-    step_num: 2000
+    step_num: 5000
 # step_num setup in the paper (depends on memory access pattern)
 # - Tensorflow or tf: 50000
 # - GraphChi or gc: 50000
@@ -44,7 +44,7 @@
   post_delay: 10
   job_args:
     local dir: ~/Downloads/
-    target dir: Downloads/04_macro_profile_ma
+    target dir: Downloads/04_macro_profile_tf
 
 - name: collect log data (server to local)
   job: collect_from_server
@@ -52,5 +52,5 @@
   post_delay: 0
   job_args:
     local dir: ~/Downloads/
-    target dir: Downloads/04_macro_profile_ma
+    target dir: Downloads/04_macro_profile_tf
 
