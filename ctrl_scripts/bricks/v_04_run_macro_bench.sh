@@ -18,7 +18,7 @@ pwd
 make_cmd="run_$4_$3t"
 echo "Log file: ${LOG_DIR}/$4_$1_of_$2_$3t"
 echo "Make cmd: ${make_cmd}"
-make $make_cmd NODE_ID=$1 NUM_NODE=$2 MAX_PASS=$5 > /dev/null 2>&1
+make $make_cmd NODE_ID=$1 NUM_NODE=$2 MAX_PASS=$5
 sleep 30
 sudo cp /tmp_test/progress.txt ${LOG_DIR}/progress.$4_$1_of_$2_$3t.log
 # cd ${MIND_PATH}/mind_linux/util_modules

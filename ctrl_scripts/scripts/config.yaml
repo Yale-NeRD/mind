@@ -1,86 +1,76 @@
 # Configuration for access information
 # Default values: any omiited user id and ssh key will use those values
 
+# pull this repo as:
+# git clone git@tscript.github.com:shsym/mind.git
+
 # This is an example configuration that we used for our cluster
 default:
   script root: ~/mind/ctrl_scripts/
-  user: sslee_cs
-  key: ~/.ssh/id_rsa
+  user: sosp_ae
+  key: ~/.ssh/vmhost_acc
   cluster gw: 10.10.10.0
-  nic: ens9
+  nic: ens9  
 
 # id of switch must be -1
 switch:
 - switch1:
   id: -1
-  control ip: 128.110.219.201 # control plane IP
+  control ip: 172.29.249.42   # control plane IP
   cluster ip: 10.10.10.1      # data plane IP
+  # user: sslee                 # user to login
+  # key: ~/.ssh/switch_acc      # ssh key to use for logging in
 
 # list of compute servers
 compute servers:
 - c_server1:
   id: 1   # server's id
-  control ip: amd272.utah.cloudlab.us
+  control ip: 172.28.229.148
   cluster ip: 10.10.10.201
   nic: ens8f0                 # a network interface for copying data
+  user: sosp_ae
+  key: ~/.ssh/vmhost_acc
   data_onwer: sslee           # owner of the memory traces
   vm list:
     - vm1:
       id: 0
       control ip: 192.168.122.101
       cluster ip: 10.10.10.201
-      mac: 00:11:22:33:44:55
-      vm name: mind_CN1
+      vm name: Ubuntu-CN1
       user: sslee
-      key: ~/.ssh/key_for_vm
-- c_server2:
-  id: 2
-  control ip: amd274.utah.cloudlab.us
-  cluster ip: 10.10.10.202
-  nic: ens8f0
-  data_onwer: yanpeng
-  vm list:
-    - vm1:
+      key: ~/.ssh/id_rsa_for_vm
+    - vm2:
       id: 1
       control ip: 192.168.122.102
       cluster ip: 10.10.10.202
-      mac: 00:11:22:33:44:55
-      vm name: mind_CN2
+      vm name: Ubuntu-CN2
       user: sslee
-      key: ~/.ssh/key_for_vm
-- c_server3:
-  id: 3
-  control ip: amd275.utah.cloudlab.us
+      key: ~/.ssh/id_rsa_for_vm
+- c_server2:
+  id: 2
+  control ip: 172.28.229.149
   cluster ip: 10.10.10.203
   nic: ens8f0
-  data_onwer: yupeng
+  data_onwer: yanpeng
   vm list:
     - vm1:
       id: 2
       control ip: 192.168.122.103
       cluster ip: 10.10.10.203
-      mac: 00:11:22:33:44:55
-      vm name: mind_CN3
+      vm name: Ubuntu-CN3
       user: sslee
-      key: ~/.ssh/key_for_vm
-- c_server4:
-  id: 4
-  control ip: amd276.utah.cloudlab.us
-  cluster ip: 10.10.10.204
-  nic: ens8f0
-  data_onwer: yupeng
-  vm list:
-    - vm1:
+      key: ~/.ssh/id_rsa_for_vm
+    - vm2:
       id: 3
       control ip: 192.168.122.104
       cluster ip: 10.10.10.204
-      mac: 00:11:22:33:44:55
-      vm name: mind_CN4
+      vm name: Ubuntu-CN4
       user: sslee
-      key: ~/.ssh/key_for_vm
-- c_server5:
-  id: 5
-  control ip: amd278.utah.cloudlab.us
+      key: ~/.ssh/id_rsa_for_vm
+      nic: ens10
+- c_server3:
+  id: 3
+  control ip: 172.28.229.151
   cluster ip: 10.10.10.205
   nic: ens8f0
   data_onwer: yupeng
@@ -89,39 +79,49 @@ compute servers:
       id: 4
       control ip: 192.168.122.105
       cluster ip: 10.10.10.205
-      mac: 00:11:22:33:44:55
-      vm name: mind_CN5
+      vm name: Ubuntu-CN5
       user: sslee
-      key: ~/.ssh/key_for_vm
-- c_server6:
-  id: 6
-  control ip: amd279.utah.cloudlab.us
-  cluster ip: 10.10.10.206
+      key: ~/.ssh/id_rsa_for_vm
+    - vm2:
+      id: 5
+      control ip: 192.168.122.106
+      cluster ip: 10.10.10.206
+      vm name: Ubuntu-CN6
+      user: sslee
+      key: ~/.ssh/id_rsa_for_vm
+- c_server4:
+  id: 4
+  control ip: 172.28.229.153
+  cluster ip: 10.10.10.207
   nic: ens8f0
   data_onwer: yupeng
   vm list:
     - vm1:
-      id: 5
-      control ip: 192.168.122.106
-      cluster ip: 10.10.10.206
-      mac: 00:11:22:33:44:55
-      vm name: mind_CN6
+      id: 6
+      control ip: 192.168.122.107
+      cluster ip: 10.10.10.207
+      vm name: Ubuntu-CN7
       user: sslee
-      key: ~/.ssh/key_for_vm
+      key: ~/.ssh/id_rsa_for_vm
+    - vm2:
+      id: 7
+      control ip: 192.168.122.108
+      cluster ip: 10.10.10.208
+      vm name: Ubuntu-CN8
+      user: sslee
+      key: ~/.ssh/id_rsa_for_vm
 
 # list of memory servers
 memory servers:
   - m_server1:
-    id: 1
-    control ip: amd280.utah.cloudlab.us
+    control ip: 172.29.249.30
     vm list:
       - vm1:
         id: 16
-        control ip: 192.168.122.11
+        control ip: 192.168.122.102
         cluster ip: 10.10.10.221
-        vm name: mind_MN
-        user: sslee
-        key: ~/.ssh/key_for_vm
+        vm name: Ubuntu-MN
+        user: sosp_ae
         nic: ens10
 
 # list of storage servers

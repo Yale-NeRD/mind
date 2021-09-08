@@ -17,6 +17,8 @@
 #include <map>
 #include "test_program.h"
 
+// #define VERBOSE
+
 static int latency_to_bkt(unsigned long lat_in_us)
 {
 	if (lat_in_us < 100)
@@ -78,7 +80,9 @@ int init(struct trace_t *trace)
 		// write itself
 		if (trace->master_thread)
 		{
+#ifdef VERBOSE
 			printf("Start step [%lu]\n", step);
+#endif
 			meta_ptr->node_mask[trace->node_idx] = step + 1;
 
 			// check nodes
@@ -90,8 +94,10 @@ int init(struct trace_t *trace)
 					char node_bits[256] = "";
 					for (int j = 0; j < MAX_NUM_NODES; ++j)
 						sprintf(node_bits, "%s[%u]", node_bits, meta_ptr->node_mask[j]);
+#ifdef VERBOSE
 					printf("Waiting nodes [%03d]: %d [step:%lu -> %u]/[%u] || [%s]\n",
 						   (i / 100) % 100, trace->num_nodes, step, meta_ptr->node_mask[trace->node_idx], max_step, node_bits);
+#endif
 				}
 				if (i % 200 == 0)
 				{
@@ -103,10 +109,14 @@ int init(struct trace_t *trace)
 				usleep(10000);
 				i++;
 			}
+#ifdef VERBOSE
 			printf("All nodes are initialized: %d [%u]\n", trace->num_nodes, meta_ptr->node_mask[trace->node_idx]);
+#endif
 			phase = !phase;
 			pthread_barrier_wait(&s_barrier);
+#ifdef VERBOSE
 			fprintf(stderr, "Start step [%lu] after barrier\n", step);
+#endif
 			return 0;
 		}else{
 			pthread_barrier_wait(&s_barrier);
@@ -140,7 +150,9 @@ int fini(struct metadata_t *meta_buf, int num_nodes, int node_id)
 		}
 		if (i % 200 == 0)
 		{
+#ifdef VERBOSE
 			printf("Waiting for next step [%lu] || init[%u]\n", step, meta_buf->node_mask[node_id]);
+#endif
 			meta_buf->fini_node_step[node_id] = step;
 			if (meta_buf->node_mask[node_id] != step)
 			{
@@ -309,8 +321,9 @@ void do_log(void *arg)
 		else if (op == 'B')
 		{
 			struct Blog *log = (struct Blog *)cur;
+			int res = 0;
 			interval_between_access(log->usec - old_ts);
-			brk((void *)(log->addr & MMAP_ADDR_MASK));
+			res = brk((void *)(log->addr & MMAP_ADDR_MASK));
 			old_ts = log->usec;
 		}
 		else if (op == 'U')
@@ -335,8 +348,10 @@ void do_log(void *arg)
 #endif
 	trace->time += dt;
 	trace->last_dt = dt;
+#ifdef VERBOSE
 	if (trace->master_thread)
 		fprintf(stderr, "total run time is %lu us\n", trace->time);
+#endif
 }
 
 int load_trace(void *void_arg) {
@@ -362,7 +377,9 @@ int load_trace(void *void_arg) {
 			continue;
 		} else {
 			new_offset = (arg->offset + (cur - sizeof(RWlog) - arg->logs)) / LOG_MAP_ALIGN * LOG_MAP_ALIGN;
+#ifdef VERBOSE
 			printf("unexpected op %c\n", *cur);
+#endif
 			arg->done = true;
             break;
 		}
@@ -425,6 +442,7 @@ static void print_time(void)
 			sprintf(progress_text, "%s %lu, ", progress_text, args[i].time);
 		}
 		fprintf(progress, "%s in us\n", progress_text);
+		printf("%s in us\n", progress_text);
 		fflush(progress);
 	}
 }
@@ -588,7 +606,9 @@ int main(int argc, char **argv)
 
 	// start load and run logs in time window
 	unsigned long ts_limit = start_ts;
+#ifdef VERBOSE
 	printf("Start main loop\n");
+#endif
 	pthread_t load_thread[MAX_NUM_THREAD];
 	pthread_t run_thread[MAX_NUM_THREAD];
 
@@ -621,7 +641,9 @@ int main(int argc, char **argv)
 
 		// sync on the end of the time window
 		++step;
+#ifdef VERBOSE
 		fprintf(stderr, "Prepare for next step [%lu]\n", step);
+#endif
 		fini((metadata_t *)meta_buf, num_nodes, node_id);
 
 		bool all_done = true;
