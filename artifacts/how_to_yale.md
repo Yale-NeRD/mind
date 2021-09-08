@@ -24,10 +24,10 @@ ssh -i [PATH TO THE SSH KEY] sosp_ae@ecl-mem-01.cs.yale.internal
 - Please find ssh key from hotcrp.
 - Please do not remove repository in the control server; it will also remove any precomputed input/log files we set up on the servers.
 
-Once you log in, the default directory is set to the [control script directory](https://github.com/shsym/mind/tree/main/mind_switch_ctrl) of MIND repository:
+Once you log in, the default directory is set to `scripts` directory inside the [control scripts](https://github.com/shsym/mind/tree/main/ctrl_scripts/) of MIND repository:
 ```bash
 $ pwd
-/home/sosp_ae/mind/ctrl_scripts
+/home/sosp_ae/mind/ctrl_scripts/scripts
 ```
 
 You can check the current status of git repository
@@ -58,7 +58,6 @@ python3 run_commands.py --profile=profiles/02_setup_mind_switch.yaml
 
 Let's go inside the script directory and load memory access traces for Tensorflow
 ```bash
-cd scripts
 python3 run_commands.py --profile=profiles/05_load_trace_tf.yaml
 ```
 The script will print out raw input (i.e., ssh commands to the servers) and standard output.
