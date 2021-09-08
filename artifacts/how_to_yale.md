@@ -77,18 +77,18 @@ python3 run_commands.py --profile profiles/04_macro_bench_tf.yaml
         per_command_delay: 10
         post_delay: 0
         job_args:
-        trace: tf         # Tensorflow workload
-        node num: 2       # <- modify this value to set the number of compute blades [1, 2, 4, 8]
-        thread_num: 10    # <- modify this value to set the number of threads per blade [1, 2, 4, 10]
-        step_num: 5000    # <- increase this value to run more portion of the traces
-    # step_num used in the paper ()
-    # - Tensorflow or tf: 50000
-    # - GraphChi or gc: 50000
-    # - Memcached YCSB workloadA or ma: 35000
-    # - Memcached YCSB workloadA or mc: 20000
+          trace: tf         # Tensorflow workload
+          node num: 2       # <- modify this value to set the number of compute blades [1, 2, 4, 8]
+          thread_num: 10    # <- modify this value to set the number of threads per blade [1, 2, 4, 10]
+          step_num: 5000    # <- increase this value to run more portion of the traces
     ```
-The result of the experiment will be downloaded at `~/Downloads/04_macro_bench_[APP]`
-- [APP]: `tf` for Tensorflow, `gc` for GraphChi, `ma` / `mc` for Memcached with YCSB workloadA/workloadC
+  - Tag for the application or [APP]
+    - [APP]: `tf` for TensorFlow, `gc` for GraphChi, `ma` / `mc` for Memcached with YCSB workloadA/workloadC
+  - Number of total steps we used in the paper are
+    - `tf`: 50000,  `gc`: 50000, `ma`: 35000, `mc`: 20000
+
+The result of the experiment will be downloaded at `~/Downloads/04_macro_bench_[APP]`.
+
 
 To compute the final number of the result, please run
 ```bash
@@ -164,7 +164,7 @@ python3 run_commands.py --profile profiles/03_sharing_ratio_sr50_rw50.yaml
     ```
     - Inside the file, the last line shows 4KB IOPS. We used the sum over 8 blades.
 
-Please find other example profiles such as `03_sharing_ratio_sr0_rw0.yaml`, ..., `03_sharing_ratio_sr100_rw100.yaml`.
+Please find other example profiles in `profiles` directory: `profiles/03_sharing_ratio_sr0_rw0.yaml`, ..., `profiles/03_sharing_ratio_sr100_rw100.yaml`.
 - Please modify `03_sharing_ratio.yaml` if you want to test your own sharing and read ratios:
   ```yaml
     - name: run sharing ratio
@@ -221,7 +221,8 @@ In this section, we simply use the pre-computed inputs to calculate PSO/PSO+ and
 ```
 cd ~/mind/tools/pso_estimator/
 ```
-Please find results (performance per blade performance) which are green colored. We can multiply the number of compute blades to this value, then compare the value with the results from [macro benchmark results](https://github.com/shsym/mind/blob/main/artifacts/how_to_yale.md#-performance-evaluation-with-memory-traces-fig-6-and-8-left).
+Please find results (performance per blade performance) which are green colored.
+- We can multiply the number of compute blades to this value, then compare the value with the results from [macro benchmark results](https://github.com/shsym/mind/blob/main/artifacts/how_to_yale.md#-performance-evaluation-with-memory-traces-fig-6-and-8-left) (since the #passes in the pre-compute are based on the result running total number of steps, it may not consistent with the value measured with partial traces)
 - TensorFlow
 ```
 ./run_tf.sh
@@ -238,3 +239,7 @@ Please find results (performance per blade performance) which are green colored.
 
 ### Bounded splitting algorithm
 - Please find pre-computed [output](https://github.com/shsym/mind/tree/main/tools/cache_coherence_sim/bounded_split_eval).
+- Please refer the last line of the log consisting of 3 columns. Each column means:
+  1. Cumulative summation of #false invalidations (invalidation request granularity)
+  2. #Falsely invalidated/written backed pages (page granularity)
+  3. #Directory entries at the end the current resizing epoch
