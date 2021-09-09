@@ -78,3 +78,8 @@ You can also test traces from other applications, for example:
 python3 run_commands.py --profile=profiles/05_load_trace_gc.yaml
 python3 run_commands.py --profile profiles/04_macro_bench_gc.yaml
 ```
+
+**Please shutdown compute blades before testing out other systems**
+```bash
+python3 run_commands.py --profile profiles/06_shutdown_system.yaml
+```
