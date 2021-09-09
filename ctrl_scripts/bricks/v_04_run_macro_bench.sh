@@ -24,7 +24,7 @@ cp backup/workloads_$4_$3 lib/workload.py
 ./benchmark.py test_program 1
 
 sleep 30
-sudo cp -r ~/artifact_eval/cfm/test_program/log ${LOG_DIR}/fastswap_log
+sudo cp ~/artifact_eval/cfm/test_program/log/progress.txt ${LOG_DIR}/fastswap_progress.$4_$1_of_$2_$3t.log
 # cd ${MIND_PATH}/mind_linux/util_modules
 # make
 # sudo rmmod pprint.ko
