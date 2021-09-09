@@ -4,7 +4,7 @@
 - name: start VMs
   job: setup
   per_command_delay: 1
-  post_delay: 10
+  post_delay: 300
 
 - name: restart and reset VMs
   job: reset

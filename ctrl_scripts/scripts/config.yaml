@@ -34,7 +34,7 @@ compute servers:
   data_onwer: sslee           # owner of the memory traces
   vm list:
     - vm1:
-      id: 101
+      id: 0
       control ip: 192.168.122.211
       cluster ip: 10.10.10.201
       mac: 04:3f:72:a2:b4:a2
