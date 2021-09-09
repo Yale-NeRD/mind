@@ -29,8 +29,11 @@ if __name__ == '__main__':
         fname_split = fname.split('_')
         node_idx = fname_split[1]
         node_num = fname_split[3]
+        thread_num = fname_split[4].split('.')[0]
         if node_num not in res_time_list:
-            res_time_list[node_num] = {'pass': [], 'time': []}
+            res_time_list[node_num] = {}
+        if thread_num not in res_time_list[node_num]:
+            res_time_list[node_num][thread_num] = {'pass': [], 'time': []}
 
         fpath = res_dir + '/' + fname
         with open(fpath) as f:
@@ -41,21 +44,22 @@ if __name__ == '__main__':
                 res_str = res_line.split('||')
                 pass_str = res_str[0].split('[')[1]
                 pass_str = pass_str.split(']')[0]
-                res_time_list[node_num]['pass'].append(int(pass_str))
+                res_time_list[node_num][thread_num]['pass'].append(int(pass_str))
                 res_str = res_str[1]
                 res_str = res_str.split('[')[1]
                 res_str = res_str.split(']')[0]
-                res_time_list[node_num]['time'].append(int(res_str))
+                res_time_list[node_num][thread_num]['time'].append(int(res_str))
 
     print("=== Result ===")
     for key in res_time_list:
-        max_val = max(res_time_list[key]['time'])
-        if max_val > 0:
-            # total amount of work / time = number of blades * number of passes per blade / maximum time among blades
-            norm_val = str(float(key) * float(res_time_list[key]['pass'][0]) / max_val) 
-            print(bcolors.OKGREEN + "Normalized Max for #blade[" + str(key) + "]: "
-                  + norm_val + bcolors.ENDC)
-        else:
-            print(bcolors.WARNING + "Normalized Max for #blade[" + str(key) + "]: No data found" + bcolors.ENDC)
+        for key_th in res_time_list[key]:
+            max_val = max(res_time_list[key][key_th]['time'])
+            if max_val > 0:
+                # total amount of work / time = number of blades * number of passes per blade / maximum time among blades
+                norm_val = str(float(key) * float(res_time_list[key][key_th]['pass'][0]) / max_val) 
+                print(bcolors.OKGREEN + "Normalized Max for #blade[" + str(key) + "], #thread[" + str(key_th) + "]: "
+                    + norm_val + bcolors.ENDC)
+            else:
+                print(bcolors.WARNING + "Normalized Max for #blade[" + str(key) + "]: No data found" + bcolors.ENDC)
     print("")
 
