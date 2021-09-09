@@ -19,9 +19,11 @@ echo "Run for Node: $1"
 echo "Log file: ${LOG_DIR}/$4_$1_of_$2_$3t"
 #echo "Make cmd: ${make_cmd}"
 #make $make_cmd NODE_ID=$1 NUM_NODE=$2 MAX_PASS=$5
-cd ~/artifact_eval/cfm
-cp backup/workloads_$4_$3 lib/workload.py
-./benchmark.py test_program 1
+cd ~/artifact_eval/cfm/test_program
+./compile.sh
+
+cd ../
+./benchmark.py test_program 1 $4 $3 $5
 
 sleep 30
 sudo cp ~/artifact_eval/cfm/test_program/log/progress.txt ${LOG_DIR}/fastswap_progress.$4_$1_of_$2_$3t.log
