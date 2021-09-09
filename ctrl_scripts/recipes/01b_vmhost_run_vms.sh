@@ -17,7 +17,7 @@ do
     echo "VM: ${c_id}"
     node_id=$(($c_id - 101))
     echo "Args: $args"
-	c_id="${c_id}" node_id="${node_id}" CMD="\"export V_SCRIPT_BRICK_PATH=${V_SCRIPT_BRICK_PATH} && cd '$V_SCRIPT_BRICK_PATH' && pwd && ./v_run.sh $tar_script $node_id $args\"" bash -c 'ssh sslee@192.168.122.$c_id -i ~/.ssh/id_rsa_for_vm -tt \"$CMD\"'&
+	c_id="${c_id}" node_id="${node_id}" CMD="\"export V_SCRIPT_BRICK_PATH=${V_SCRIPT_BRICK_PATH} && cd '$V_SCRIPT_BRICK_PATH' && pwd && ./v_run.sh $tar_script $node_id $args\"" bash -c 'ssh sslee@192.168.122.$c_id -i ~/.ssh/id_rsa_for_gam_vm -tt \"$CMD\"'&
     sleep 5
 	(( c_id++ ))
 done

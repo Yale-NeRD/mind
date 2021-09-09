@@ -40,7 +40,7 @@ compute servers:
       mac: 04:3f:72:a2:b4:a2
       vm name: fastswap_client_01
       user: root
-      key: ~/.ssh/id_rsa_for_vm
+      key: ~/.ssh/id_rsa_for_gam_vm
 
 # list of memory servers
 memory servers:
@@ -48,7 +48,7 @@ memory servers:
     control ip: 172.29.249.30
     vm list:
       - vm1:
-        id: 16
+        id: 102
         control ip: 192.168.122.61
         cluster ip: 10.10.10.221
         mac: 04:3f:72:a2:b7:3a
