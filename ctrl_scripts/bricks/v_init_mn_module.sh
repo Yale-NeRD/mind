@@ -21,4 +21,4 @@ cd ~
 sleep 1
 
 cd ~/fastswap/farmemserver
-./rmserver 50000
+nohup ./rmserver 50000 &
