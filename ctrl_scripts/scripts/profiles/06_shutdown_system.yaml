@@ -1,0 +1,5 @@
+# Profile for tasks/commands in order
+- name: shutdown VMs
+  job: shutdown
+  per_command_delay: 0
+  post_delay: 30
