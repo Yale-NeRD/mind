@@ -8,6 +8,8 @@ The interface of the control script is very similar to MIND's.
 
 <br></br>
 ## Setup evaluation for FastSwap
+* *Please make sure that you shut down compute blades(/VMs) running other systems*
+
 We assume you already have access to the control server.
 
 Change to the directory of this repository (having scripts for FastSwap).
@@ -79,7 +81,7 @@ python3 run_commands.py --profile=profiles/05_load_trace_gc.yaml
 python3 run_commands.py --profile profiles/04_macro_bench_gc.yaml
 ```
 
-**Please shutdown compute blades before testing out other systems**
+**Please shut down FastSwap's compute blades(/VMs) before testing out other systems**
 ```bash
 python3 run_commands.py --profile profiles/06_shutdown_system.yaml
 ```
