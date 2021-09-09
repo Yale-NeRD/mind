@@ -10,7 +10,7 @@ The interface of the control script is very similar to MIND's.
 ## Setup evaluation for FastSwap
 * *Please make sure that you shut down compute blades(/VMs) running other systems*
 
-We assume you already have access to the control server.
+* We assume you already have access to the control server.
 
 Change to the directory of this repository (having scripts for FastSwap).
 ```bash
