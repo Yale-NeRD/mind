@@ -12,6 +12,7 @@ We will run the following experiments:
 
 Generating each data point will take 15 ~ 60 minutes with default configuration in this repository.
 
+<br/><br/>
 ## Access to the control server
 We assume thet you already have Yale VPN following our instructions in hotcrp.
 - **IMPORTANT** please reserve your time slot first using the link in hotcrp; since we have only one cluster with a programmable switch, each evaluator should have own dedicated time slot.
@@ -53,10 +54,11 @@ Please tell switch that you are going to run MIND
 ```bash
 python3 run_commands.py --profile=profiles/02_setup_mind_switch.yaml
 ```
-
+<br/><br/>
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces (Fig. 6 and 8-left)
 
 Let's go inside the script directory and load memory access traces for Tensorflow
+- **NOTE) Every time you load traces for new application, it will automatically erase the previous ones**
 ```bash
 python3 run_commands.py --profile=profiles/05_load_trace_tf.yaml
 ```
@@ -68,7 +70,7 @@ After the script for loading traces is finished, we can run the following comman
 python3 run_commands.py --profile profiles/04_macro_bench_tf.yaml
 ```
 - By default, it will run only 1/10 of the total traces with 2 compute blades; it will take 10 ~ 20 minutes.
-  - Please modify the values in `profiles/04_macro_bench_tf.yaml` for test various setup
+  - Please modify the values in `profiles/04_macro_bench_tf.yaml` to test different number of blades, threads, and step number
 
     ```yaml
     - name: run macro benchmark
@@ -115,6 +117,7 @@ python3 run_commands.py --profile profiles/04_macro_bench_gc.yaml
 
 ---
 
+<br/><br/>
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases (Fig. 7-left)
 If you tested other systems, please ensure that switch knows about the type of the system—MIND in this case:
 ```bash
@@ -150,6 +153,7 @@ We can test other transition cases (some examples):
 
 ---
 
+<br/><br/>
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Benchmark with various sharing and read/write ratios (Fig. 7-right)
 Now we run an experiment with various sharing and read(/write) ratios. Let's try an experiment for sharing ratio=50 and read ratio=50:
 ```bash
@@ -185,6 +189,8 @@ python3 run_commands.py --profile profiles/01_restart_vms.yaml
 - This profile will clone this repo (which will print warnings because our VMs already have the repo), build kernel, and restart VMs.
 
 ---
+
+<br/><br/>
 ## Memory allocator comparison (Fig. 8-center and right)
 We simply explain here how to calculate number of pages and fairness for each memory allocation scheme.
 ```bash
@@ -208,6 +214,7 @@ The memory allocation traces we collected from applications are placed in `input
 
 ---
 
+<br/><br/>
 ## Cache coherence emulator (PSO/PSO+ in Fig. 6-right and Fig. 9)
 In this section, we simply use the pre-computed inputs to calculate PSO/PSO+ and outputs for bounded splitting algorithm due to the computation time (computation for each application would take up to 2 days).
 - The huge computation overheads are majorly coming from emulation overhead. Since the goal of the experiments presented here is to examine trade-off over extreme cases which are not feasible in real hardware (e.g., PSO simulation, unlimited directory entries in PSO+, fine-grained directory entries, etc.), we needed to do emulation.
