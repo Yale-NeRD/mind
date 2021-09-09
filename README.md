@@ -32,8 +32,8 @@ cd /home/sosp_ae/mind_ae_fastswap/ctrl_scripts/scripts
 You can check the current status of git repository
 ```bash
 $ git remote -v
-origin	https://github.com/shsym/mind.git (fetch)
-origin	https://github.com/shsym/mind.git (push)
+origin	https://github.com/yyppyy/mind.git (fetch)
+origin	https://github.com/yyppyy/mind.git (push)
 
 $ git status
 (some result here)
@@ -48,9 +48,9 @@ git reset --hard HEAD
 git pull
 ```
 
-Please tell switch that you are going to run MIND
+Please tell switch that you are going to run normal switch program
 ```bash
-python3 run_commands.py --profile=profiles/02_setup_mind_switch.yaml
+python3 run_commands.py --profile=profiles/02_setup_normal_switch.yaml
 ```
 
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces (Fig. 6 and 8-left)
