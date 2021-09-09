@@ -54,6 +54,7 @@ python3 run_commands.py --profile=profiles/05_load_trace_tf.yaml
 ```
 
 After the script for loading traces is finished, we can run the following command to run an experiment with the TensorFlow memory traces we just loaded:
+- ***Important: since FastSwap VMs will take time to boot up, please wait for 10~12 min. If it is forcely canceled in the middle  (e.g., try to reboot VMs), it can cause an error in host machine's NIC—it will require our team at Yale to visit and reboot the host machine physically.***
 ```bash
 python3 run_commands.py --profile profiles/04_macro_bench_tf.yaml
 ```
