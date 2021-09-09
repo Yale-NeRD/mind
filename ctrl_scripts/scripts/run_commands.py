@@ -163,8 +163,7 @@ def build_vm_reset_command(server_ip, user, key, vm_name):
     #cmd = "sudo virsh reboot " + vm_name + " && "
     cmd = "sudo virsh destroy " + vm_name + " && "
     cmd += "sudo virsh start " + vm_name + " && "
-    cmd += "sleep 15" + " && "
-    cmd += "sudo virsh reset " + vm_name
+    cmd += "sleep 15"
     cmd = build_ssh_base(server_ip, user, key) + build_ssh_cmd(cmd)
     return cmd
 
