@@ -111,7 +111,7 @@ python3 run_commands.py --profile profiles/04_macro_bench_gc.yaml
 
 ### Comparison with other systems
 - For GAM, please check [this repository](https://github.com/charles-typ/mind_ae_gam)
-- For FastSwap, please check [this repository](https://github.com/yyppyy/cfm)
+- For FastSwap, please check [this repository](https://github.com/yyppyy/mind/blob/main/README.md)
 
 ---
 
