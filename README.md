@@ -8,7 +8,9 @@ The interface of the control script is very similar to MIND's.
 
 <br></br>
 ## Setup evaluation for FastSwap
-We assume you already have access to the control server.
+* *Please make sure that you shut down compute blades(/VMs) running other systems*
+
+* We assume you already have access to the control server.
 
 Change to the directory of this repository (having scripts for FastSwap).
 ```bash
@@ -52,6 +54,9 @@ python3 run_commands.py --profile=profiles/05_load_trace_tf.yaml
 ```
 
 After the script for loading traces is finished, we can run the following command to run an experiment with the TensorFlow memory traces we just loaded:
+
+**IMPORTANT:** *Please wait for 10~12 min to let the following command finish, because FastSwap VMs will take some time to boot up. If it is forcely canceled in the middle  (e.g., try to reboot VMs), it can cause an error in host machine's NIC—it will require our team at Yale to visit and reboot the host machine physically.*
+
 ```bash
 python3 run_commands.py --profile profiles/04_macro_bench_tf.yaml
 ```
@@ -77,4 +82,9 @@ You can also test traces from other applications, for example:
 ```bash
 python3 run_commands.py --profile=profiles/05_load_trace_gc.yaml
 python3 run_commands.py --profile profiles/04_macro_bench_gc.yaml
+```
+
+**Please shut down FastSwap's compute blades(/VMs) before testing out other systems**
+```bash
+python3 run_commands.py --profile profiles/06_shutdown_system.yaml
 ```
