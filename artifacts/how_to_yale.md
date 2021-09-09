@@ -111,7 +111,7 @@ python3 run_commands.py --profile profiles/04_macro_bench_gc.yaml
 ```
 
 ### Comparison with other systems
-Please shutdown compute blade VMs before testing out other systems:
+**Please shutdown compute blades before testing out other systems**
 ```bash
 python3 run_commands.py --profile profiles/06_shutdown_system.yaml
 ```
