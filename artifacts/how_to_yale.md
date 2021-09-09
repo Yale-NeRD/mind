@@ -69,8 +69,8 @@ After the script for loading traces is finished, we can run the following comman
 ```bash
 python3 run_commands.py --profile profiles/04_macro_bench_tf.yaml
 ```
-- By default, it will run only 1/10 of the total traces with 2 compute blades; it will take 10 ~ 20 minutes.
-  - Please modify the values in `profiles/04_macro_bench_tf.yaml` to test different number of blades, threads, and step number
+- By default, it will run only 1/10 of the total traces (i.e., 5k steps of total 50k steps) with 2 compute blades; it will take 10 ~ 20 minutes.
+  - Please modify the values in `profiles/04_macro_bench_tf.yaml` to change number of blades, threads, and steps.
 
     ```yaml
     - name: run macro benchmark
@@ -88,15 +88,14 @@ python3 run_commands.py --profile profiles/04_macro_bench_tf.yaml
   - Number of total steps we used in the paper are
     - `tf`: 50000,  `gc`: 50000, `ma`: 35000, `mc`: 20000
 
-The result of the experiment will be downloaded at `~/Downloads/04_macro_bench_[APP]`.
-
-
-To compute the final number of the result, please run
+### Results
+To compute a result from the logs, please run
 ```bash
 cd post_processing && ./04macro_bench_res.sh && cd ..
 ```
 - This script will scan through the directories for all the applications and number of compute blades then calculate normalized computing speed.
   - The value is calculated by (total amount of task / processing time): [actual code](https://github.com/shsym/mind/blob/8cf7e8baa05bd2489ad3058437d06acd92c8aa43/ctrl_scripts/scripts/post_processing/04macro_bench.py#L54)
+- The raw result logs are downloaded at `~/Downloads/04_macro_bench_[APP]` by default.
 
 Result from the switch will be placed at `~/Download/latest.log`
   - A new result will override any previous result having the same filename.
