@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     print("=== Result ===")
     for sr_key in res_time_list:
-        for rwr_key in res_time_list:
+        for rwr_key in res_time_list[sr_key]:
             sum_val = sum(res_time_list[sr_key][rwr_key])
             header_str = "Throughput | sharing ratio[" + str(sr_key) + "], read ratio[" + str(rwr_key) + "]: "
             if sum_val > 0:
