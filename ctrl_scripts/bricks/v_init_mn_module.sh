@@ -21,6 +21,4 @@ cd ~
 sleep 1
 
 cd ~/fastswap/farmemserver
-tmux
-./rmserver 50000
-logout
+tmux new-session -d -s "myTempSession" ./rmserver 50000
