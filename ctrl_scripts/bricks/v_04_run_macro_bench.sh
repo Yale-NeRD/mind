@@ -26,7 +26,7 @@ cd ../
 ./benchmark.py test_program 1 $4 $3 $5
 
 sleep 30
-sudo cp ~/artifact_eval/cfm/test_program/log/progress.txt ${LOG_DIR}/fastswap_progress.$4_$1_of_$2_$3t.log
+sudo cp ~/artifact_eval/cfm/test_program/log/progress.txt ${LOG_DIR}/progress.$4_$1_of_$2_$3t.log.fastswap
 # cd ${MIND_PATH}/mind_linux/util_modules
 # make
 # sudo rmmod pprint.ko
