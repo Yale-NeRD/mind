@@ -53,7 +53,7 @@ Please tell switch that you are going to run normal switch program
 python3 run_commands.py --profile=profiles/02_setup_normal_switch.yaml
 ```
 
-## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Performance evaluation with memory traces (Fig. 6 and 8-left)
+## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Fastswap Performance evaluation with memory traces (Fig. 6 left)
 
 Let's go inside the script directory and load memory access traces for Tensorflow
 ```bash
