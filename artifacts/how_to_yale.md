@@ -120,6 +120,7 @@ python3 run_commands.py --profile profiles/04_macro_bench_gc.yaml
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases (Fig. 7-left)
 If you tested other systems, please ensure that switch knows about the type of the system—MIND in this case:
 ```bash
+cd /home/sosp_ae/mind/ctrl_scripts/scripts
 python3 run_commands.py --profile=profiles/02_setup_mind_switch.yaml
 ```
 
