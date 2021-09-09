@@ -10,7 +10,7 @@ We will run the following experiments:
   - Memory allocator comparison (Fig. 8-center and right)
   - Cache coherence emulator (Fig. 9 and PSO/PSO+ in Fig. 6-right)
 
-Generating each data point will take 5~25 minutes.
+Generating each data point will take 15 ~ 60 minutes with default configuration in this repository.
 
 ## Access to the control server
 We assume thet you already have Yale VPN following our instructions in hotcrp.

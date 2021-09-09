@@ -187,6 +187,7 @@ int init(struct trace_t *trace) {
         i++;
       }
       printf("All nodes are initialized: %d [0x%x]\n", trace->num_nodes, meta_ptr->node_mask[trace->node_idx]);
+      fflush(stdout);
       phase = !phase;
       pthread_barrier_wait(&s_barrier);
       return 0;
@@ -505,6 +506,7 @@ int main(int argc, char **argv) {
   time_taken = (time_taken + (end.tv_nsec - start.tv_nsec)) * 1e-9;
   printf("Done in (%.9lf sec, %.4lf accesses/sec, total incl. remote)\n\n\n",
          time_taken, (double) (DATASET_SIZE * local_thread_num) / time_taken);
+  fflush(stdout);
   {
     FILE *ofp = NULL;
     char out_file[255] = "";
