@@ -111,6 +111,10 @@ python3 run_commands.py --profile profiles/04_macro_bench_gc.yaml
 ```
 
 ### Comparison with other systems
+Please shutdown compute blade VMs before testing out other systems:
+```bash
+python3 run_commands.py --profile profiles/06_shutdown_system.yaml
+```
 - For GAM, please check [this repository](https://github.com/charles-typ/mind_ae_gam/blob/master/how_to_yale.md)
 - For FastSwap, please check [this repository](https://github.com/yyppyy/mind/blob/main/README.md)
 
