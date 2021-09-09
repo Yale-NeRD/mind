@@ -28,7 +28,7 @@
   post_delay: 0
   job_args:
     trace: tf
-    node_num: 1
+    node num: 1
     thread_num: 10
     step_num: 5000
 # step_num setup in the paper (depends on memory access pattern)

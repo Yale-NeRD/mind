@@ -21,4 +21,6 @@ cd ~
 sleep 1
 
 cd ~/fastswap/farmemserver
-nohup ./rmserver 50000 & exit
+tmux
+./rmserver 50000
+logout
