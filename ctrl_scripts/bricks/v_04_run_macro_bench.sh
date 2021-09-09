@@ -11,16 +11,20 @@ fi
 LOG_DIR=~/Downloads/04_macro_bench_$4
 mkdir -p $LOG_DIR
 echo "Run for Node: $1" 
-source g_set_env.sh
+#source g_set_env.sh
 
-cd ${MIND_PATH}/mind_linux/test_programs/04_macro_benchmark
-pwd
-make_cmd="run_$4_$3t"
+#cd ${MIND_PATH}/mind_linux/test_programs/04_macro_benchmark
+#pwd
+#make_cmd="run_$4_$3t"
 echo "Log file: ${LOG_DIR}/$4_$1_of_$2_$3t"
-echo "Make cmd: ${make_cmd}"
-make $make_cmd NODE_ID=$1 NUM_NODE=$2 MAX_PASS=$5
+#echo "Make cmd: ${make_cmd}"
+#make $make_cmd NODE_ID=$1 NUM_NODE=$2 MAX_PASS=$5
+cd ~/artifact_eval/cfm
+cp backup/workloads_$4_$3 lib/workload.py
+./benchmark.py test_program 1
+
 sleep 30
-sudo cp /tmp_test/progress.txt ${LOG_DIR}/progress.$4_$1_of_$2_$3t.log
+sudo cp -r ~/artifact_eval/cfm/test_program/log ${LOG_DIR}/fastswap_log
 # cd ${MIND_PATH}/mind_linux/util_modules
 # make
 # sudo rmmod pprint.ko

@@ -6,7 +6,7 @@
 
 # This is an example configuration that we used for our cluster
 default:
-  script root: ~/mind/ctrl_scripts/
+  script root: ~/mind_ae_fastswap/ctrl_scripts/
   user: sosp_ae
   key: ~/.ssh/vmhost_acc
   cluster gw: 10.10.10.0
@@ -34,89 +34,12 @@ compute servers:
   data_onwer: sslee           # owner of the memory traces
   vm list:
     - vm1:
-      id: 0
-      control ip: 192.168.122.101
+      id: 101
+      control ip: 192.168.122.211
       cluster ip: 10.10.10.201
       mac: 04:3f:72:a2:b4:a2
-      vm name: Ubuntu-CN1
-      user: sslee
-      key: ~/.ssh/id_rsa_for_vm
-    - vm2:
-      id: 1
-      control ip: 192.168.122.102
-      cluster ip: 10.10.10.202
-      mac: 04:3f:72:a2:b4:a3
-      vm name: Ubuntu-CN2
-      user: sslee
-      key: ~/.ssh/id_rsa_for_vm
-- c_server2:
-  id: 2
-  control ip: 172.28.229.149
-  cluster ip: 10.10.10.203
-  nic: ens8f0
-  data_onwer: yanpeng
-  vm list:
-    - vm1:
-      id: 2
-      control ip: 192.168.122.103
-      cluster ip: 10.10.10.203
-      mac: 04:3f:72:a2:b5:f2
-      vm name: Ubuntu-CN3
-      user: sslee
-      key: ~/.ssh/id_rsa_for_vm
-    - vm2:
-      id: 3
-      control ip: 192.168.122.104
-      cluster ip: 10.10.10.204
-      mac: 04:3f:72:a2:b5:f3
-      vm name: Ubuntu-CN4
-      user: sslee
-      key: ~/.ssh/id_rsa_for_vm
-- c_server3:
-  id: 3
-  control ip: 172.28.229.151
-  cluster ip: 10.10.10.205
-  nic: ens8f0
-  data_onwer: yupeng
-  vm list:
-    - vm1:
-      id: 4
-      control ip: 192.168.122.105
-      cluster ip: 10.10.10.205
-      mac: 0c:42:a1:41:8b:5a
-      vm name: Ubuntu-CN5
-      user: sslee
-      key: ~/.ssh/id_rsa_for_vm
-    - vm2:
-      id: 5
-      control ip: 192.168.122.106
-      cluster ip: 10.10.10.206
-      mac: 0c:42:a1:41:8b:5b
-      vm name: Ubuntu-CN6
-      user: sslee
-      key: ~/.ssh/id_rsa_for_vm
-- c_server4:
-  id: 4
-  control ip: 172.28.229.153
-  cluster ip: 10.10.10.207
-  nic: ens8f0
-  data_onwer: yupeng
-  vm list:
-    - vm1:
-      id: 6
-      control ip: 192.168.122.107
-      cluster ip: 10.10.10.207
-      mac: 04:3f:72:a2:b0:12
-      vm name: Ubuntu-CN7
-      user: sslee
-      key: ~/.ssh/id_rsa_for_vm
-    - vm2:
-      id: 7
-      control ip: 192.168.122.108
-      cluster ip: 10.10.10.208
-      mac: 04:3f:72:a2:b0:13
-      vm name: Ubuntu-CN8
-      user: sslee
+      vm name: fastswap_client_01
+      user: root
       key: ~/.ssh/id_rsa_for_vm
 
 # list of memory servers
@@ -126,11 +49,11 @@ memory servers:
     vm list:
       - vm1:
         id: 16
-        control ip: 192.168.122.102
+        control ip: 192.168.122.61
         cluster ip: 10.10.10.221
         mac: 04:3f:72:a2:b7:3a
-        vm name: Ubuntu-MN
-        user: sslee
+        vm name: fastswap_server_01
+        user: root
         nic: ens10
 
 # list of storage servers

@@ -4,12 +4,12 @@
 - name: start VMs
   job: setup
   per_command_delay: 1
-  post_delay: 60
+  post_delay: 300
 
 - name: restart and reset VMs
   job: reset
   per_command_delay: 1
-  post_delay: 90
+  post_delay: 300
 
 - name: update repo
   job: update
@@ -28,7 +28,7 @@
   post_delay: 0
   job_args:
     trace: tf
-    node num: 2
+    node num: 1
     thread_num: 10
     step_num: 5000
 # step_num setup in the paper (depends on memory access pattern)
