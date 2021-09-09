@@ -745,38 +745,3 @@ if __name__ == "__main__":
                            job_args=job_arg_list, target_vms=target_vm_list,
                         per_command_delay=pc_delay, post_delay=p_delay)
 
-    # update
-    # run_on_all_vms(mind_config, job="update", verbose=args.verbose,
-    #                per_command_delay=0, post_delay=60)
-    # # reboot, reset, restart
-    # run_on_all_vms(mind_config, job="reset", verbose=True,
-    #                per_command_delay=0, post_delay=60)
-    # # connect VMs to the switch
-    # run_on_all_vms(mind_config, job="init", job_args=None,
-    #                per_command_delay=10, post_delay=30,
-    #                verbose=False)
-    # # start sharing ratio experiment
-    # run_on_all_vms(mind_config, job="sharing_ratio",
-    #                job_args={key_sr: 50, key_rwr: 50, key_node_num: 2},
-    #                target_vms=[0, 1],   # compute blade 1 - 2
-    #                per_command_delay=15, post_delay=0,
-    #                verbose=False)
-
-    # start macro benchmark experiment
-    # run_on_all_vms(mind_config, job="macro_bench",
-    #                job_args={key_trace: 'ma', key_node_num: 2, key_thread_num: 10},
-    #                target_vms=[0, 1],   # compute blade 1 - 2
-    #                per_command_delay=15, post_delay=0,
-    #                verbose=False)
-
-    # == utils ==
-    # add ssh fingerprint for the first access
-    # run_on_all_vms(mind_config, job="first_access", verbose=True,
-    #                per_command_delay=10, post_delay=0)
-    # start VMs over servers
-    # run_on_all_vms(mind_config, job="setup", verbose=True,
-    #                per_command_delay=5, post_delay=0)
-    # Update and rebuild kernel
-    # run_on_all_vms(mind_config, job="update_kernel", verbose=args.verbose,
-    #                per_command_delay=0, post_delay=0)
-
