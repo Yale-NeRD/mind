@@ -16,7 +16,7 @@ echo "Initialize fastswap server"
 #sudo insmod ns.ko
 #sudo ethtool --set-priv-flags $2 sniffer on
 cd ~
-./enable_ip2.sh
+./.enable_ip2.sh
 
 sleep 1
 
