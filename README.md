@@ -23,11 +23,11 @@ Once you log in, the default directory is set to `scripts` directory inside the 
 $ pwd
 /home/sosp_ae/mind/ctrl_scripts/scripts
 ```
-**IMPORTANT** However, in order to run fastswap evaluations, please use
+**IMPORTANT** However, in order to run fastswap evaluations, please use the following command to change to the directory of this repository.
+
 ```bash
 cd /home/sosp_ae/mind_ae_fastswap/ctrl_scripts/scripts
 ```
-to change to the directory of this repository.
 
 You can check the current status of git repository
 ```bash
