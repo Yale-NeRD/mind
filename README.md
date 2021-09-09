@@ -68,7 +68,7 @@ python3 run_commands.py --profile profiles/04_macro_bench_tf.yaml
 ```
 - By default, it will run the entire traces on a single compute blades; it will take 10 ~ 20 minutes.
   - Please modify the values in `profiles/04_macro_bench_tf.yaml` for test various setup.
-  - **IMPORTANT** fastswap can not run on multiple compute servers. So the node_num should always be set to zero. 
+  - **IMPORTANT** fastswap can not run on multiple compute servers. So the node_num should always be set to 1. 
 
     ```yaml
     - name: run macro benchmark
