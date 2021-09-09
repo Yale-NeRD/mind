@@ -111,7 +111,11 @@ python3 run_commands.py --profile profiles/04_macro_bench_gc.yaml
 ```
 
 ### Comparison with other systems
-**Please shutdown compute blades before testing out other systems**
+***For each system, please make sure:***
+  - Shut down previous system's blades(/VMs)
+  - Let switch know the type of system (i.e., MIND versus normal—no modification for RDMA packets)
+
+Please shut down compute blades(/VMs) before testing out other systems
 ```bash
 python3 run_commands.py --profile profiles/06_shutdown_system.yaml
 ```
@@ -122,24 +126,16 @@ python3 run_commands.py --profile profiles/06_shutdown_system.yaml
 
 <br/><br/>
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases (Fig. 7-left)
-If you tested other systems, please ensure that switch knows about the type of the system—MIND in this case:
+**If you tested other systems, please check other system's VMs are shut down and switch knows that we are back to MIND**
 ```bash
 cd /home/sosp_ae/mind/ctrl_scripts/scripts
 python3 run_commands.py --profile=profiles/02_setup_mind_switch.yaml
 ```
 
-Now we run latency measurements from idle to modified (M; exclusive, write-able) state
+Now we run latency measurements from idle (I) to modified (M; exclusive, write-able) state
 ```bash
 python3 run_commands.py --profile profiles/03b_latency_I_to_M.yaml
 ```
-- Result will be placed in `~/Downloads/03b_latency` (will replace any previous result)
-  - The name `[shared]_to_[modified]_total_[1]_blades.log` represents the transition from `Shared` (it was actually `Idle` state, since we only used one blade) to `Modified` states for `1` blades.
-    - Another example is `[shared]_to_[modified]_total_[8]_blades.log`: transition from `Shared` to `Modified` states for `8` blades (7 sharers -> 1 writer).
-  - Please look into the file to check the values reported in the paper
-    - Please look at the `Avg(ns)` column
-    - `FH_fetch_remote_tot` shows network latency in ns
-    - `FH_ack_waiting_node` shows latency for waiting ACK/invalidation in ns
-    - (*We ported this useful profiling system from [LegoOS](https://github.com/WukLab/LegoOS)*)
 
 We can test other transition cases (some examples):
 - Modified to Modified
@@ -155,6 +151,15 @@ We can test other transition cases (some examples):
     python3 run_commands.py --profile profiles/03b_latency_S_to_S_8.yaml
     ```
 
+### Results
+- Result will be placed in `~/Downloads/03b_latency` (will replace any previous result)
+  - The name `[shared]_to_[modified]_total_[1]_blades.log` represents the transition from `Shared` (it was actually `Idle` state, since we only used one blade) to `Modified` states for `1` blades.
+    - Another example is `[shared]_to_[modified]_total_[8]_blades.log`: transition from `Shared` to `Modified` states for `8` blades (7 sharers -> 1 writer).
+  - Please look into the file to check the values reported in the paper
+    - Please look at the `Avg(ns)` column
+    - `FH_fetch_remote_tot` shows network latency in ns
+    - `FH_ack_waiting_node` shows latency for waiting ACK/invalidation in ns
+    - (*We ported this useful profiling system from [LegoOS](https://github.com/WukLab/LegoOS)*)
 ---
 
 <br/><br/>
@@ -183,8 +188,9 @@ Please find other example profiles in `profiles` directory: `profiles/03_sharing
           rw ratio: 50          # modify this value for read ratio [0, 25, 50, 75, 100]
           node num: 2           # total number of compute blades
   ```
-
 --- 
+
+<br/><br/>
 ## (Re-)Build MIND kernel
 If you want to pull the lastest repo inside blades (i.e., VMs) and then rebuild the kernel, please run
 ```
