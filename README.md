@@ -2,7 +2,7 @@
 
 ## Summary
 We will run the following experiments:
-- Fastswap Performance evaluation with memory traces (Fig. 6 left)
+- Fastswap performance evaluation with memory traces (Fig. 6 left)
 The interface of the control script is very similar to MIND's.
 ---
 
@@ -57,7 +57,7 @@ python3 run_commands.py --profile profiles/04_macro_bench_tf.yaml
 ```
 - By default, it will take 10 ~ 20 minutes by running only 1/10 of the trace (i.e., 5k steps of total 50k steps).
   - Please modify the values in `profiles/04_macro_bench_tf.yaml` to change number of threads and steps.
-  - **IMPORTANT** fastswap can not run on multiple compute servers. So the node_num should always be set to 1. 
+  - **IMPORTANT** fastswap can not run on multiple compute servers, so it must be `node num: 1`. 
   - Tag for the application or [APP]
     - [APP]: `tf` for TensorFlow, `gc` for GraphChi, `ma` / `mc` for Memcached with YCSB workloadA/workloadC
   - Number of total steps we used in the paper are
