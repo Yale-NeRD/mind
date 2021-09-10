@@ -15,7 +15,7 @@ Generating each data point will take 15 ~ 60 minutes with default configuration 
 <br/><br/>
 ## Access to the control server
 We assume thet you already have Yale VPN following our instructions in hotcrp.
-- **IMPORTANT** please reserve your time slot first using the link in hotcrp; since we have only one cluster with a programmable switch, each evaluator should have own dedicated time slot.
+- **IMPORTANT** please reserve your time slot via the link in hotcrp before using the cluster; since we have only one cluster with a programmable switch, each evaluator should have own dedicated time slot.
 - *For your anonymity, please do not use your google account when you access any Google docs we provide*
 
 After start Yale VPN session (i.e., login on Cisco Anyconnect)
