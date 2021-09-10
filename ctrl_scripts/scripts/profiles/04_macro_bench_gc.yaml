@@ -51,7 +51,7 @@
   per_command_delay: 1
   post_delay: 0
   job_args:
-    local dir: ~/Downloads/
+    local dir: ~/Downloads/fastswap_logs/
     target dir: Downloads/04_macro_bench_gc
 
 - name: switch side log
