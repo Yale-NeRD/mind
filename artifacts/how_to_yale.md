@@ -50,6 +50,19 @@ git reset --hard HEAD
 git pull
 ```
 
+To make sure there is no other running VMs (might be run by the previous user), please shutdown VMs of GAM and FastSwap:
+```
+cd /home/sosp_ae/mind_ae_gam/ctrl_scripts/scripts
+python3 run_commands.py --profile profiles/06_shutdown_system.yaml
+cd /home/sosp_ae/mind_ae_fastswap/ctrl_scripts/scripts
+python3 run_commands.py --profile profiles/06_shutdown_system.yaml
+```
+
+Back to the main repo
+```
+cd /home/sosp_ae/mind/ctrl_scripts/scripts
+```
+
 Please tell switch that you are going to run MIND
 ```bash
 python3 run_commands.py --profile=profiles/02_setup_mind_switch.yaml
