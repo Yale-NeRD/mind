@@ -680,6 +680,7 @@ int main(int argc, char **argv)
 		pthread_barrier_wait(&cont_barrier);
 	}
 	printf("Wait for 60 sec before exit...\n");
+	fflush(stdout);
 	sleep(60);
 
 	// loaders
