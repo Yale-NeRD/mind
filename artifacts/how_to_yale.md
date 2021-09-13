@@ -76,7 +76,7 @@ Let's go inside the script directory and load memory access traces for Tensorflo
 python3 run_commands.py --profile=profiles/05_load_trace_tf.yaml
 ```
 The script will print out raw input (i.e., ssh commands to the servers) and standard output.
-- Since we need to download more than 1TB of data, this will take some time up to one hour.
+- Since we need to download more than 1TB of data, this will take some time (up to one hour).
 
 After the script for loading traces is finished, we can run the following command to run an experiment with the TensorFlow memory traces we just loaded:
 ```bash
