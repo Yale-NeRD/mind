@@ -1,0 +1,15 @@
+# Profile for tasks/commands in order
+- name: restart and reset VMs
+  job: reset
+  per_command_delay: 1
+  post_delay: 90
+
+- name: update repo
+  job: update
+  per_command_delay: 1
+  post_delay: 10
+
+- name: initialize VMs
+  job: init
+  per_command_delay: 10
+  post_delay: 20
