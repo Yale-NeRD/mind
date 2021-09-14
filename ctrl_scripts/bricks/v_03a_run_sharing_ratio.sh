@@ -20,4 +20,4 @@ make
 sudo rmmod pprint.ko
 sudo insmod pprint.ko
 sleep 5
-tail -n 20 /var/log/kern.log >> ${LOG_DIR}/kern.node_$1_of_$4_sr_$2_rw_$3.log
+tail -n 20 /var/log/kern.log > ${LOG_DIR}/kern.node_$1_of_$4_sr_$2_rw_$3.log
