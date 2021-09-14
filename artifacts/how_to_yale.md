@@ -50,6 +50,7 @@ git reset --hard HEAD
 git pull
 ```
 
+#### Clean-up
 To make sure there is no other running VMs (might be run by the previous user), please shutdown VMs of GAM and FastSwap:
 ```
 cd /home/sosp_ae/mind_ae_gam/ctrl_scripts/scripts
@@ -139,7 +140,9 @@ python3 run_commands.py --profile profiles/06_shutdown_system.yaml
 
 <br/><br/>
 ## ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) Latency measurements for state transision cases (Fig. 7-left)
-**If you tested other systems, please check other system's VMs are shut down and switch knows that we are back to MIND**
+**[If you tested other systems, please check other system's VMs are shut down](https://github.com/shsym/mind/blob/main/artifacts/how_to_yale.md#clean-up)**
+
+To let switch know that we are back to MIND
 ```bash
 cd /home/sosp_ae/mind/ctrl_scripts/scripts
 python3 run_commands.py --profile=profiles/02_setup_mind_switch.yaml
