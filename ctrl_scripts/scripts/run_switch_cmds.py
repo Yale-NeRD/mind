@@ -1,6 +1,8 @@
 import requests
 import argparse
 import socket
+import time
+import shutil
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -31,4 +33,11 @@ if __name__ == '__main__':
         req = requests.get(url = url + normal_switch_hook, params={'remote-addr': str(my_ip)})
     else:
         exit(0)
-    print("Please wait for 1 min to finish running the script")
+    print("Please wait for 1 min to finish running the script", flush=True)
+    time.sleep(60)
+
+    # copy log file
+    time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.gmtime())
+    time_str = "latest_%s.log" % (time_str)
+    download_str = "/home/" + args.user + "/Downloads"
+    shutil.copyfile(download_str + "/latest.log", download_str + "/switch_logs/" + time_str)
