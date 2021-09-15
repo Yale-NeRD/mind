@@ -1,0 +1,7 @@
+- name: switch side log
+  job: switch_log
+  per_command_delay: 1
+  post_delay: 0
+  job_args:
+    local dir: ~/Downloads/
+    target dir: /home/sslee/sde/bf-sde-9.2.0/pkgsrc/bf-drivers/bf_switchd/bfrt_examples/log/latest.log
