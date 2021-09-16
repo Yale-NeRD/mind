@@ -73,6 +73,7 @@ python3 run_commands.py --profile=profiles/02_setup_mind_switch.yaml
 
 Let's go inside the script directory and load memory access traces for Tensorflow
 - **NOTE) Every time you load traces for new application, it will automatically erase the previous ones**
+  - If you are trying to compare performance between MIND and the other systems, it may be more time-efficient to run all systems for the loaded trace first, and then move on to the next application trace.
 ```bash
 python3 run_commands.py --profile=profiles/05_load_trace_tf.yaml
 ```
