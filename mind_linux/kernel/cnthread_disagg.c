@@ -1549,7 +1549,7 @@ static int ___cnthread_evict_one(struct cnthread_req *victim, unsigned long addr
         // Now we have read-only pte and data in memory
         // We assume that communication/re-tx was already handled by the RDMA library.
         PROFILE_START(cnthread_evict_one_rdma);
-        if (need_push_back)
+        if (need_push_back || inv_ctx->is_target_data)
         {
             int cpu_id = (2 * DISAGG_NUM_CPU_CORE_IN_COMPUTING_BLADE) + get_cpu();
 #ifdef CNTHREAD_COPY_FOR_INVALIDATE
