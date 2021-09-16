@@ -37,7 +37,8 @@ if __name__ == '__main__':
     time.sleep(60)
 
     # copy log file
-    time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.gmtime())
-    time_str = "latest_%s.log" % (time_str)
-    download_str = "/home/" + args.user + "/Downloads"
-    shutil.copyfile(download_str + "/latest.log", download_str + "/switch_logs/" + time_str)
+    if args.cmd == "download_log":
+        time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.gmtime())
+        time_str = "latest_%s.log" % (time_str)
+        download_str = "/home/" + args.user + "/Downloads"
+        shutil.copyfile(download_str + "/latest.log", download_str + "/switch_logs/" + time_str)
