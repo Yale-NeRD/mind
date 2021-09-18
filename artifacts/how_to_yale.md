@@ -112,7 +112,7 @@ cd post_processing && ./04macro_bench_res.sh && cd ..
   - The value is calculated by (total amount of task / processing time): [actual code](https://github.com/shsym/mind/blob/8cf7e8baa05bd2489ad3058437d06acd92c8aa43/ctrl_scripts/scripts/post_processing/04macro_bench.py#L54)
 - The raw result logs are downloaded at `~/Downloads/04_macro_bench_[APP]` by default.
 
-Result from the switch will be placed at `~/Download/latest.log`
+Result from the switch will be placed at `~/latest_switch.log`
   - A new result will override any previous result having the same filename.
   - Inside the log file, each line  `23:07:02:512201, 7473, 1`
 
