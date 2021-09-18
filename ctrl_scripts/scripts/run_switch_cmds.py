@@ -40,5 +40,5 @@ if __name__ == '__main__':
     if args.cmd == "download_log":
         time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.gmtime())
         time_str = "latest_%s.log" % (time_str)
-        download_str = "/home/" + args.user + "/Downloads"
-        shutil.copyfile(download_str + "/latest.log", download_str + "/switch_logs/" + time_str)
+        download_str = "/home/" + args.user
+        shutil.copyfile(download_str + "/latest_switch.log", download_str + "/switch_logs/" + time_str)
