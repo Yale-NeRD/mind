@@ -24,7 +24,7 @@ if __name__ == '__main__':
     print("Result files in " + res_dir + ": ")
     res_time_list = {}
     for fname in res_files:
-        if fname[0:8] != 'progress':
+        if fname[0:8] != 'progress' or fname[-3:] != "log":
             continue
         fname_split = fname.split('_')
         node_idx = fname_split[1]
