@@ -41,4 +41,4 @@ if __name__ == '__main__':
         time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.gmtime())
         time_str = "latest_%s.log" % (time_str)
         download_str = "/home/" + args.user
-        shutil.copyfile(download_str + "/latest_switch.log", download_str + "Downloads/switch_logs/" + time_str)
+        shutil.copyfile(download_str + "/latest_switch.log", download_str + "/Downloads/switch_logs/" + time_str)
