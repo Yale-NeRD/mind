@@ -1559,8 +1559,6 @@ static int ___cnthread_evict_one(struct cnthread_req *victim, unsigned long addr
                                                  req_qp, (void*)get_dummy_page_dma_addr(cpu_id))))
 #else
             (void)cpu_id;   // make compiler happy
-            if (need_push_back)
-                cn_copy_page_data_to_mn(cnline->tgid, cnline->mm, addr, pte, CN_OTHER_PAGE, req_qp, (void *)victim->dma_addr);
             if (unlikely(cn_copy_page_data_to_mn(cnline->tgid, cnline->mm, addr,
                                                  pte, inv_ctx->is_target_data ? CN_TARGET_PAGE : CN_OTHER_PAGE, 
                                                  req_qp, (void *)victim->dma_addr)))
