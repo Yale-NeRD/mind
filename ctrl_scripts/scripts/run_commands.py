@@ -518,8 +518,10 @@ def run_on_all_vms(cfg, job="dummy", job_args=None, verbose=True, per_command_de
                                 delete_dst = storage_server[key_trace_dst][app_names]
                                 for trace_slice in [key_dir_1, key_dir_2]:
                                     delete_cmd += "echo " + delete_dst[trace_slice] + " && sudo mkdir -p " + delete_dst[trace_slice]
-                                    delete_cmd += " && sudo rm -r " + delete_dst[trace_slice]
-                                    delete_cmd += " && sudo mkdir -p " + delete_dst[trace_slice] + " && "
+                                    if app_names != job_args[key_trace]:
+                                        delete_cmd += " && sudo rm -r " + delete_dst[trace_slice]
+                                        delete_cmd += " && sudo mkdir -p " + delete_dst[trace_slice]
+                                    delete_cmd += " && "
                             cmd = build_host_load_trace_command(server[key_ip], s_user_id, s_ssh_key,
                                                                 script_root, app_name_map[job_args[key_trace]], trace_src,
                                                                 trace_dst[key_dir_1], trace_dst[key_dir_2], s_user_id,
