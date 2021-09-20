@@ -409,7 +409,7 @@ void *prepare_data_page(
 		if (new_cnreq_ptr)
 			*new_cnreq_ptr = cnreq;
 	}else{
-		BUG(); // Present & writable, then why it generate page fault?
+		BUG(); // Present & writable, then why it generated page fault?
 	}
 	// printk(KERN_DEFAULT "CN: (pre) fault handler - pte: 0x%p, val: 0x%lx, page: 0x%lx, addr: 0x%lx, ecode: 0x%lx, page(%d)\n",
 	// 	   (void *)entry, (unsigned long)entry->pte, (unsigned long)page, address, error_code, need_new_page);
@@ -491,6 +491,12 @@ static __always_inline pte_t *restore_data_page(
 			new_data = cnreq->kmap;
 			memcpy(new_data, old_data, PAGE_SIZE);
 			kunmap_atomic(old_data);
+		}
+		else
+		{
+			new_data = cnreq->kmap;
+			memcpy(new_data, get_dummy_page_buf_addr(get_cpu()), PAGE_SIZE);
+			put_cpu();
 		}
 		PROFILE_LEAVE(FH_DATA_rw_copy);
 	}
