@@ -22,14 +22,20 @@ echo cd ${DST_DIR_1}/
 cd ${DST_DIR_1}/
 mkdir -p ~/sftp_logs
 for i in 0 1 2 3 4 5 6 7 8 9; do
-  sudo sftp -i ${SERVER_KEY} ${USER}@${LOG_SERVER}:${SRC_DIR}/partitioned/${PRE}$(((SERVER_ID-1)*20+i))${POST} > ~/sftp_logs/foo_${i}.out 2> ~/sftp_logs/foo_${i}.err < /dev/null &
-  sleep 1
+  if [[ ! -f ${PRE}$(((SERVER_ID-1)*20+i))${POST} ]]
+  then
+    sudo sftp -i ${SERVER_KEY} ${USER}@${LOG_SERVER}:${SRC_DIR}/partitioned/${PRE}$(((SERVER_ID-1)*20+i))${POST} > ~/sftp_logs/foo_${i}.out 2> ~/sftp_logs/foo_${i}.err < /dev/null &
+    sleep 1
+  fi
 done
 echo cd ${DST_DIR_2}/
 cd ${DST_DIR_2}/
 for i in 10 11 12 13 14 15 16 17 18 19; do
-  sudo sftp -i ${SERVER_KEY} ${USER}@${LOG_SERVER}:${SRC_DIR}/partitioned/${PRE}$(((SERVER_ID-1)*20+i))${POST} > ~/sftp_logs/foo_${i}.out 2> ~/sftp_logs/foo_${i}.err < /dev/null &
-  sleep 1
+  if [[ ! -f ${PRE}$(((SERVER_ID-1)*20+i))${POST} ]]
+  then
+    sudo sftp -i ${SERVER_KEY} ${USER}@${LOG_SERVER}:${SRC_DIR}/partitioned/${PRE}$(((SERVER_ID-1)*20+i))${POST} > ~/sftp_logs/foo_${i}.out 2> ~/sftp_logs/foo_${i}.err < /dev/null &
+    sleep 1
+  fi
 done
 # wait for sftp
 echo "Wait for downloading the memory access traces... (it may take up to a few hours)"
