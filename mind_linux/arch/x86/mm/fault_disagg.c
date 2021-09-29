@@ -756,7 +756,8 @@ retry:
 
 			// Check if other thread already solved this
 			if ((!(error_code & X86_PF_WRITE) && pte_present(*entry)) // Read request
-				|| ((error_code & X86_PF_WRITE) && pte_present(*entry) && pte_write(*entry))) // Write request
+				|| ((error_code & X86_PF_WRITE) && pte_present(*entry)
+					&& (!(error_code & X86_PF_PROT) || pte_write(*entry)))) // Write request
 			{
 return_and_retry:
 				if (likely(spin_is_locked(ptl_ptr)))
