@@ -84,6 +84,12 @@ After the script for loading traces is finished, we can run the following comman
 ```bash
 python3 run_commands.py --profile profiles/04_macro_bench_tf.yaml
 ```
+- If you face an error looking like the following log, please re-run the script for loading memory traces, in order to download missing traces.
+  ```
+  fail to open log input file -1
+  Makefile:122: recipe for target 'run_tf_10t' failed
+  make: *** [run_tf_10t] Error 1
+  ```
 - By default, it will run only 1/10 of the total traces (i.e., 5k steps of total 50k steps) with 2 compute blades; it will take 10 ~ 20 minutes.
   - Please modify the values in `profiles/04_macro_bench_tf.yaml` to change number of blades, threads, and steps.
 
