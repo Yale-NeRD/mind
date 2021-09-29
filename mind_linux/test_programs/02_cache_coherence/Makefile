@@ -1,7 +1,7 @@
 # Makefile
 IDIR = .
 CC=gcc
-CFLAGS=-I$(IDIR) -lpthread -g -D __TEST__
+CFLAGS=-I$(IDIR) -lpthread -g -D __TEST__  -D_GNU_SOURCE
 
 obj-y += test_protocol.o
 

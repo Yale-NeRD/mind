@@ -6,7 +6,6 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <sys/mman.h>
-#include <pthread.h>
 #include <sched.h>
 #include <assert.h>
 #include "../../include/disagg/config.h"

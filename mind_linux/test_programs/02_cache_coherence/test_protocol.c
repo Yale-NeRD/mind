@@ -1,13 +1,15 @@
 // Test program to allocate new memory
-
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <time.h>
+#include <sys/time.h>
 #include <pthread.h>
 #include <unistd.h>
 #include <sys/mman.h>
-#include <pthread.h>
+#include <sched.h>
 #include "../../include/disagg/config.h"
 
 // === Now the following configurations are placed in ../../include/disagg/config.h ===/
@@ -31,6 +33,7 @@ struct trace_t {
 	int node_idx;
 	int num_nodes;
 	int master_thread;
+	int thread_id;
 };
 struct trace_t arg1, arg2;
 
@@ -83,9 +86,28 @@ int init(struct trace_t *trace)
 	return -1;
 }
 
+int pin_to_core(int core_id)
+{
+    int num_cores = sysconf(_SC_NPROCESSORS_ONLN);
+    if (core_id < 0 || core_id >= num_cores)
+        return -1;
+
+    cpu_set_t cpuset;
+    CPU_ZERO(&cpuset);
+    CPU_SET(core_id, &cpuset);
+
+    pthread_t current_thread = pthread_self();
+    return pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &cpuset);
+}
+
 void func(void *arg)
 {
 	struct trace_t *trace = (struct trace_t*) arg;
+	if (trace)
+	{
+		pin_to_core(trace->thread_id);
+	}
+
 	if (init(trace))
 	{
 		fprintf(stderr, "Initialization error!\n");
@@ -194,7 +216,9 @@ int main(int argc, char **argv)
 	arg1.data_buf = arg2.data_buf = arg1.meta_buf + TEST_METADATA_SIZE;
 	arg1.num_nodes = arg2.num_nodes = num_nodes;
 	arg1.master_thread = 1;
+	arg1.thread_id = 0;
 	arg2.master_thread = 0;
+	arg2.thread_id = 1;
 	printf("protocol testing buf addr is: %p\n", arg1.meta_buf);
 
 	printf("running trace...\n");

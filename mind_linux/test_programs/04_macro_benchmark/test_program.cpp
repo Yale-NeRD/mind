@@ -6,7 +6,6 @@
 #include <cstdlib>
 #include <time.h>
 #include <sys/time.h>
-#include <pthread.h>
 #include <unistd.h>
 #include <sys/mman.h>
 #include <pthread.h>
