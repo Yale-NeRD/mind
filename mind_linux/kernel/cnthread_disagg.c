@@ -1405,7 +1405,7 @@ static int __cnthread_evict_range(struct cnthread_cacheline *cnline, unsigned lo
         PROFILE_LEAVE(cnthread_evict_range_flush);
     }
     // If we need to remove data (if another compute blade wants to have exclusive permission to the data)
-    if (remove_data)
+    if (remove_data || flush_cnt)
     {
         PROFILE_START(cnthread_evict_range_remove);
         lru_add_drain();
@@ -1422,23 +1422,26 @@ static int __cnthread_evict_range(struct cnthread_cacheline *cnline, unsigned lo
         }
         tlb_finish_mmu(&tlb, addr, addr + len);
         // Finalize
-        tmp_addr = addr;
-        for (i = 0; i < len_in_page; i++)
+        if (remove_data)
         {
-            victim = find_page_from_cacheline(cnline, tmp_addr);
-            if (victim)
+            tmp_addr = addr;
+            for (i = 0; i < len_in_page; i++)
             {
-                if ((on_going_pte_list[i].skip || on_going_pte_list[i].pte) && (tmp_addr != tar_addr))
+                victim = find_page_from_cacheline(cnline, tmp_addr);
+                if (victim)
                 {
-                    if (likely(atomic_read(&victim->is_used) == IS_PAGE_USED))
+                    if ((on_going_pte_list[i].skip || on_going_pte_list[i].pte) && (tmp_addr != tar_addr))
                     {
-                        cnthread_put_page(victim);
-                        atomic_dec(&cnline->used_page);
-                        atomic_long_inc(&cn_total_eviction_counter);
+                        if (likely(atomic_read(&victim->is_used) == IS_PAGE_USED))
+                        {
+                            cnthread_put_page(victim);
+                            atomic_dec(&cnline->used_page);
+                            atomic_long_inc(&cn_total_eviction_counter);
+                        }
                     }
                 }
+                tmp_addr += PAGE_SIZE;
             }
-            tmp_addr += PAGE_SIZE;
         }
         PROFILE_LEAVE(cnthread_evict_range_remove);
     }
@@ -1602,7 +1605,7 @@ clear_victim_from_evict_list:
     }
 
 #ifdef PRINT_CACHE_COHERENCE
-    if (inv_ctx->remove_data)
+    // if (inv_ctx->remove_data)
     {
         int used_page = 0;
         if (likely(victim))
