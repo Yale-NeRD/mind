@@ -1,0 +1,10 @@
+/Users/seung-seoblee/Dev/mind/docs/CMakeFiles/rebuild_cache.dir
+/Users/seung-seoblee/Dev/mind/docs/CMakeFiles/docs_publish.dir
+/Users/seung-seoblee/Dev/mind/docs/CMakeFiles/docs.dir
+/Users/seung-seoblee/Dev/mind/docs/CMakeFiles/javaclient_doc.dir
+/Users/seung-seoblee/Dev/mind/docs/CMakeFiles/pyclient_doc.dir
+/Users/seung-seoblee/Dev/mind/docs/CMakeFiles/doxygen_cpp.dir
+/Users/seung-seoblee/Dev/mind/docs/CMakeFiles/edit_cache.dir
+/Users/seung-seoblee/Dev/mind/docs/CMakeFiles/docs_serve.dir
+/Users/seung-seoblee/Dev/mind/docs/CMakeFiles/doxygen_cpp_client.dir
+/Users/seung-seoblee/Dev/mind/docs/CMakeFiles/mkdocs.dir
