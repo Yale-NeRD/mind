@@ -1,29 +1,21 @@
-# Confluo
+# MIND: In-Network Memory Management for Disaggregated Data Centers
 
 ## Overview
+MIND is an in-network memory management system for compute-memory disaggregation.
 
-Confluo is a system for real-time monitoring and analysis of data, that supports:
+(WIP: Placeholder)
 
-* high-throughput concurrent writes of millions of data points from multiple data streams;
-* online queries at millisecond timescale; and 
-* ad-hoc queries using minimal CPU resources.
+## What is resource disaggregation and its benefits?
+Resource disaggregation physically seprates compute and memory into network-attached resource blades, which can provide
 
-## User Guide
+* higher resource utilization,
+* better support for hardware heterogeneity,
+* resource elasticity, and 
+* failure handling,
 
-* [Quick Start](quick_start.md)
-* [Installation](install.md)
-* [Modes of Operation](modes_of_operation.md)
-* [Data Storage](loading_data.md)
-    - [Type System](type_system.md)
-* [Querying Data](queries.md)
-    - [Online Queries](online_queries.md)
-    - [Offline Queries](offline_queries.md)
-* [Archiving Data](data_archival.md)
+compared to traditional data center architectures.
 
-## API Docs
+<!-- ## Challenges in compute-memory disaggregation -->
+## In-network memory management
 
-* [C++ API](cpp_api.md)
-* [Client APIs](client_api.md)
-    - [C++ Client API](cpp_client_api.md)
-    - [Python Client API](python_client_api.md)
-    - [Java Client API](java_client_api.md)
+## Looking ahead

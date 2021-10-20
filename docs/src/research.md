@@ -1,5 +1,5 @@
 # Research Papers
 
-[Confluo: Distributed Monitoring and Diagnosis Stack for High-speed Networks](https://people.eecs.berkeley.edu/~anuragk/papers/confluo.pdf) <br/>
-Anurag Khandelwal, Rachit Agarwal, Ion Stoica <br/>
-NSDI, Boston, MA, Feb 2019
+[MIND: In-Network Memory Management for Disaggregated Data Centers](http://www.cs.yale.edu/homes/abhishek/sslee-sosp21.pdf) <br/>
+Seung-seob Lee, Yanpeng Yu, Yupeng Tang, Anurag Khandelwal, Lin Zhong, Abhishek Bhattacharjee <br/>
+*SOSP '21, October 26–29, Virtual Event, Germany*
