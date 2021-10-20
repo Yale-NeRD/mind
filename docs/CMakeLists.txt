@@ -42,11 +42,18 @@ set(MKDOCS_OUT ${CMAKE_CURRENT_BINARY_DIR}/mkdocs.yml)
 # request to configure the file
 configure_file(${MKDOCS_IN} ${MKDOCS_OUT} @ONLY)
 
+execute_process(
+        COMMAND bash -c "which mkdocs"
+        OUTPUT_VARIABLE MKDOCS_LOC
+)
+string(STRIP ${MKDOCS_LOC} MKDOCS_LOC)
+
 # generate text documentation using mkdocs
 add_custom_command(
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/mkdocs.stamp
         DEPENDS ${MKDOCS_IN} ${CMAKE_CURRENT_SOURCE_DIR}/src/*.md
         # COMMAND ${MKDOCS_EXECUTABLE} build
+        COMMAND python3 "${MKDOCS_LOC}" gh-deploy --force
         COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_BINARY_DIR}/mkdocs.stamp
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Generating Documentation with MkDocs"
