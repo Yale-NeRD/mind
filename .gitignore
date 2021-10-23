@@ -1,2 +1,3 @@
 .vscode
 *.log
+.DS_Store
