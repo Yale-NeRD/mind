@@ -117,97 +117,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named docs_publish
-
-# Build rule for target.
-docs_publish: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 docs_publish
-.PHONY : docs_publish
-
-# fast build rule for target.
-docs_publish/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/docs_publish.dir/build.make CMakeFiles/docs_publish.dir/build
-.PHONY : docs_publish/fast
-
-#=============================================================================
-# Target rules for targets named docs
-
-# Build rule for target.
-docs: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 docs
-.PHONY : docs
-
-# fast build rule for target.
-docs/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/docs.dir/build.make CMakeFiles/docs.dir/build
-.PHONY : docs/fast
-
-#=============================================================================
-# Target rules for targets named javaclient_doc
-
-# Build rule for target.
-javaclient_doc: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 javaclient_doc
-.PHONY : javaclient_doc
-
-# fast build rule for target.
-javaclient_doc/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/javaclient_doc.dir/build.make CMakeFiles/javaclient_doc.dir/build
-.PHONY : javaclient_doc/fast
-
-#=============================================================================
-# Target rules for targets named pyclient_doc
-
-# Build rule for target.
-pyclient_doc: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pyclient_doc
-.PHONY : pyclient_doc
-
-# fast build rule for target.
-pyclient_doc/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pyclient_doc.dir/build.make CMakeFiles/pyclient_doc.dir/build
-.PHONY : pyclient_doc/fast
-
-#=============================================================================
-# Target rules for targets named doxygen_cpp
-
-# Build rule for target.
-doxygen_cpp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 doxygen_cpp
-.PHONY : doxygen_cpp
-
-# fast build rule for target.
-doxygen_cpp/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/doxygen_cpp.dir/build.make CMakeFiles/doxygen_cpp.dir/build
-.PHONY : doxygen_cpp/fast
-
-#=============================================================================
-# Target rules for targets named docs_serve
-
-# Build rule for target.
-docs_serve: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 docs_serve
-.PHONY : docs_serve
-
-# fast build rule for target.
-docs_serve/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/docs_serve.dir/build.make CMakeFiles/docs_serve.dir/build
-.PHONY : docs_serve/fast
-
-#=============================================================================
-# Target rules for targets named doxygen_cpp_client
-
-# Build rule for target.
-doxygen_cpp_client: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 doxygen_cpp_client
-.PHONY : doxygen_cpp_client
-
-# fast build rule for target.
-doxygen_cpp_client/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/doxygen_cpp_client.dir/build.make CMakeFiles/doxygen_cpp_client.dir/build
-.PHONY : doxygen_cpp_client/fast
-
-#=============================================================================
 # Target rules for targets named mkdocs
 
 # Build rule for target.
@@ -228,14 +137,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... docs"
-	@echo "... docs_publish"
-	@echo "... docs_serve"
-	@echo "... doxygen_cpp"
-	@echo "... doxygen_cpp_client"
-	@echo "... javaclient_doc"
 	@echo "... mkdocs"
-	@echo "... pyclient_doc"
 .PHONY : help
 
 

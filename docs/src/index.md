@@ -3,7 +3,7 @@
 ## Overview
 MIND is an in-network memory management system for compute-memory disaggregation.
 
-(WIP: Placeholder)
+![type:video](https://www.youtube.com/embed/Gm43N_0UMQM)
 
 ## What is resource disaggregation and its benefits?
 Resource disaggregation physically seprates compute and memory into network-attached resource blades, which can provide

@@ -10,8 +10,8 @@ repo_url: https://github.com/shsym/mind
 
 # Configuration
 theme:
-  name: null
-  custom_dir: /Users/seung-seoblee/Dev/mind/docs/material-theme
+  name: material
+  # custom_dir: /Users/seung-seoblee/Dev/mind/docs/material-theme
   
   # Language for theme localization
   language: en
@@ -27,12 +27,21 @@ theme:
   # Sets the primary and accent color palettes as defined in the Material Design
   # documentation - possible values can be looked up in the getting started guide
   palette:
-
     # Primary color used for header, sidebar and links, default: indigo
-    primary: light green
+    # primary: indigo
 
     # Accent color for highlighting user interaction, default: indigo
-    accent: orange
+    # accent: indigo
+
+    # Dark mode
+    - scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
 
   # Fonts used by Material, automatically loaded from Google Fonts - see the site
   # for a list of available fonts
@@ -90,40 +99,17 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tilde
 
+plugins:
+- mkdocs-video
+
 # Navigation
 nav:
   - About: index.md
   - Research Papers: research.md
-  - Contributing: contributing.md
-  - User Guide:
-    - Quick Start: quick_start.md
-    - Installation: install.md
-    - Modes of Operation: modes_of_operation.md
-    - Data Storage: 
-      - Data Storage Overview: loading_data.md
-      - Type System: type_system.md
-    - Querying Data:
-      - Queries Overview: queries.md
-      - Online Queries: online_queries.md
-      - Offline Queries: offline_queries.md
-    - Archiving Data: data_archival.md
-  - API Docs:
-    - Overview: api.md
-    - C++: cpp_api.md
-    - Client APIs:
-      - Overview: client_api.md
-      - C++: cpp_client_api.md
-      - Python: python_client_api.md
-      - Java: java_client_api.md
-  - Applications:
-    - Overview: applications.md
-    - Network Monitoring and Diagnosis: network_monitoring.md
-    - Timeseries Database: timeseries_db.md
-    - Pub-sub System: pub_sub.md
   - People:
-    - Confluo Team: contact.md
+    - MIND Team: contact.md
 
 # Google Analytics
-google_analytics:
-  - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_KEY"]
-  - auto
+# google_analytics:
+#  - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_KEY"]
+#  - auto
