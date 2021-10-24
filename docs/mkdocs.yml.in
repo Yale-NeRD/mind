@@ -36,11 +36,11 @@ theme:
     # Dark mode
     - scheme: default
       toggle:
-        icon: material/weather-sunny
+        icon: material/lightbulb-outline
         name: Switch to dark mode
     - scheme: slate
       toggle:
-        icon: material/weather-night
+        icon: material/lightbulb
         name: Switch to light mode
 
   # Fonts used by Material, automatically loaded from Google Fonts - see the site
