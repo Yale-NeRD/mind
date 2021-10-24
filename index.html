@@ -249,6 +249,26 @@
     In-network memory management
   </a>
   
+    <nav class="md-nav" aria-label="In-network memory management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#control-plane-operations-slow-path" class="md-nav__link">
+    Control plane operations (slow path)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-plane-operations-fast-path" class="md-nav__link">
+    Data plane operations (fast path)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -373,6 +393,26 @@
     In-network memory management
   </a>
   
+    <nav class="md-nav" aria-label="In-network memory management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#control-plane-operations-slow-path" class="md-nav__link">
+    Control plane operations (slow path)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-plane-operations-fast-path" class="md-nav__link">
+    Data plane operations (fast path)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -404,7 +444,7 @@
 <p>MIND is an in-network memory management system for compute-memory disaggregation.</p>
 <p><iframe src="https://www.youtube.com/embed/Gm43N_0UMQM" style="position: relative; width: 100%; height: 22.172vw" frameborder="0" allowfullscreen></iframe></p>
 <h2 id="what-is-resource-disaggregation-and-its-benefits">What is resource disaggregation and its benefits?<a class="headerlink" href="#what-is-resource-disaggregation-and-its-benefits" title="Permanent link">&para;</a></h2>
-<p>Resource disaggregation physically seprates compute and memory into network-attached resource blades, which can provide</p>
+<p>Resource disaggregation physically separates compute and memory into network-attached resource blades, which can provide</p>
 <ul>
 <li>higher resource utilization,</li>
 <li>better support for hardware heterogeneity,</li>
@@ -414,7 +454,16 @@
 <p>compared to traditional data center architectures.</p>
 <!-- ## Challenges in compute-memory disaggregation -->
 <h2 id="in-network-memory-management">In-network memory management<a class="headerlink" href="#in-network-memory-management" title="Permanent link">&para;</a></h2>
+<p>MIND leverages programmability of network to achieve high performance, elastic scalability, and transparent virtual address abstraction. Unlike prior disaggregated memory designs, MIND places all logic and metadata for memory management in the network which include memory allocation, address translation, memory protection, and cache coherence. In fact, such many memory management functionalities have similar counterparts in networking allowing MIND to leverage decades of innovation in net- work hardware and protocol design for disaggregated memory management.</p>
+<p><strong>Assumption</strong>: MIND assumes partial memory disaggregation where compute blades possess a small amount (few GBs) of local DRAM as cache. All memory LOAD/STORE operations from the user processes are handled by this DRAM cache.</p>
+<h3 id="control-plane-operations-slow-path">Control plane operations (slow path)<a class="headerlink" href="#control-plane-operations-slow-path" title="Permanent link">&para;</a></h3>
+<p>MIND's kernel (modified Linux) captures memory management-related system calls (<code>mmap</code>, <code>munmap</code>, etc.) and forwards them to the programmable switch. Similar to how Linux manages handles memory allocations, MIND's control plane program running on the programmable switch maintains simplified version of <code>vm_area_struct</code>, <code>struct mm_struct</code>, and <code>task_struct</code>. Instead of updating page table entries (in Linux), MIND updates address translation and memory protection tables in the programmable switch ASIC.</p>
+<h3 id="data-plane-operations-fast-path">Data plane operations (fast path)<a class="headerlink" href="#data-plane-operations-fast-path" title="Permanent link">&para;</a></h3>
+<p>When DRAM cache miss happens, MIND's page fault handler generates and sends a data request to the programmable switch. The request is served by the programmable switch ASIC following the address translation and memory protection rules. In addition, MIND realizes in-network cache coherence protocol by maintaining cache directory entries inside the switching ASIC.</p>
+<!-- % To overcome the limited in-network compute and memory resources, we designed MIND -->
+
 <h2 id="looking-ahead">Looking ahead<a class="headerlink" href="#looking-ahead" title="Permanent link">&para;</a></h2>
+<p>MIND is a first step toward our vision, an OS for resource disaggregation which can abstract the entire edge data center as a single computer for applications.</p>
                 
               
               
