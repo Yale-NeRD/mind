@@ -18,6 +18,10 @@ Compute-memory disaggregation physically separates compute and memory that typic
 MIND leverages programmability of network to achieve high performance, compute and memory elasticity, and transparent virtual memory abstraction. Unlike prior disaggregated memory designs, MIND places the logic and metadata for memory management (memory allocation, address translation, memory protection, and cache coherence) _in the network fabric_. Interestingly, we found many memory management functionalities to already have similar counterparts in the networking domain, allowing MIND to leverage decades of innovation in network hardware and protocol design to enable efficient disaggregated memory management.
 
 MIND assumes partial memory disaggregation where compute blades possess a small amount (few GBs) of local DRAM as cache. All memory LOAD/STORE operations from the user processes are handled by this DRAM cache. MIND distinguishes between its control plane components (which are realized in a centralized processor on the switch) and its data plane components (which are realized in specialized hardware, specifically the programmable switch ASIC).
+<p align="center">
+    <img src="https://raw.githubusercontent.com/shsym/mind/docs/docs/src/img/design.png" align="center" width="100%"/>
+    <b>Figure 1. High-level MIND architecture</b>
+</p>
 
 ### Control plane operations
 MIND's kernel (modified Linux) captures memory management-related system calls (`mmap`, `munmap`, etc.) and forwards them to the programmable switch. Similar to how Linux manages handles memory allocations, MIND's control plane program running on the programmable switch maintains a global memory allocation metadata, e.g., simplified realizations of `vm_area_struct`, `mm_struct`, and `task_struct`. Based on the global metadata, MIND updates address translation and memory protection tables in the programmable switch ASIC.
