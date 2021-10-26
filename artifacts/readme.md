@@ -9,9 +9,6 @@
     - Even though the results from shorter memory traces would not be the exactly same values in the paper, we believe overall performance trend would be consistent (since we reported normalized values in the paper).
   - For the cache coherence protocol emulation, we prepared pre-computed output results.
   - For PSO/PSO+ estimation, the pre-computed output from the cache coherence protocol and other pre-computed input data can be used to feed the estimator.
-- ### **For Yale cluster, please find step by step guide [here](https://github.com/shsym/mind/blob/main/artifacts/how_to_yale.md).**
-- Please find the [list of experiments](https://github.com/shsym/mind/tree/main/artifacts#how-to-run-experiments) and follow the detailed instructions on the linked pages.
-
 ---
 
 ### NDA Requirements
