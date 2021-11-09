@@ -29,5 +29,5 @@ When a memory access incurs a miss in the compute blades local DRAM cache, MIND'
 ## Looking ahead
 MIND is a first step toward our vision, an OS for resource disaggregation which can abstract the entire edge data center as a single computer for applications. In MIND, we focused on memory subsystem, particularly the shared memory abstraction between compute blades. We are working on other OS components such as process management and virtualization.
 
-Please see our [SOSP'21](https://dl.acm.org/doi/10.1145/3477132.3483561) paper ([:material/projector-screen-outline.svg:](https://github.com/shsym/mind/raw/docs/docs/src/mind_sosp_21_fin.pdf)) and [GitHub repo](https://github.com/shsym/mind) for more details!
+Please see our [SOSP'21 paper](https://dl.acm.org/doi/10.1145/3477132.3483561) ([slides](https://github.com/shsym/mind/raw/docs/docs/src/mind_sosp_21_fin.pdf)) and [GitHub repo](https://github.com/shsym/mind) for more details!
 
