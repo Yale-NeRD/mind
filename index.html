@@ -8,11 +8,11 @@
       
       
       
-        <meta name="author" content="Seung-seob Lee">
+        <meta name="author" content="Yale-NeRD: Network centric Resource Disaggregation">
       
       
       <link rel="icon" href="theme/assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.a57b2b03.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.db9e7362.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.3f5d1f46.min.css">
@@ -132,13 +132,13 @@
     
       <div class="md-header__source">
         
-<a href="https://github.com/shsym/mind/" title="Go to repository" class="md-source" data-md-component="source">
+<a href="https://github.com/Yale-NeRD/mind/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    shsym/mind
+    Yale-NeRD/mind
   </div>
 </a>
       </div>
@@ -177,13 +177,13 @@
   
     <div class="md-nav__source">
       
-<a href="https://github.com/shsym/mind/" title="Go to repository" class="md-source" data-md-component="source">
+<a href="https://github.com/Yale-NeRD/mind/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    shsym/mind
+    Yale-NeRD/mind
   </div>
 </a>
     </div>
@@ -217,8 +217,6 @@
       </a>
       
         
-
-
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -363,8 +361,6 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-
-
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -438,7 +434,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/shsym/mind/edit/master/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/Yale-NeRD/mind/edit/master/docs/index.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
@@ -459,6 +455,11 @@
 <h2 id="in-network-memory-management">In-network memory management<a class="headerlink" href="#in-network-memory-management" title="Permanent link">&para;</a></h2>
 <p>MIND leverages programmability of network to achieve high performance, compute and memory elasticity, and transparent virtual memory abstraction. Unlike prior disaggregated memory designs, MIND places the logic and metadata for memory management (memory allocation, address translation, memory protection, and cache coherence) <em>in the network fabric</em>. Interestingly, we found many memory management functionalities to already have similar counterparts in the networking domain, allowing MIND to leverage decades of innovation in network hardware and protocol design to enable efficient disaggregated memory management.</p>
 <p>MIND assumes partial memory disaggregation where compute blades possess a small amount (few GBs) of local DRAM as cache. All memory LOAD/STORE operations from the user processes are handled by this DRAM cache. MIND distinguishes between its control plane components (which are realized in a centralized processor on the switch) and its data plane components (which are realized in specialized hardware, specifically the programmable switch ASIC).</p>
+<p align="center">
+    <img src="https://raw.githubusercontent.com/shsym/mind/docs/docs/src/img/design.png" align="center" width="100%"/>
+    <b>Figure 1. High-level MIND architecture</b>
+</p>
+
 <h3 id="control-plane-operations">Control plane operations<a class="headerlink" href="#control-plane-operations" title="Permanent link">&para;</a></h3>
 <p>MIND's kernel (modified Linux) captures memory management-related system calls (<code>mmap</code>, <code>munmap</code>, etc.) and forwards them to the programmable switch. Similar to how Linux manages handles memory allocations, MIND's control plane program running on the programmable switch maintains a global memory allocation metadata, e.g., simplified realizations of <code>vm_area_struct</code>, <code>mm_struct</code>, and <code>task_struct</code>. Based on the global metadata, MIND updates address translation and memory protection tables in the programmable switch ASIC.</p>
 <h3 id="data-plane-operations">Data plane operations<a class="headerlink" href="#data-plane-operations" title="Permanent link">&para;</a></h3>
@@ -525,10 +526,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.b1047164.min.js"></script>
+      <script src="assets/javascripts/bundle.1e84347e.min.js"></script>
       
     
   </body>
