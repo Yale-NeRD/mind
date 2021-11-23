@@ -2,11 +2,11 @@
 site_name: MIND
 docs_dir: @CMAKE_CURRENT_SOURCE_DIR@/src
 site_dir: @CMAKE_CURRENT_BINARY_DIR@/site
-site_author: 'Seung-seob Lee'
+site_author: 'Yale-NeRD: Network centric Resource Disaggregation'
 
 # Repository
-repo_name: shsym/mind
-repo_url: https://github.com/shsym/mind
+repo_name: Yale-NeRD/mind
+repo_url: https://github.com/Yale-NeRD/mind
 
 # Configuration
 theme:
