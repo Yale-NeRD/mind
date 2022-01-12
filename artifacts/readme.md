@@ -1,7 +1,7 @@
 # Artifact evaulation
 
 ## Summary
-- *Please first check NDA and HW requirements*; if you plan to use CloudLab, you do not need to sign the NDA with Intel (but please agree with Mellanox's End-User Agreement as described below).
+- *Please first check NDA and HW requirements*: a programmable switch, Mellanox NICs and corresponding NDA.
 - We recommend using our VMs on Yale cluster to minimize effort to create VMs and manually build kernel on them.
   - You can try to rebuild kernel inside those VMs to verify completeness of the source code (we have a script for [rebuild](https://github.com/shsym/mind/blob/main/ctrl_scripts/readme.md#re-build-mind-kernel)).
 - Since some of the experiments use the memory access traces (over 6 TB), it would take more than a week to reproduce all data points for MIND and the compared systems (FastSwap and GAM). To mitigate this overhead:
@@ -9,7 +9,7 @@
     - Even though the results from shorter memory traces would not be the exactly same values in the paper, we believe overall performance trend would be consistent (since we reported normalized values in the paper).
   - For the cache coherence protocol emulation, we prepared pre-computed output results.
   - For PSO/PSO+ estimation, the pre-computed output from the cache coherence protocol and other pre-computed input data can be used to feed the estimator.
-- We have scripts for automating evaluations but requiring preliminary setup for the cluster. An old guide for the scripts are [located in here](https://github.com/shsym/mind/blob/main/artifacts/how_to_yale.md).
+- We have scripts for automating evaluations (preliminary setup is needed for the cluster such as VMs and physical Ethernet links between the NICs and the switch; the old guide we used for artifact evaluation in pre-configured Yale's cluster [located in here](https://github.com/shsym/mind/blob/main/artifacts/how_to_yale.md)).
 ---
 
 ### NDA Requirements
@@ -22,8 +22,6 @@
 - We enabled IO-MMU and used PCIe passthrough to attach NIC to VMs.
 
 ## Artifact evaulation instructions
-- *Update) When CloudLab experiment setup is ready (with a programmable switch), we will add CloudLab specific instructions and scripts.*
-
 ### How to build MIND
 - Please find the link to each system component below.
 1. [MIND kernel](https://github.com/shsym/mind/tree/main/mind_linux)
@@ -37,7 +35,7 @@ We list up the evaluations included in this repo and *a link to more specific in
 - We use this marker ![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) to notify script for the evaluations
 1. [Performance with Tensorflow, GracphChi, and Memcached memory access traces](https://github.com/shsym/mind/tree/main/ctrl_scripts)
     - [Modified Intel PIN tool for collecting memory traces](https://github.com/shsym/mind/tree/main/tools/prepare_traces)
-      - *You can skip this preparation step by directly using the memory traces provided via CloudLab or our cluster at Yale*
+      - *You can skip this preparation step by directly using the memory traces provided via our cluster at Yale*
     - In the compute blade, end-to-end running time will be presented (Fig. 6)
     - In the programmable switch, number of directory entries over time will be presented (Fig. 8, left)
     - [PSO/PSO+ simulator](https://github.com/shsym/mind/tree/main/tools/pso_estimator) (part of Fig. 6)
